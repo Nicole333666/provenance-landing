@@ -22,8 +22,8 @@ describe('formPoses', () => {
     const accentBottom = bottom.clone().applyQuaternion(accent!.quaternion);
     expect(inkTop.z).toBeGreaterThan(accentTop.z);
     expect(inkBottom.z).toBeLessThan(accentBottom.z);
-    // The tubes clear each other at the crossings.
-    expect(inkTop.z - accentTop.z).toBeGreaterThan(2 * LINK.tube);
+    // The flat, extruded links clear each other at the crossings.
+    expect(inkTop.z - accentTop.z).toBeGreaterThan(2 * LINK.flatHalfDepth + 0.04);
   });
 
   it('pair shows only two links', () => {

@@ -63,42 +63,7 @@ export function setupReveals(): () => void {
         scrollTrigger: { trigger: '.proof__courses', start: 'top 84%', once: true },
       },
     );
-
-    // The refused verdict is struck through as you read it.
-    gsap.fromTo(
-      '.verdicts__rule',
-      { scaleX: 0 },
-      {
-        scaleX: 1,
-        ease: 'none',
-        scrollTrigger: { trigger: '.verdicts', start: 'top 72%', end: 'top 38%', scrub: 0.6 },
-      },
-    );
-
-    // The replay strip fills in.
-    ScrollTrigger.create({
-      trigger: '.replay',
-      start: 'top 82%',
-      once: true,
-      onEnter: () => document.querySelector('.replay')?.classList.add('is-in'),
-    });
   });
 
   return () => ctx.revert();
-}
-
-/** Draws the system diagram's outline chain on with scroll. */
-export function drawOnScroll(svg: SVGSVGElement, trigger: Element): () => void {
-  const paths = svg.querySelectorAll<SVGPathElement>('.draw');
-  const tween = gsap.fromTo(
-    paths,
-    { strokeDasharray: 1, strokeDashoffset: 1 },
-    {
-      strokeDashoffset: 0,
-      ease: 'none',
-      stagger: { each: 0.02 },
-      scrollTrigger: { trigger, start: 'top 80%', end: 'top 20%', scrub: 0.8 },
-    },
-  );
-  return () => tween.scrollTrigger?.kill();
 }

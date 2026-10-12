@@ -1,13 +1,17 @@
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { detect } from './capabilities';
 import { chainSession, type ChainedEvent } from './record/chain-hash';
-import { buildSession } from './record/session';
+import { Playground } from './record/playground';
+import { buildPastedSession, buildSession } from './record/session';
 import { TamperControl } from './record/tamper-control';
 import { Ticker } from './record/ticker';
+import type { Stage } from './scene/stage';
 import { createSceneState } from './scene/state';
-import { mountEmboss, mountSystemLine, signalPattern } from './sections/outline';
-import { mountReplay } from './sections/replay';
-import { drawOnScroll, setupReveals } from './sections/reveal';
+import { mountEvening } from './sections/evening';
+import { mountField } from './sections/field';
+import { mountHistories } from './sections/histories';
+import { signalPattern } from './sections/outline';
+import { setupReveals } from './sections/reveal';
 import { Acts } from './timeline/acts';
 import { createScroller } from './timeline/scroll';
 
@@ -37,32 +41,26 @@ async function boot(): Promise<void> {
   });
 
   // 2D graphics.
-  const emboss = $<HTMLElement>('.emboss');
-  if (emboss) mountEmboss(emboss);
   const pattern = $<HTMLElement>('[data-pattern]');
   if (pattern) pattern.style.backgroundImage = signalPattern('#b83f06', '#dc520b');
-  const line = $<HTMLElement>('[data-outline-chain]');
-  if (line) {
-    const stations = [...document.querySelectorAll<HTMLElement>('.station')];
-    let undraw: (() => void) | null = null;
-    const mountLine = () => {
-      undraw?.();
-      const svg = mountSystemLine(line, stations, 'rgb(24 24 27 / .62)', '#f1ece6');
-      undraw = reduced ? null : drawOnScroll(svg, line);
-    };
-    mountLine();
-    let t = 0;
-    new ResizeObserver(() => {
-      clearTimeout(t);
-      t = window.setTimeout(mountLine, 120);
-    }).observe(line);
-    disposers.push(() => undraw?.());
-  }
+  const field = $<HTMLElement>('[data-field]');
+  if (field) disposers.push(mountField(field));
+  const flag = $<HTMLElement>('[data-flag]');
+  if (flag) disposers.push(demoteFlag(flag, reduced));
+  const playground = new Playground(
+    $<HTMLTextAreaElement>('[data-input]')!,
+    $<HTMLOListElement>('[data-log]')!,
+    $<HTMLElement>('[data-log-status]')!,
+    $<HTMLButtonElement>('[data-replay]')!,
+  );
+  disposers.push(() => playground.dispose());
 
   // The record: an illustrative session, hash-chained in the browser.
   const session = buildSession();
-  const strip = $<HTMLElement>('[data-replay-strip]');
-  if (strip) disposers.push(mountReplay(strip, $<HTMLElement>('.replay__axis'), session));
+  const histories = mountHistories($<HTMLElement>('.histories')!, session, buildPastedSession());
+  const evening = $<HTMLElement>('[data-evening-plot]');
+  if (evening)
+    disposers.push(mountEvening(evening, $<HTMLElement>('[data-evening-axis]')!, session));
 
   const ticker = new Ticker(
     $<HTMLOListElement>('[data-ticker]')!,
@@ -99,9 +97,20 @@ async function boot(): Promise<void> {
   window.addEventListener('load', () => setTimeout(startHashing, 2500), { once: true });
 
   let tamper: TamperControl | null = null;
+  const makeTamper = (stage: Stage | null) =>
+    new TamperControl(
+      $<HTMLElement>('[data-tamper]')!,
+      $<HTMLButtonElement>(stage ? '[data-tamper-key]' : '[data-tamper-still]')!,
+      $<HTMLButtonElement>('[data-reset]')!,
+      stage,
+      ticker,
+      () => chain,
+    );
   acts.onChange((snap) => {
     if (chain) ticker.show(snap.growth * (chain.length - 1));
-    tamper?.setLive(snap.tamperPhase);
+    histories.update(snap.histories);
+    tamper?.setPhase(snap.phase);
+    tamper?.setAuto(snap.autoTamper);
   });
 
   scroller.onScroll(() => acts.update());
@@ -137,14 +146,7 @@ async function boot(): Promise<void> {
           root.classList.remove('has-stage');
           root.classList.add('no-stage');
           tamper?.dispose();
-          tamper = new TamperControl(
-            $<HTMLElement>('[data-tamper]')!,
-            $<HTMLButtonElement>('[data-tamper-still]')!,
-            $<HTMLButtonElement>('[data-reset]')!,
-            null,
-            ticker,
-            () => chain,
-          );
+          tamper = makeTamper(null);
           acts.update();
         }
       };
@@ -153,14 +155,7 @@ async function boot(): Promise<void> {
         stage.resize();
         acts.update();
       });
-      tamper = new TamperControl(
-        $<HTMLElement>('[data-tamper]')!,
-        $<HTMLButtonElement>('[data-tamper-key]')!,
-        $<HTMLButtonElement>('[data-reset]')!,
-        stage,
-        ticker,
-        () => chain,
-      );
+      tamper = makeTamper(stage);
       disposers.push(() => tamper?.dispose());
       acts.update();
     } catch (err) {
@@ -173,20 +168,46 @@ async function boot(): Promise<void> {
 
   // Without the 3D, the demo still edits and re-verifies the real chain.
   if (!tamper) {
-    tamper = new TamperControl(
-      $<HTMLElement>('[data-tamper]')!,
-      $<HTMLButtonElement>('[data-tamper-still]')!,
-      $<HTMLButtonElement>('[data-reset]')!,
-      null,
-      ticker,
-      () => chain,
-    );
+    tamper = makeTamper(null);
     disposers.push(() => tamper?.dispose());
     acts.update();
   }
 
   ScrollTrigger.refresh();
   window.addEventListener('pagehide', () => disposers.forEach((d) => d()), { once: true });
+}
+
+/** A paste flag that turns out to be the student's own code, demoted in place. */
+function demoteFlag(el: HTMLElement, reduced: boolean): () => void {
+  const level = el.querySelector<HTMLElement>('[data-flag-level]')!;
+  const text = el.querySelector<HTMLElement>('[data-flag-text]')!;
+  let timer = 0;
+  const demote = () => {
+    text.style.opacity = '0';
+    timer = window.setTimeout(
+      () => {
+        level.textContent = 'info';
+        text.textContent = 'Code moved within trails.py';
+        text.style.opacity = '1';
+        el.classList.add('is-moved');
+      },
+      reduced ? 0 : 280,
+    );
+  };
+  const io = new IntersectionObserver(
+    (entries) => {
+      if (entries.some((e) => e.isIntersecting)) {
+        io.disconnect();
+        timer = window.setTimeout(demote, reduced ? 0 : 1100);
+      }
+    },
+    { threshold: 1 },
+  );
+  io.observe(el);
+  return () => {
+    io.disconnect();
+    clearTimeout(timer);
+  };
 }
 
 function settled(): Promise<void> {

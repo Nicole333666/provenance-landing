@@ -79,68 +79,6 @@ export function outlineChain(o: OutlineOptions): [string, number, number] {
   return [`<defs>${defs}</defs>${body}`, width, height];
 }
 
-/**
- * The system diagram's line: the record itself. Irregular ticks (events) run
- * under the recorder, the woven mark seals them at the bundle, and one clean line
- * carries the sealed record on to the analyzer.
- */
-export function mountSystemLine(
-  host: HTMLElement,
-  stations: HTMLElement[],
-  ink: string,
-  ground: string,
-): SVGSVGElement {
-  const box = host.getBoundingClientRect();
-  const W = Math.max(320, box.width);
-  const H = Math.max(56, box.height);
-  const y = H / 2;
-  let xs = stations.map((s) => s.getBoundingClientRect().left - box.left);
-  // Stacked stations (narrow screens): spread the line's three parts across it.
-  if ((xs[1] ?? 0) - (xs[0] ?? 0) < 40) xs = [0, W * 0.44, W * 0.8];
-  const bundleX = xs[1] ?? W / 2;
-  const analyzerX = xs[2] ?? W * 0.75;
-  const markSize = Math.min(H * 0.9, 76);
-  const markX = bundleX + markSize * 0.62;
-
-  // Events: deterministic, bunched like real typing.
-  let ticks = '';
-  let x = 2;
-  let seed = 7;
-  const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
-  const end = markX - markSize * 0.95;
-  while (x < end) {
-    const h = 6 + rnd() * rnd() * H * 0.36;
-    ticks += `<path class="draw" pathLength="1" d="M${x.toFixed(1)},${(y - h).toFixed(1)}V${y.toFixed(1)}" stroke="${ink}" stroke-width="1"/>`;
-    x += rnd() < 0.2 ? 14 + rnd() * 26 : 3 + rnd() * 5;
-  }
-
-  const [mark] = outlineChain({
-    count: 2,
-    size: markSize,
-    ink,
-    ground,
-    pathClass: 'draw',
-    line: 1,
-  });
-  const pad = markSize * (9 / 104) + 4;
-  const markW = markSize * (96 / 104) + markSize * (60 / 104) + pad * 2;
-  const tx = markX - markW / 2;
-  const ty = y - (markSize + pad * 2) / 2;
-
-  const svg = document.createElementNS(NS, 'svg');
-  svg.setAttribute('viewBox', `0 0 ${W.toFixed(1)} ${H.toFixed(1)}`);
-  svg.setAttribute('width', W.toFixed(1));
-  svg.setAttribute('height', H.toFixed(1));
-  svg.innerHTML =
-    `<path class="draw" pathLength="1" d="M0,${y}H${W.toFixed(1)}" stroke="${ink}" stroke-width="1"/>` +
-    ticks +
-    `<g transform="translate(${tx.toFixed(1)} ${ty.toFixed(1)})">${mark}</g>` +
-    `<circle class="draw" pathLength="1" cx="${(analyzerX - 0.5).toFixed(1)}" cy="${y}" r="4.5" fill="${ground}" stroke="${ink}" stroke-width="1"/>` +
-    `<circle cx="${(W - 3).toFixed(1)}" cy="${y}" r="3" fill="${ink}"/>`;
-  host.replaceChildren(svg);
-  return svg;
-}
-
 /** A seamless tile of chain rows for the signal ground, as a CSS background. */
 export function signalPattern(rule: string, ground: string): string {
   const size = 128;
@@ -161,22 +99,4 @@ export function signalPattern(rule: string, ground: string): string {
   }
   const svg = `<svg xmlns="${NS}" width="${tileW.toFixed(2)}" height="${tileH.toFixed(2)}" viewBox="0 0 ${tileW.toFixed(2)} ${tileH.toFixed(2)}">${body}</svg>`;
   return `url("data:image/svg+xml;utf8,${encodeURIComponent(svg)}")`;
-}
-
-/** The mark, set into the paper as a blind emboss: paper on paper, edges only. */
-export function mountEmboss(host: HTMLElement): void {
-  host.innerHTML = `<svg viewBox="30 54 196 144" aria-hidden="true">
-    <defs>
-      <clipPath id="emboss-cross"><rect x="96" y="50" width="64" height="78"/></clipPath>
-      <filter id="emboss" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
-        <feDropShadow dx="-0.7" dy="-0.7" stdDeviation="0.35" flood-color="#ffffff" flood-opacity="0.95"/>
-        <feDropShadow dx="0.9" dy="1.1" stdDeviation="0.9" flood-color="#5e4a36" flood-opacity="0.2"/>
-      </filter>
-    </defs>
-    <g fill="none" stroke="#efeae4" stroke-width="18">
-      <rect filter="url(#emboss)" x="50" y="74" width="96" height="104" rx="34"/>
-      <rect filter="url(#emboss)" x="110" y="74" width="96" height="104" rx="34"/>
-      <g clip-path="url(#emboss-cross)"><rect filter="url(#emboss)" x="50" y="74" width="96" height="104" rx="34"/></g>
-    </g>
-  </svg>`;
 }

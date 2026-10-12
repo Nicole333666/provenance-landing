@@ -8,8 +8,8 @@ const q = new URLSearchParams(location.search);
 const state = createSceneState(q.has('still'));
 state.s = Number(q.get('s') ?? 0);
 state.growth = Number(q.get('g') ?? 1);
-if (state.s >= 2.5 && state.s < 3.5) document.body.classList.add('day');
-if (state.s >= 3.5) document.body.classList.add('signal');
+if (state.s >= 3.5 && state.s < 4.5) document.body.classList.add('day');
+if (state.s >= 4.5) document.body.classList.add('signal');
 if (q.get('bg') === 'none') {
   document.documentElement.style.background = 'transparent';
   document.body.style.background = 'transparent';

@@ -49,3 +49,39 @@ describe('roundedRectPoint', () => {
     expect(a[1]).toBeCloseTo(b[1]);
   });
 });
+
+describe('createLinkGeometry', () => {
+  it('has a flat base and a round morph target with the same topology', async () => {
+    const { createLinkGeometry, LINK } = await import('./link-geometry');
+    const g = createLinkGeometry(64, 16);
+    const base = g.getAttribute('position');
+    const round = g.morphAttributes.position![0]!;
+    expect(round.count).toBe(base.count);
+    // The flat mark is no deeper than its 2D stroke is wide; the tube is round.
+    let maxZ = 0;
+    let maxZr = 0;
+    for (let i = 0; i < base.count; i++) {
+      maxZ = Math.max(maxZ, Math.abs(base.getZ(i)));
+      maxZr = Math.max(maxZr, Math.abs(round.getZ(i)));
+    }
+    expect(maxZ).toBeCloseTo(LINK.flatHalfDepth, 3);
+    expect(maxZr).toBeCloseTo(LINK.tube, 3);
+  });
+
+  it('normals point away from the centreline (outer edge faces outward)', async () => {
+    const { createLinkGeometry, roundedRectPoint: rp } = await import('./link-geometry');
+    const segments = 64;
+    const radial = 16;
+    const g = createLinkGeometry(segments, radial);
+    const p = g.getAttribute('position');
+    const n = g.getAttribute('normal');
+    for (let i = 0; i < segments; i++) {
+      const [cx, cy] = rp(i / segments, w, h, r);
+      const v = i * radial; // profile angle 0: the outer edge
+      const dx = p.getX(v) - cx;
+      const dy = p.getY(v) - cy;
+      const len = Math.hypot(dx, dy);
+      expect((n.getX(v) * dx + n.getY(v) * dy) / len).toBeGreaterThan(0.9);
+    }
+  });
+});

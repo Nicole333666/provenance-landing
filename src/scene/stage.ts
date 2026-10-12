@@ -29,7 +29,7 @@ import { blendPoses, chainSlot, formPoses, LINK_COUNT, makePoses, type Pose } fr
 import type { SceneState } from './state';
 
 const COLORS = {
-  porcelain: new Color('#ece6db'),
+  porcelain: new Color('#f2ede4'),
   accent: new Color('#f2621a'),
   accentDay: new Color('#ec5a12'),
   ink: new Color('#141416'),
@@ -77,6 +77,10 @@ export class Stage {
   private wave = 0;
   private waveTarget = 0;
   private dragging: number | null = null;
+
+  /** carries the flat-to-round morph weight into setMorphAt */
+  private readonly morph = Object.assign(new Mesh(), { morphTargetInfluences: [0] });
+  private lastRound = -1;
 
   private raf = 0;
   private last = 0;
@@ -131,7 +135,10 @@ export class Stage {
     this.mesh.castShadow = true;
     this.mesh.receiveShadow = true;
     this.mesh.frustumCulled = false;
-    for (let i = 0; i < LINK_COUNT; i++) this.mesh.setColorAt(i, COLORS.porcelain);
+    for (let i = 0; i < LINK_COUNT; i++) {
+      this.mesh.setColorAt(i, COLORS.porcelain);
+      this.mesh.setMorphAt(i, this.morph);
+    }
     this.scene.add(this.mesh);
 
     this.key.castShadow = true;
@@ -254,6 +261,21 @@ export class Stage {
     return this.breakAt(link);
   }
 
+  /**
+   * Pulls a link out of line by a fraction of the full pull, without breaking the
+   * chain (used when the demo plays itself on scroll).
+   */
+  setPull(link: number, amount: number): void {
+    if (this.dragging !== null) return;
+    const s = this.placeA.scale;
+    const slot = chainSlot(link);
+    for (let i = 0; i < LINK_COUNT; i++) {
+      const ds = Math.abs(chainSlot(i) - slot);
+      const k = ds === 0 ? 1 : ds === 1 ? 0.22 : 0;
+      this.offsetTargets[i]!.set(0.16, 0.42, 0.3).multiplyScalar(s * amount * k);
+    }
+  }
+
   /** Breaks the chain at a link (tap, click or keyboard). */
   breakAt(link: number): number {
     const slot = chainSlot(link);
@@ -316,7 +338,7 @@ export class Stage {
     pos.y -= (1 - intro) * scale * 0.16;
     const quat = new Quaternion().slerpQuaternions(a.quaternion, b.quaternion, f);
     const parallax = k0.parallax + (k1.parallax - k0.parallax) * f;
-    const settle = (1 - intro) * 0.6;
+    const settle = (1 - intro) * 0.95;
     const breathe = state.reduced ? 0 : Math.sin(t * 0.55) * 0.02;
     const pq = new Quaternion().setFromEuler(
       new Euler(
@@ -331,6 +353,15 @@ export class Stage {
     formPoses(k0.form, state.growth, this.posesA, k0.stream);
     formPoses(k1.form, state.growth, this.posesB, k1.stream);
     blendPoses(this.posesA, this.posesB, f, this.poses);
+
+    // Cross-section: the flat mark rounds out into chain links, and back.
+    const round = k0.round + (k1.round - k0.round) * f;
+    if (Math.abs(round - this.lastRound) > 0.002) {
+      this.lastRound = round;
+      this.morph.morphTargetInfluences[0] = round;
+      for (let i = 0; i < LINK_COUNT; i++) this.mesh.setMorphAt(i, this.morph);
+      if (this.mesh.morphTexture) this.mesh.morphTexture.needsUpdate = true;
+    }
 
     // A chain at rest is never quite still: a slow ripple runs along it.
     const chainWeight = (k0.form === 'chain' ? 1 - f : 0) + (k1.form === 'chain' ? f : 0);
@@ -400,7 +431,7 @@ export class Stage {
     const env = this.studio.update(day);
     if (env) this.scene.environment = env;
     this.scene.environmentIntensity = (0.95 + day * 0.1) * (0.8 + 0.2 * intro);
-    const dir = new Vector3(0.18 + (1 - intro) * 0.9, 1, 0.34 - (1 - intro) * 0.5)
+    const dir = new Vector3(0.22 + (1 - intro) * 0.9, 0.95, 0.72 - (1 - intro) * 0.6)
       .normalize()
       .lerp(new Vector3(-1, 0.62, 0.5).normalize(), day)
       .normalize();
@@ -431,7 +462,9 @@ export class Stage {
     // Shadow catcher, behind the object, facing the camera.
     const depth = k0.shadowDepth + (k1.shadowDepth - k0.shadowDepth) * f;
     this.catcher.position.set(pos.x, pos.y, pos.z - depth * scale * LINK_OUTER.height);
-    const shadow = (k0.shadow + (k1.shadow - k0.shadow) * f) * intro;
+    // Shadows belong to an object at rest: none while it travels between acts.
+    const travel = 1 - 4 * f * (1 - f);
+    const shadow = (k0.shadow + (k1.shadow - k0.shadow) * f) * intro * travel;
     this.catcher.material.opacity = shadow;
     const tint0 = k0.shadowTint;
     const tint1 = k1.shadowTint;

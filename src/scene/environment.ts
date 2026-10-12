@@ -25,6 +25,7 @@ export class Studio {
   private readonly strip: MeshBasicMaterial;
   private readonly floor: MeshBasicMaterial;
   private readonly sun: MeshBasicMaterial;
+  private readonly front: MeshBasicMaterial;
   private readonly pmrem: PMREMGenerator;
   private target: WebGLRenderTarget | null = null;
   private lastMix = -1;
@@ -57,6 +58,14 @@ export class Studio {
     floor.rotation.x = -Math.PI / 2;
     this.scene.add(floor);
 
+    // A broad, soft panel in front and a little above: lights flat faces evenly,
+    // with a gentle falloff toward the bottom.
+    this.front = new MeshBasicMaterial();
+    const front = new Mesh(new PlaneGeometry(16, 7), this.front);
+    front.position.set(0, 10, 10);
+    front.lookAt(0, 0, 0);
+    this.scene.add(front);
+
     // The sun, low from the upper left: a small hot disc for day reflections.
     this.sun = new MeshBasicMaterial();
     const sun = new Mesh(new PlaneGeometry(2.2, 2.2), this.sun);
@@ -77,6 +86,7 @@ export class Studio {
     this.strip.color.copy(lerp(new Color(4.5, 4.3, 4.0), new Color(0.8, 0.8, 0.82)));
     this.floor.color.copy(lerp(new Color(0.05, 0.03, 0.02), new Color(0.85, 0.8, 0.74)));
     this.sun.color.copy(lerp(new Color(0, 0, 0), new Color(30, 25, 19)));
+    this.front.color.copy(lerp(new Color(2.6, 2.5, 2.32), new Color(0.9, 0.88, 0.85)));
 
     const next = this.pmrem.fromScene(this.scene, 0, 0.1, 60);
     this.target?.dispose();

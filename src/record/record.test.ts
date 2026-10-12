@@ -1,5 +1,14 @@
 import { describe, expect, it } from 'vitest';
-import { buildSession, berkeleyClock, prng } from './session';
+import {
+  berkeleyClock,
+  buildPastedSession,
+  buildSession,
+  FINAL,
+  lineCol,
+  offsetOf,
+  prng,
+  Replay,
+} from './session';
 import { canonical, chainSession, GENESIS, hashEvent } from './chain-hash';
 import { tamper, verifyChain } from './verify';
 
@@ -13,7 +22,7 @@ describe('session', () => {
 
   it('has monotonic seq and t, and starts and ends the session', () => {
     const { events } = buildSession();
-    expect(events.length).toBeGreaterThan(1300);
+    expect(events.length).toBeGreaterThan(800);
     events.forEach((e, i) => {
       expect(e.seq).toBe(i);
       if (i > 0) expect(e.t).toBeGreaterThanOrEqual(events[i - 1]!.t);
@@ -22,12 +31,46 @@ describe('session', () => {
     expect(events.at(-1)!.kind).toBe('session.end');
   });
 
-  it('marks the paste, the external change, and the 23:40 test run', () => {
+  it('marks the struggle, the rewrite and the 23:40 test run', () => {
     const { events, marks } = buildSession();
-    expect(events[marks.paste.seq]!.kind).toBe('paste');
-    expect(events[marks.paste.seq]!.data.lines).toBe(212);
-    expect(events[marks.external.seq]!.kind).toBe('fs.external_change');
-    expect(berkeleyClock(events[marks.testPass.seq]!.wall).slice(0, 5)).toBe('23:40');
+    expect(marks.stuck.runs).toBeGreaterThanOrEqual(5);
+    expect(marks.stuck.to - marks.stuck.from).toBeGreaterThan(30 * 60_000);
+    expect(marks.rewrite.at).toBeGreaterThan(marks.stuck.to);
+    expect(berkeleyClock(events[marks.pass.seq]!.wall).slice(0, 5)).toBe('23:40');
+  });
+
+  it('both histories reconstruct the same final file, byte for byte', () => {
+    for (const session of [buildSession(), buildPastedSession()]) {
+      const replay = new Replay(session);
+      expect(replay.textAfter(session.events.length - 1)).toBe(FINAL);
+    }
+  });
+
+  it('the pasted history is one paste after a long time away', () => {
+    const s = buildPastedSession();
+    expect(s.events.filter((e) => e.kind === 'paste')).toHaveLength(1);
+    expect(s.events.filter((e) => e.kind === 'doc.change')).toHaveLength(0);
+    expect(s.marks.away.to - s.marks.away.from).toBeGreaterThan(2 * 3600_000);
+  });
+
+  it('replay scrubs to any moment and matches a full rebuild', () => {
+    const session = buildSession();
+    const replay = new Replay(session);
+    let text = '';
+    session.events.forEach((e, i) => {
+      text = Replay.apply(text, e);
+      if (i % 397 === 0) expect(replay.textAfter(i)).toBe(text);
+    });
+    expect(replay.indexAt(-1)).toBe(-1);
+    expect(replay.indexAt(session.duration)).toBe(session.events.length - 1);
+  });
+
+  it('lineCol and offsetOf are inverses', () => {
+    const text = 'ab\ncde\n\nf';
+    for (let o = 0; o <= text.length; o++) {
+      const [l, c] = lineCol(text, o);
+      expect(offsetOf(text, l, c)).toBe(o);
+    }
   });
 
   it('prng stays in [0, 1)', () => {

@@ -100,7 +100,7 @@
         <span class="wordmark">Provenance</span>
       </a>
       <nav class="nav__island" aria-label="Primary">
-        <a class="nav__link" href="#how">How it works</a>
+        <a class="nav__link" href="#histories">How it works</a>
         <a class="nav__link" href="#students">For students</a>
         <a class="nav__link" href="https://github.com/ProvenanceTools">GitHub</a>
         <a
@@ -193,9 +193,62 @@
         </div>
       </section>
 
-      <!-- 3 + 4. The chain, then the tamper demo ------------------------------ -->
+      <!-- 3. Same file, two histories --------------------------------------- -->
+      <section
+        class="histories"
+        id="histories"
+        data-theme="night"
+        aria-labelledby="histories-title"
+      >
+        <div class="histories__sticky">
+          <header class="wrap histories__head">
+            <h2 class="display-2" id="histories-title" data-split>Same file. Two histories.</h2>
+            <p class="lead" data-fade>
+              Both end in exactly the same bytes. Only one of them is an evening of work.
+            </p>
+          </header>
+          <div class="wrap histories__panes">
+            <figure class="history" data-history="written">
+              <div class="history__bar mono">
+                <span>trails.py</span>
+                <span class="history__clock" data-clock>20:55</span>
+              </div>
+              <pre class="history__code mono" data-code aria-hidden="true"></pre>
+              <div class="history__away mono" data-away>editor in the background</div>
+              <div class="history__track" data-track aria-hidden="true"></div>
+              <figcaption class="history__caption">
+                <strong data-count>Typed, tested, rewritten.</strong>
+                <span class="mono" data-digest></span>
+              </figcaption>
+            </figure>
+            <figure class="history" data-history="pasted">
+              <div class="history__bar mono">
+                <span>trails.py</span>
+                <span class="history__clock" data-clock>20:55</span>
+              </div>
+              <pre class="history__code mono" data-code aria-hidden="true"></pre>
+              <div class="history__away mono" data-away>editor in the background</div>
+              <div class="history__track" data-track aria-hidden="true"></div>
+              <figcaption class="history__caption">
+                <strong data-count>Away, then one paste.</strong>
+                <span class="mono" data-digest></span>
+              </figcaption>
+            </figure>
+          </div>
+          <p class="wrap histories__verdict mono" data-verdict aria-live="polite"></p>
+          <p class="visually-hidden">
+            Two recordings of the same assignment. In the first, a student types the file over an
+            evening, runs the tests, gets stuck, deletes a function and writes it again, and the
+            tests pass at 23:40. In the second, the editor sits in the background for two and a half
+            hours, then the whole file arrives in a single paste. Both final files are identical.
+          </p>
+        </div>
+      </section>
+
+      <!-- 4. The chain: the mark becomes a chain, breaks, and you try ---------- -->
       <section class="how" id="how" data-theme="night" aria-label="How it works">
         <div class="how__sticky">
+          <div class="how__anchor how__anchor--mark" data-anchor="mark"></div>
           <div class="how__anchor" data-anchor="chain"></div>
           <picture class="still still--cover" style="--k: none">
             <source
@@ -215,41 +268,45 @@
             />
           </picture>
 
-          <div class="how__copy how__copy--chain" data-phase="chain">
+          <div class="how__copy" data-phase="chain">
             <h2 class="display-2" data-split>Every edit is a link.</h2>
             <p class="lead">
-              The recorder runs inside the student&rsquo;s editor. Each change, paste, save and
-              shift of focus becomes an event, and each event is hashed together with the one before
-              it. What you get is the work itself, in the order it happened, sealed into a chain.
+              The recorder writes down every change, paste, save and switch of focus. Each event is
+              sealed to the one before it, so the record runs in one unbroken line, from the first
+              keystroke to the hand-in.
             </p>
-            <ol class="beats mono" role="list">
-              <li data-beat>SHA-256, each event bound to the one before</li>
-              <li data-beat>checkpoints signed as the student works</li>
-              <li data-beat>handed in with the work</li>
-            </ol>
           </div>
 
-          <div class="how__copy how__copy--tamper" data-phase="tamper">
+          <div class="how__copy" data-phase="tamper">
             <h2 class="display-2" data-split>Change one link, and the chain says so.</h2>
             <p class="lead">
-              Rewrite an event after the fact and its hash stops matching. Every event after it
-              fails too, all the way to the end.
-              <span class="hint hint--fine">Go ahead: pull a link out of the chain.</span>
-              <span class="hint hint--coarse">Go ahead: tap a link to tamper with it.</span>
-              <span class="hint hint--still"
-                >Go ahead: tamper with one event and watch the ledger.</span
-              >
+              Rewrite a single event after the fact and its seal stops matching. Every event after
+              it stops verifying, all the way to the end.
             </p>
-            <button
-              class="btn btn--primary btn--small tamper__still"
-              type="button"
-              data-tamper-still
-            >
-              <span>Tamper with an event</span>
-            </button>
           </div>
 
-          <div class="tamper" data-tamper aria-describedby="chain-status">
+          <div class="how__copy" data-phase="try">
+            <h2 class="display-2" data-split>Now you try.</h2>
+            <p class="lead">
+              <span class="hint hint--fine">Pull any link out of the chain.</span>
+              <span class="hint hint--coarse">Tap any link to tamper with it.</span>
+              <span class="hint hint--still">Tamper with one event and watch the record.</span>
+            </p>
+            <div class="actions">
+              <button class="btn btn--ghost btn--small" type="button" data-reset hidden>
+                <span>Repair the chain</span>
+              </button>
+              <button
+                class="btn btn--primary btn--small tamper__still"
+                type="button"
+                data-tamper-still
+              >
+                <span>Tamper with an event</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="tamper" data-tamper>
             <button class="tamper__target" type="button" data-tamper-key>
               Tamper with the link in the center of the chain
             </button>
@@ -257,20 +314,12 @@
 
           <div class="ledger">
             <div class="ledger__head mono">
-              <span>cats.slog</span>
+              <span>trails.slog</span>
               <span class="ledger__status" id="chain-status" role="status" aria-live="polite"
-                >Chain verified. 4,296 events, no breaks.</span
+                >Chain verified.</span
               >
             </div>
             <ol class="ledger__rows mono" data-ticker role="list" aria-hidden="true"></ol>
-            <div class="ledger__foot">
-              <p class="ledger__note">
-                An illustrative session. Every hash shown is computed in your browser.
-              </p>
-              <button class="btn btn--ghost btn--small" type="button" data-reset hidden>
-                <span>Reset the chain</span>
-              </button>
-            </div>
           </div>
         </div>
       </section>
@@ -278,19 +327,17 @@
       <!-- The relight: night becomes day ------------------------------------- -->
       <div class="relight" aria-hidden="true"></div>
 
-      <!-- 5. Evidence -------------------------------------------------------- -->
-      <section class="evidence" data-theme="day" aria-labelledby="evidence-title">
-        <div class="wrap evidence__top">
-          <div class="evidence__copy">
-            <h2 class="display-2" id="evidence-title" data-split>Evidence, not a guess.</h2>
+      <!-- 5. Built not to accuse ---------------------------------------------- -->
+      <section class="fair" id="fair" data-theme="day" aria-labelledby="fair-title">
+        <div class="wrap fair__top">
+          <div class="fair__copy">
+            <h2 class="display-2" id="fair-title" data-split>Built not to accuse.</h2>
             <p class="lead" data-fade>
-              AI detectors read finished code and return a probability. The scores are unreliable,
-              and no student can argue with one. Provenance doesn&rsquo;t score code at all. It
-              shows how the code came to exist: what was typed, what was pasted, and what changed
-              while the editor wasn&rsquo;t looking.
+              Provenance surfaces patterns for a person to look at. Everything about it is designed
+              so that honest work stays out of the way.
             </p>
           </div>
-          <div class="evidence__anchor" data-anchor="day">
+          <div class="fair__anchor" data-anchor="day">
             <picture class="still" style="--k: 467%">
               <source
                 type="image/avif"
@@ -311,80 +358,86 @@
           </div>
         </div>
 
-        <figure class="wrap verdicts">
-          <p class="verdicts__refused" data-strike>
-            <span class="verdicts__phrase">87% likely AI-generated</span>
-            <span class="verdicts__rule" aria-hidden="true"></span>
-          </p>
-          <figcaption class="verdicts__caption mono">
-            The kind of answer Provenance will never give.
-          </figcaption>
-          <div class="replay" data-replay>
-            <div class="replay__strip" data-replay-strip></div>
-            <div class="replay__axis mono" aria-hidden="true">
-              <span>20:55</span><span>22:00</span><span>23:00</span><span>23:41</span>
+        <div class="wrap principles">
+          <article class="principle" data-fade>
+            <h3 class="principle__title">Moving your own code isn&rsquo;t copying.</h3>
+            <p>
+              A paste that matches code you already typed is recognized as a move. It drops out of
+              the review queue, and stays on the record.
+            </p>
+            <div class="flag" data-flag aria-hidden="true">
+              <span class="flag__level mono" data-flag-level>high</span>
+              <span class="flag__text" data-flag-text>Paste of 6 lines into trails.py</span>
             </div>
-            <p class="visually-hidden">
-              A replay timeline of the illustrative session: steady typing from 20:55 to 23:41, one
-              paste of 212 lines, and one file changed outside the editor.
+          </article>
+          <article class="principle" data-fade>
+            <h3 class="principle__title">Missing evidence is never evidence.</h3>
+            <p>
+              A check that can&rsquo;t run reports that it was skipped. It never reports a failure
+              it couldn&rsquo;t see.
             </p>
-          </div>
-        </figure>
+            <div class="checks mono" aria-hidden="true">
+              <span><i class="ok"></i>chain intact</span>
+              <span><i class="ok"></i>seal valid</span>
+              <span><i class="skip"></i>checkpoints: skipped</span>
+            </div>
+          </article>
+          <article class="principle" data-fade>
+            <h3 class="principle__title">Your course sets the rules.</h3>
+            <p>
+              Staff can weight or switch off every signal, and a course can turn some kinds of
+              capture off before anything is recorded.
+            </p>
+          </article>
+          <article class="principle" data-fade>
+            <h3 class="principle__title">A person decides.</h3>
+            <p>
+              Every flag opens the exact moment in the replay. Nothing happens automatically, and
+              nothing is a verdict.
+            </p>
+          </article>
+        </div>
 
-        <div class="wrap evidence__verdict">
-          <p class="pull" data-fade>
-            <strong>A flag is a question, not a verdict.</strong>
-            Every case goes to a person, with the whole session to replay.
-          </p>
+        <div class="wrap fair__pull">
+          <p class="pull" data-fade><strong>A flag is a question, not a verdict.</strong></p>
         </div>
       </section>
 
-      <!-- 6. System ---------------------------------------------------------- -->
-      <section class="system" data-theme="day" aria-labelledby="system-title">
+      <!-- 6. See the process -------------------------------------------------- -->
+      <section class="insight" data-theme="day" aria-labelledby="insight-title">
         <div class="wrap">
-          <h2 class="display-2 system__title" id="system-title" data-split>
-            Two halves, one record.
-          </h2>
-          <div class="system__diagram">
-            <div class="system__line" data-outline-chain aria-hidden="true"></div>
-            <article class="station" data-fade>
-              <h3 class="station__name">The recorder</h3>
-              <p class="station__where mono">in the editor</p>
-              <p>
-                Runs in VS Code, JetBrains IDEs and Neovim. Works offline. Watches the assignment
-                folder and nothing else.
-              </p>
-            </article>
-            <article class="station station--bundle" data-fade>
-              <h3 class="station__name">The bundle</h3>
-              <p class="station__where mono">with the submission</p>
-              <p>The signed log, handed in alongside the code.</p>
-            </article>
-            <article class="station" data-fade>
-              <h3 class="station__name">The analyzer</h3>
-              <p class="station__where mono">in the browser</p>
-              <p>
-                Where course staff review. See a whole cohort at once, then replay any submission
-                edit by edit. Every signal can be weighted or switched off by your staff, and
-                cross-submission checks catch the same paste turning up in different students&rsquo;
-                work.
-              </p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <!-- 7. Students -------------------------------------------------------- -->
-      <section class="students" id="students" data-theme="day" aria-labelledby="students-title">
-        <div class="emboss" aria-hidden="true"></div>
-        <div class="wrap">
-          <div class="students__intro">
-            <h2 class="display-2" id="students-title" data-split>It works for you, too.</h2>
+          <div class="insight__copy">
+            <h2 class="display-2" id="insight-title" data-split>
+              Grade the work. See the process.
+            </h2>
             <p class="lead" data-fade>
-              If you did the work, the record is the best evidence you have that you did it. Here is
-              exactly what it sees.
+              The replay shows where a student got stuck, what they tried, and when it clicked.
+              Office hours can start from the actual evening, not a guess about it.
             </p>
           </div>
+          <figure class="evening" data-evening>
+            <div class="evening__plot" data-evening-plot aria-hidden="true"></div>
+            <div class="evening__axis mono" data-evening-axis aria-hidden="true"></div>
+            <figcaption class="visually-hidden">
+              The first history, annotated: stuck on longest_flat for about forty minutes across six
+              failing test runs, away for nine minutes, the function deleted and rewritten, and
+              every test passing at 23:40.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- 7. One folder ------------------------------------------------------- -->
+      <section class="privacy" id="students" data-theme="day" aria-labelledby="privacy-title">
+        <div class="wrap">
+          <div class="privacy__copy">
+            <h2 class="display-2" id="privacy-title" data-split>One folder. Nothing else.</h2>
+            <p class="lead" data-fade>
+              The recorder watches the assignment folder and nothing else on the computer. If you
+              did the work, the record is the best evidence you have that you did it.
+            </p>
+          </div>
+          <div class="field" data-field aria-hidden="true"></div>
 
           <div class="sees">
             <div class="sees__col" data-fade>
@@ -407,11 +460,19 @@
             </div>
           </div>
 
-          <div class="students__foot" data-fade>
-            <p>
-              No network requests while you work. The log stays on your computer until you hand it
-              in, and it&rsquo;s plain text you can read.
-            </p>
+          <ul class="pledges" role="list" data-fade>
+            <li><strong>Offline.</strong> No network requests while you work.</li>
+            <li>
+              <strong>Yours to read.</strong> The log is plain text, on your computer until you hand
+              it in.
+            </li>
+            <li><strong>Open.</strong> Every line of the recorder is public.</li>
+            <li>
+              <strong>Not forever.</strong> Stored logs are deleted on a schedule your school sets.
+            </li>
+          </ul>
+
+          <div class="privacy__foot" data-fade>
             <a
               class="btn btn--ink"
               href="https://github.com/ProvenanceTools/provenance/blob/main/docs/student-guide.md"
@@ -419,6 +480,45 @@
               <span>Install guide</span>
               <span class="btn__icon" aria-hidden="true">&#8599;</span>
             </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8. Try it ----------------------------------------------------------- -->
+      <section class="tryit" data-theme="day" aria-labelledby="tryit-title">
+        <div class="wrap tryit__inner">
+          <div class="tryit__copy">
+            <h2 class="display-2" id="tryit-title" data-split>See it for yourself.</h2>
+            <p class="lead" data-fade>
+              Type in the editor. Everything the recorder would write down appears beside it, sealed
+              link by link. Paste something, click away, come back. Nothing leaves this page.
+            </p>
+          </div>
+          <div class="playground" data-playground>
+            <div class="playground__editor">
+              <div class="playground__bar mono">
+                <span>scratch.py</span>
+                <button class="playground__replay mono" type="button" data-replay>Replay</button>
+              </div>
+              <label class="visually-hidden" for="scratch"
+                >A small code editor whose edits are recorded on this page</label
+              >
+              <textarea
+                id="scratch"
+                class="playground__input mono"
+                spellcheck="false"
+                autocapitalize="off"
+                autocomplete="off"
+                data-input
+              ></textarea>
+            </div>
+            <div class="playground__log">
+              <div class="playground__bar mono">
+                <span>scratch.slog</span>
+                <span data-log-status>0 events</span>
+              </div>
+              <ol class="playground__rows mono" data-log role="log" aria-live="off"></ol>
+            </div>
           </div>
         </div>
       </section>

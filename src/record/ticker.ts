@@ -2,7 +2,7 @@ import type { ChainedEvent } from './chain-hash';
 import { berkeleyClock } from './session';
 import type { Verdict } from './verify';
 
-const ROWS = 10;
+const ROWS = 7;
 const fmt = new Intl.NumberFormat('en-US');
 
 /**
@@ -66,7 +66,7 @@ export class Ticker {
       v.downstream,
     )} events after it no longer verify.`;
     // Frame the break: a few verified rows, the broken one, then the unverified.
-    this.paint(Math.min(this.chain.length - 1, v.brokenAt + 5), v);
+    this.paint(Math.min(this.chain.length - 1, v.brokenAt + 3), v);
   }
 
   private paint(last: number, v: Verdict | null): void {
@@ -121,8 +121,6 @@ function snippet(e: ChainedEvent): string {
       return d.focused ? ' gained' : ' lost';
     case 'doc.save':
     case 'doc.open':
-      return ` ${String(d.path)}`;
-    case 'fs.external_change':
       return ` ${String(d.path)}`;
     default:
       return '';

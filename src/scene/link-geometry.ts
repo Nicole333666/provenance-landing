@@ -1,4 +1,4 @@
-import { Curve, TubeGeometry, Vector3 } from 'three';
+import { BufferAttribute, BufferGeometry, Curve, Vector3 } from 'three';
 
 /**
  * Link proportions, taken from the brand mark (`provenance-mark.svg`):
@@ -9,7 +9,11 @@ export const LINK = {
   width: 96 / 104,
   height: 1,
   corner: 34 / 104,
+  /** round cross-section (chain links) */
   tube: 10.4 / 104,
+  /** flat cross-section (the extruded mark): half the 2D stroke, and half the depth */
+  flatHalfWidth: 9 / 104,
+  flatHalfDepth: 6.2 / 104,
   /** horizontal offset between the two links of the mark */
   offset: 60 / 104,
 } as const;
@@ -73,8 +77,78 @@ export class RoundedRectCurve extends Curve<Vector3> {
   }
 }
 
-export function createLinkGeometry(tubular = 240, radial = 36): TubeGeometry {
-  const geo = new TubeGeometry(new RoundedRectCurve(), tubular, LINK.tube, radial, true);
-  geo.computeBoundingSphere();
-  return geo;
+/**
+ * A point on a superellipse cross-section: n = 2 is an ellipse, larger n is a
+ * rectangle with ever softer corners. Returns [radial, depth].
+ */
+export function profilePoint(theta: number, a: number, b: number, n: number): [number, number] {
+  const c = Math.cos(theta);
+  const s = Math.sin(theta);
+  const e = 2 / n;
+  return [a * Math.sign(c) * Math.abs(c) ** e, b * Math.sign(s) * Math.abs(s) ** e];
+}
+
+/** The two cross-sections a link can have. */
+export const PROFILES = {
+  /** the 2D mark given depth: flat face, softened edges */
+  flat: { a: LINK.flatHalfWidth, b: LINK.flatHalfDepth, n: 7 },
+  /** a chain link */
+  tube: { a: LINK.tube, b: LINK.tube, n: 2 },
+} as const;
+
+/**
+ * One link, swept along the mark's rounded rectangle. The base shape is the flat,
+ * extruded mark; morph target 0 is the round chain link, with the same topology,
+ * so a link can round out on screen.
+ */
+export function createLinkGeometry(segments = 240, radial = 36): BufferGeometry {
+  const sweep = (p: { a: number; b: number; n: number }) => {
+    const pos = new Float32Array(segments * radial * 3);
+    const eps = 1e-4;
+    let k = 0;
+    for (let i = 0; i < segments; i++) {
+      const t = i / segments;
+      const [px, py] = roundedRectPoint(t, LINK.width, LINK.height, LINK.corner);
+      const [qx, qy] = roundedRectPoint(t + eps, LINK.width, LINK.height, LINK.corner);
+      const tl = Math.hypot(qx - px, qy - py) || 1;
+      // Outward normal of a clockwise path, in the link's plane.
+      const nx = -(qy - py) / tl;
+      const ny = (qx - px) / tl;
+      for (let j = 0; j < radial; j++) {
+        const [r, d] = profilePoint((j / radial) * Math.PI * 2, p.a, p.b, p.n);
+        pos[k++] = px + nx * r;
+        pos[k++] = py + ny * r;
+        pos[k++] = d;
+      }
+    }
+    return pos;
+  };
+
+  const index: number[] = [];
+  for (let i = 0; i < segments; i++) {
+    const i1 = (i + 1) % segments;
+    for (let j = 0; j < radial; j++) {
+      const j1 = (j + 1) % radial;
+      const a = i * radial + j;
+      const b = i1 * radial + j;
+      const c = i1 * radial + j1;
+      const d = i * radial + j1;
+      index.push(a, d, b, d, c, b);
+    }
+  }
+
+  const build = (pos: Float32Array) => {
+    const g = new BufferGeometry();
+    g.setAttribute('position', new BufferAttribute(pos, 3));
+    g.setIndex(index);
+    g.computeVertexNormals();
+    return g;
+  };
+  const flat = build(sweep(PROFILES.flat));
+  const tube = build(sweep(PROFILES.tube));
+  flat.morphAttributes.position = [tube.getAttribute('position')];
+  flat.morphAttributes.normal = [tube.getAttribute('normal')];
+  flat.computeBoundingSphere();
+  tube.dispose();
+  return flat;
 }

@@ -5,7 +5,7 @@ import { chainSlot, LINK_COUNT } from './slots';
 export { chainSlot, LINK_COUNT };
 
 /** Opposite tilt that makes the pair weave: the first link passes over at the top. */
-export const WEAVE_TILT = (15 * Math.PI) / 180;
+export const WEAVE_TILT = (11 * Math.PI) / 180;
 
 /** Centre-to-centre spacing of a chain under tension, with a hair of clearance. */
 export const CHAIN_PITCH = LINK.width - 2.12 * LINK.tube;
