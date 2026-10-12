@@ -203,50 +203,59 @@
         data-theme="night"
         aria-labelledby="histories-title"
       >
-        <div class="histories__sticky">
-          <header class="wrap histories__head">
+        <div class="wrap">
+          <header class="histories__head">
             <h2 class="display-2" id="histories-title" data-split>Same file. Two histories.</h2>
             <p class="lead" data-fade>
               Both end in exactly the same bytes. Only one of them is an evening of work.
             </p>
           </header>
-          <div class="wrap histories__panes">
-            <figure class="history" data-history="written">
-              <div class="history__bar mono">
-                <span>trails.py</span>
-                <span class="history__clock" data-clock>20:55</span>
+          <figure class="records" data-records aria-describedby="records-desc">
+            <div class="records__axis mono" aria-hidden="true">
+              <div class="records__ticks" data-axis></div>
+              <span class="records__clock" data-clock>20:55</span>
+            </div>
+            <div class="record" data-record="written">
+              <div class="record__head">
+                <h3 class="record__title">An evening of work</h3>
+                <p class="record__stats mono">
+                  <span data-stat>633 edits</span><span data-stat>10 test runs</span
+                  ><span data-stat>0 pastes</span>
+                </p>
               </div>
-              <pre class="history__code mono" data-code aria-hidden="true"></pre>
-              <div class="history__away mono" data-away>editor in the background</div>
-              <div class="history__term mono" data-term aria-hidden="true"></div>
-              <div class="history__track" data-track aria-hidden="true"></div>
-              <figcaption class="history__caption">
-                <strong data-count>Typed, tested, rewritten.</strong>
-                <span class="mono" data-digest></span>
-              </figcaption>
-            </figure>
-            <figure class="history" data-history="pasted">
-              <div class="history__bar mono">
-                <span>trails.py</span>
-                <span class="history__clock" data-clock>20:55</span>
+              <div class="record__track" data-track></div>
+              <ol class="record__notes mono" data-notes role="list" aria-hidden="true"></ol>
+            </div>
+            <div class="record" data-record="pasted">
+              <div class="record__head">
+                <h3 class="record__title">Away, then one paste</h3>
+                <p class="record__stats mono">
+                  <span data-stat>1 edit</span><span data-stat>1 test run</span
+                  ><span data-stat>1 paste</span>
+                </p>
               </div>
-              <pre class="history__code mono" data-code aria-hidden="true"></pre>
-              <div class="history__away mono" data-away>editor in the background</div>
-              <div class="history__term mono" data-term aria-hidden="true"></div>
-              <div class="history__track" data-track aria-hidden="true"></div>
-              <figcaption class="history__caption">
-                <strong data-count>Away, then select all, delete, paste.</strong>
-                <span class="mono" data-digest></span>
-              </figcaption>
-            </figure>
-          </div>
-          <p class="wrap histories__verdict mono" data-verdict aria-live="polite"></p>
-          <p class="visually-hidden">
-            Two recordings of the same assignment. In the first, a student types the file over an
-            evening, runs the tests, gets stuck, deletes a function and writes it again, and the
-            tests pass at 23:40. In the second, the editor sits in the background for two and a half
-            hours, then the whole file arrives in a single paste. Both final files are identical.
-          </p>
+              <div class="record__track" data-track></div>
+              <ol class="record__notes mono" data-notes role="list" aria-hidden="true"></ol>
+            </div>
+            <figcaption class="records__foot">
+              <p class="records__digests mono" aria-hidden="true">
+                <span>trails.py</span>
+                <span class="records__digest" data-digest></span>
+                <span class="records__eq">=</span>
+                <span class="records__digest" data-digest></span>
+              </p>
+              <p class="records__verdict">Identical files. Completely different records.</p>
+              <button class="records__replay mono" type="button" data-replay>Replay</button>
+              <span class="visually-hidden" id="records-desc">
+                Two recordings of the same assignment on one clock, 20:55 to 23:41. In the first, a
+                student types the file over the evening: 633 edits and 10 test runs, stuck for a
+                while on longest_flat, which they delete and write again, and every test passes at
+                23:40. In the second, the editor sits in the background for two and a half hours,
+                then the whole file arrives in a single 26-line paste. Both final files are
+                identical.
+              </span>
+            </figcaption>
+          </figure>
         </div>
       </section>
 

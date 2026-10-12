@@ -139,7 +139,6 @@ async function boot(): Promise<void> {
   let demo: ChainDemo | null = null;
   acts.onChange((snap) => {
     if (chain) ticker.show(snap.growth * (chain.length - 1));
-    histories.update(snap.histories);
     tryit.update(snap.tryit);
     demo?.update(snap.phase, snap.autoTamper, snap.cover);
   });
@@ -171,8 +170,10 @@ async function boot(): Promise<void> {
       const stage = new Stage(canvas, state, { lowPower: caps.lowPower });
       disposers.push(() => stage.dispose());
       stage.onFirstFrame = () => root.classList.add('has-stage');
+      // Below ~42 fps on a phone (~23 fps elsewhere), the stills look better than the 3D.
+      const limit = caps.lowPower ? 24 : 44;
       stage.onPerf = (median) => {
-        if (median > 44) {
+        if (median > limit) {
           stage.dispose();
           root.classList.remove('has-stage');
           root.classList.add('no-stage');

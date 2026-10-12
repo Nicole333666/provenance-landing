@@ -8,6 +8,7 @@ import {
   Mesh,
   MeshPhysicalMaterial,
   NeutralToneMapping,
+  PCFShadowMap,
   PerspectiveCamera,
   PlaneGeometry,
   Quaternion,
@@ -97,8 +98,14 @@ export class Stage {
   private disposed = false;
   private drawnEmpty = false;
   private frameTimes: number[] = [];
+  private renderedLast = false;
+  /** what the last rendered frame showed, for skipping identical frames */
+  private readonly lastDrawn: number[] = [];
 
-  /** Called once, after ~2 s of rendering, with the median frame time in ms. */
+  /**
+   * Called with the median frame time in ms: after ~2 s of rendering, then again
+   * after every further 150 rendered frames for as long as it stays set.
+   */
   onPerf: ((medianMs: number) => void) | null = null;
   /** Called on every frame that actually rendered, after the first. */
   onFirstFrame: (() => void) | null = null;
@@ -119,7 +126,8 @@ export class Stage {
     this.renderer.toneMappingExposure = 1;
     this.renderer.outputColorSpace = SRGBColorSpace;
     this.renderer.shadowMap.enabled = true;
-    this.renderer.shadowMap.type = VSMShadowMap;
+    // VSM's blur passes are the softest shadow and the most expensive; phones get PCF.
+    this.renderer.shadowMap.type = opts.lowPower ? PCFShadowMap : VSMShadowMap;
 
     this.studio = new Studio(this.renderer);
     this.scene.environment = this.studio.update(0, true);
@@ -131,7 +139,7 @@ export class Stage {
       metalness: 0,
       clearcoat: 1,
       clearcoatRoughness: 0.09,
-      sheen: 0.12,
+      sheen: opts.lowPower ? 0 : 0.12,
       sheenRoughness: 0.55,
       sheenColor: new Color(1, 1, 1),
     });
@@ -189,8 +197,13 @@ export class Stage {
   }
 
   resize(): void {
-    this.width = window.innerWidth;
-    this.height = window.innerHeight;
+    // The canvas is sized in CSS to the largest viewport, so a phone's toolbar
+    // showing and hiding never reallocates it mid-scroll.
+    const w = this.canvas.clientWidth || window.innerWidth;
+    const h = this.canvas.clientHeight || window.innerHeight;
+    if (w === this.width && h === this.height) return;
+    this.width = w;
+    this.height = h;
     const dpr = Math.min(window.devicePixelRatio || 1, this.opts.lowPower ? 1.5 : 2);
     this.renderer.setPixelRatio(dpr);
     this.renderer.setSize(this.width, this.height, false);
@@ -269,6 +282,8 @@ export class Stage {
       if (!this.drawnEmpty) {
         this.renderer.clear();
         this.drawnEmpty = true;
+        this.lastDrawn.length = 0;
+        this.renderedLast = false;
       }
       return;
     }
@@ -283,6 +298,9 @@ export class Stage {
     // Arrival: the object is lit from its first frame. It turns and rises into
     // place while the canvas fades in, and the key light sweeps across the glaze.
     const intro = state.reduced ? 1 : 1 - Math.pow(1 - MathUtils.clamp(t / 2.8, 0, 1), 4);
+    // The slow breathing and the ripple along the chain keep a frame changing even
+    // when nothing scrolls. Phones go without them, so a still page draws nothing.
+    const idle = !state.reduced && !this.opts.lowPower;
 
     // Group placement.
     const pos = new Vector3().lerpVectors(a.position, b.position, f);
@@ -291,7 +309,7 @@ export class Stage {
     const quat = new Quaternion().slerpQuaternions(a.quaternion, b.quaternion, f);
     const parallax = k0.parallax + (k1.parallax - k0.parallax) * f;
     const settle = (1 - intro) * 0.95;
-    const breathe = state.reduced ? 0 : Math.sin(t * 0.55) * 0.02;
+    const breathe = idle ? Math.sin(t * 0.55) * 0.02 : 0;
     const pq = new Quaternion().setFromEuler(
       new Euler(
         -this.pointer.y * 0.16 * parallax + breathe + (1 - intro) * 0.22,
@@ -317,7 +335,7 @@ export class Stage {
 
     // A chain at rest is never quite still: a slow ripple runs along it.
     const chainWeight = (k0.form === 'chain' ? 1 - f : 0) + (k1.form === 'chain' ? f : 0);
-    if (chainWeight > 0 && !state.reduced) {
+    if (chainWeight > 0 && idle) {
       for (let i = 0; i < LINK_COUNT; i++) {
         const slot = chainSlot(i);
         const p = this.poses[i]!;
@@ -414,7 +432,7 @@ export class Stage {
       .normalize()
       .lerp(new Vector3(-1, 0.62, 0.5).normalize(), day)
       .normalize();
-    const breath = state.reduced ? 1 : 1 + Math.sin((t * Math.PI * 2) / 8) * 0.045;
+    const breath = idle ? 1 + Math.sin((t * Math.PI * 2) / 8) * 0.045 : 1;
     this.key.intensity = (2.6 + day * 1.6) * (0.7 + 0.3 * intro) * breath;
     this.key.color.setRGB(1, 0.94 - day * 0.03, 0.86 - day * 0.06);
     const reach = Math.max(
@@ -454,22 +472,69 @@ export class Stage {
     );
     this.catcher.visible = shadow > 0.01;
 
+    if (!idle && intro >= 1 && this.unchanged(pos, quat, scale, round, day, demo, shadow)) {
+      this.renderedLast = false;
+      return;
+    }
     this.renderer.render(this.scene, this.camera);
 
     if (this.onFirstFrame) {
       this.onFirstFrame();
       this.onFirstFrame = null;
     }
-    if (this.onPerf) {
+    // Frame time, counted only between two frames that both rendered.
+    if (this.onPerf && this.renderedLast) {
       this.frameTimes.push(dt * 1000);
-      if (now - this.born > 2400) {
+      if (now - this.born > 2400 && this.frameTimes.length >= 150) {
         const sorted = this.frameTimes.slice(8).sort((x, y) => x - y);
         const median = sorted[Math.floor(sorted.length / 2)] ?? 16;
-        this.onPerf(median);
-        this.onPerf = null;
         this.frameTimes = [];
+        this.onPerf(median);
       }
     }
+    this.renderedLast = true;
+  }
+
+  /**
+   * True when this frame would draw exactly what the last one did: the object has
+   * not moved, and no spring, wave or cover-up is still in motion.
+   */
+  private unchanged(
+    pos: Vector3,
+    quat: Quaternion,
+    scale: number,
+    round: number,
+    day: number,
+    demo: number,
+    shadow: number,
+  ): boolean {
+    for (let i = 0; i < LINK_COUNT; i++) {
+      if (this.offsets[i]!.distanceToSquared(this.offsetTargets[i]!) > 1e-8) return false;
+    }
+    if (Math.abs(this.wave - this.waveTarget) > 1e-3) return false;
+    if (Math.abs(this.cover - this.coverTarget) > 1e-4) return false;
+    const now = [
+      pos.x,
+      pos.y,
+      pos.z,
+      quat.x,
+      quat.y,
+      quat.z,
+      quat.w,
+      scale,
+      round,
+      day,
+      demo,
+      shadow,
+      this.state.s,
+      this.state.growth,
+      this.brokenSlot ?? -1,
+      this.width,
+      this.height,
+    ];
+    const same = now.every((v, i) => Math.abs(v - (this.lastDrawn[i] ?? NaN)) < 1e-5);
+    if (!same) this.lastDrawn.splice(0, now.length, ...now);
+    return same;
   }
 
   /** Resolves a keyframe's anchor into a world-space placement. */

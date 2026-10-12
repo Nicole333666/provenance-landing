@@ -12,8 +12,6 @@ export interface ActsSnapshot {
   autoTamper: number;
   /** the cover-up: 0 nothing recomputed, 1 every hash after the edit recomputed */
   cover: number;
-  /** two-histories progress, 0..1 */
-  histories: number;
   /** try-it chapter progress, 0..1 */
   tryit: number;
   day: number;
@@ -36,7 +34,6 @@ const ramp = (x: number, a: number, b: number) => smooth((x - a) / (b - a));
  */
 export class Acts {
   private readonly el: Record<
-    | 'hero'
     | 'thesis'
     | 'histories'
     | 'how'
@@ -49,9 +46,11 @@ export class Acts {
     HTMLElement
   >;
   private readonly copies: Record<HowPhase, HTMLElement>;
-  private readonly root = document.documentElement;
+  private readonly ground = document.querySelector<HTMLElement>('.ground');
   private readonly listeners: Listener[] = [];
   private navTheme = '';
+  /** Last value written per element and property: scroll only writes what changed. */
+  private readonly written = new WeakMap<HTMLElement, Map<string, string>>();
 
   constructor(
     private readonly state: SceneState,
@@ -63,7 +62,6 @@ export class Acts {
       return e;
     };
     this.el = {
-      hero: q('.hero'),
       thesis: q('.thesis'),
       histories: q('.histories'),
       how: q('.how'),
@@ -85,13 +83,20 @@ export class Acts {
     this.listeners.push(fn);
   }
 
+  private set(el: HTMLElement, prop: string, value: string): void {
+    let seen = this.written.get(el);
+    if (!seen) this.written.set(el, (seen = new Map()));
+    if (seen.get(prop) === value) return;
+    seen.set(prop, value);
+    el.style.setProperty(prop, value);
+  }
+
   update(): void {
     const vh = window.innerHeight;
     const r = (e: HTMLElement) => e.getBoundingClientRect();
     const { reduced } = this.opts;
     const narrow = window.innerWidth < 900;
 
-    const hero = r(this.el.hero);
     const thesis = r(this.el.thesis);
     const histories = r(this.el.histories);
     const how = r(this.el.how);
@@ -110,10 +115,9 @@ export class Acts {
         : 0
       : smooth(travel(thesis.top, vh, vh / 2 - thesis.height / 2));
     const howP = travel(how.top, 0, -(how.height - vh));
-    const historiesP = travel(histories.top, 0, -(histories.height - vh));
     const p23 = travel(relight.top, vh, -relight.height);
 
-    // Object: hero -> thesis, then a cut to the mark while the two histories fill the
+    // Object: hero -> thesis, then a cut to the mark while the two histories are on
     // screen, the mark rounds into the chain, the relight, and a cut to the close.
     let s: number;
     // Narrow: the close-up leaves (off-screen) once the histories take the screen.
@@ -145,28 +149,26 @@ export class Acts {
     (Object.keys(show) as HowPhase[]).forEach((k) => {
       const v = show[k];
       const el = this.copies[k];
-      el.style.opacity = v.toFixed(3);
-      el.style.transform = `translateY(${((1 - v) * 18).toFixed(1)}px)`;
-      el.style.visibility = v < 0.01 ? 'hidden' : 'visible';
+      this.set(el, 'opacity', v.toFixed(3));
+      this.set(el, 'transform', `translateY(${((1 - v) * 18).toFixed(1)}px)`);
+      this.set(el, 'visibility', v < 0.01 ? 'hidden' : 'visible');
     });
     const phase: HowPhase = howP >= 0.73 ? 'cover' : howP >= 0.45 ? 'tamper' : 'chain';
-    this.el.ledger.style.setProperty('--ledger', ramp(howP, 0.14, 0.2).toFixed(3));
+    this.set(this.el.ledger, '--ledger', ramp(howP, 0.14, 0.2).toFixed(3));
     const autoTamper = clamp((howP - 0.5) / 0.12);
     const cover = reduced ? (howP >= 0.8 ? 1 : 0) : clamp((howP - 0.77) / 0.15);
 
     // The annotated evening draws itself left to right as it scrolls up.
     const ev = r(this.el.evening);
-    this.el.evening.style.setProperty(
-      '--reveal',
-      reduced ? '1' : travel(ev.top, vh * 1.0, vh * 0.62).toFixed(4),
-    );
+    this.set(this.el.evening, '--reveal', reduced ? '1' : travel(ev.top, vh, vh * 0.62).toFixed(4));
 
-    // Ground.
+    // Ground. Set on the ground itself, not the root: a custom property on the root
+    // restyles the whole document on every scroll frame.
     const day = reduced ? (p23 > 0.5 ? 1 : 0) : smooth((p23 - 0.12) / 0.6);
-    this.root.style.setProperty('--day', day.toFixed(4));
-    this.root.style.setProperty('--day-pos', (-10 + 140 * day).toFixed(2));
-    this.root.style.setProperty('--signal-top', `${clamp(close.top, 0, vh).toFixed(1)}px`);
-    this.root.classList.toggle('past-hero', hero.bottom < vh * 0.55);
+    if (this.ground) {
+      this.set(this.ground, '--day-pos', (-10 + 140 * day).toFixed(1));
+      this.set(this.ground, '--signal-top', `${clamp(close.top, 0, vh).toFixed(0)}px`);
+    }
 
     // Nav theme: whatever ground sits under it.
     const navTheme = close.top < 38 ? 'signal' : day > 0.28 ? 'day' : 'night';
@@ -187,7 +189,6 @@ export class Acts {
       phase,
       autoTamper,
       cover,
-      histories: historiesP,
       tryit: travel(tryit.top, 0, -(tryit.height - vh)),
       day,
     };

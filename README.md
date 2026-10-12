@@ -3,7 +3,7 @@
 The landing page for [Provenance](https://github.com/ProvenanceTools): a single long scroll
 built around the logo as a real-time 3D object. The extruded mark faces you as the logo, rounds
 out into a working chain, tears itself to show tamper-evidence, and is relit by daylight before
-the page closes on signal orange. Between those: two replays of the same file with different
+the page closes on signal orange. Between those: two records of the same file with different
 histories, the fairness and privacy design, and a live recorder visitors can type into.
 
 Static site: Vite + TypeScript, no UI framework. `three` for the scene, `gsap` (ScrollTrigger,
@@ -53,7 +53,7 @@ the fallback frames and the social card match the live scene.
   real course's solution): an evening of work and a tab-away plus one paste, both rebuilding the
   same file byte for byte (`Replay`). Hash-chained with WebCrypto SHA-256, a verifier that reports
   the first broken event, the self-playing tamper demo, and the in-page `Playground` recorder.
-- **`src/sections/`**: entrances, the two-histories replays, the annotated evening, the privacy
+- **`src/sections/`**: entrances, the two-histories records, the annotated evening, the privacy
   field, and the signal pattern.
 - **Logo system**: flat 2D mark in the nav, footer and favicon; the extruded mark (same
   proportions, with depth) wherever it is the hero; round links only where it works as a chain.

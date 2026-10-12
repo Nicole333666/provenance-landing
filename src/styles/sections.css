@@ -173,17 +173,7 @@ section {
 /* ------------------------------------------------------- two histories */
 
 .histories {
-  height: 500vh;
-}
-.histories__sticky {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  height: 100svh;
-  display: grid;
-  grid-template-rows: auto minmax(0, 1fr) auto;
-  row-gap: clamp(16px, 2.6vh, 32px);
-  padding: calc(var(--nav-h) + clamp(4px, 2vh, 24px)) 0 clamp(16px, 3.4vh, 40px);
+  padding: clamp(96px, 16vh, 180px) 0 clamp(120px, 20vh, 220px);
 }
 .histories__head {
   display: grid;
@@ -191,179 +181,268 @@ section {
   align-items: end;
   column-gap: 40px;
   row-gap: 14px;
+  margin-bottom: clamp(40px, 7vh, 80px);
 }
 .histories__head .lead {
   max-width: 30ch;
   padding-bottom: 0.3em;
 }
-.histories__panes {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(12px, 1.6vw, 24px);
-  min-height: 0;
+
+/* Two records on one clock. --p is the playhead, 0..1, shared by both tracks. */
+.records {
+  --p: 1;
+  --rule: rgb(244 241 236 / 0.1);
+  margin: 0;
 }
-.history {
+.records__axis {
   position: relative;
-  display: grid;
-  grid-template-rows: auto minmax(0, 1fr) auto auto auto;
-  min-height: 0;
-  background: rgb(244 241 236 / 0.025);
-  box-shadow: inset 0 0 0 1px rgb(244 241 236 / 0.09);
-}
-.history__bar {
-  display: flex;
-  justify-content: space-between;
-  padding: 11px 16px;
-  font-size: 0.75rem;
-  color: rgb(244 241 236 / 0.55);
-  box-shadow: inset 0 -1px 0 rgb(244 241 236 / 0.07);
-}
-.history__clock {
-  color: var(--porcelain);
+  height: 22px;
+  font-size: 0.6875rem;
+  color: rgb(244 241 236 / 0.4);
   font-variant-numeric: tabular-nums;
 }
-.history__code {
-  margin: 0;
-  padding: 14px 16px 14px 0;
-  overflow: hidden;
-  scroll-behavior: smooth;
-  font-size: clamp(0.68rem, 0.55rem + 0.32vw, 0.84rem);
-  line-height: 1.62;
-  color: rgb(244 241 236 / 0.74);
-  white-space: pre;
+.records__ticks span {
+  position: absolute;
+  left: calc(var(--x) * 100%);
+  translate: calc(var(--x) * -100%) 0;
+}
+.records__clock {
+  position: absolute;
+  left: calc(var(--p) * 100%);
+  translate: calc(var(--p) * -100%) 0;
+  padding: 0 6px;
+  color: var(--porcelain);
+  background: var(--night-1);
+  opacity: 0;
+  transition: opacity 0.4s var(--ease-soft);
+}
+.records.is-playing:not(.is-done) .records__clock {
+  opacity: 1;
+}
+.record {
+  padding-top: clamp(22px, 3.6vh, 36px);
+  border-top: 1px solid var(--rule);
+}
+.record + .record {
+  margin-top: clamp(12px, 2vh, 20px);
+}
+.records__axis + .record {
+  margin-top: 8px;
+}
+.record__head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 6px 24px;
+}
+.record__title {
+  font-size: clamp(1.0625rem, 0.95rem + 0.4vw, 1.375rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.record__stats {
+  display: flex;
+  gap: 18px;
+  font-size: 0.75rem;
+  color: rgb(244 241 236 / 0.6);
+  font-variant-numeric: tabular-nums;
+}
+.record__track {
+  position: relative;
+  height: 64px;
+  margin-top: 14px;
+}
+.record__track svg {
+  display: block;
+  overflow: visible;
+}
+.record__track .t-ink {
+  clip-path: inset(-8px calc((1 - var(--p)) * 100%) -8px -8px);
+}
+.record__track .t-rest {
+  stroke: rgb(244 241 236 / 0.1);
+}
+.record__track .t-on {
+  stroke: rgb(244 241 236 / 0.6);
+  stroke-width: 3;
+}
+.record__track .t-off {
+  stroke: rgb(244 241 236 / 0.4);
+  stroke-width: 1.5;
+  stroke-dasharray: 1.5 5;
+}
+.record__track .t-edit {
+  stroke: rgb(244 241 236 / 0.62);
+  stroke-width: 2.5;
+}
+.record__track .t-run {
+  stroke: rgb(244 241 236 / 0.7);
+  stroke-width: 1.25;
+}
+.record__track .t-paste {
+  fill: var(--accent-n);
+}
+/* The playhead. */
+.record__track::after {
+  content: '';
+  position: absolute;
+  top: -6px;
+  bottom: -2px;
+  left: calc(var(--p) * 100%);
+  width: 1px;
+  background: var(--porcelain);
+  opacity: 0;
+  transition: opacity 0.4s var(--ease-soft);
+}
+.records.is-playing:not(.is-done) .record__track::after {
+  opacity: 0.9;
+}
+
+/* Notes hang under the track at their moment. A label shifts left by its own
+   position, so it starts at the left edge, centres mid-way, ends at the right. */
+.record__notes {
+  position: relative;
+  height: 34px;
+  font-size: 0.6875rem;
+  color: rgb(244 241 236 / 0.7);
+}
+.note {
+  position: absolute;
+  top: 0;
+  left: calc(var(--x) * 100%);
+  padding-top: 12px;
+  white-space: nowrap;
+  opacity: 0;
   transition: opacity 0.5s var(--ease-soft);
 }
-.history__code .ln {
-  display: block;
-  min-height: 1.62em;
-}
-.history__code .ln::before {
-  content: attr(data-n);
-  display: inline-block;
-  width: 3.4em;
-  padding-right: 1.2em;
-  text-align: right;
-  color: rgb(244 241 236 / 0.22);
-}
-.history__code .kw {
-  color: var(--porcelain);
-}
-.history__code .str {
-  color: rgb(249 115 22 / 0.85);
-}
-.history__code .caret {
-  display: inline-block;
-  width: 2px;
-  height: 1.2em;
-  margin: 0 -1px;
-  vertical-align: -0.22em;
-  background: var(--accent-n);
-  animation: caret 1.05s steps(1) infinite;
-}
-@keyframes caret {
-  50% {
-    opacity: 0;
-  }
-}
-.history__code .sel,
-.history__code .ln.is-sel {
-  background: rgb(80 120 220 / 0.38);
-  color: var(--porcelain);
-}
-.history__code.is-pasted .ln {
-  background: rgb(249 115 22 / var(--flash, 0));
-}
-.history__term {
-  height: 0;
-  overflow: hidden;
-  padding: 0 16px;
-  font-size: 0.75rem;
-  line-height: 30px;
-  color: rgb(244 241 236 / 0.85);
-  background: rgb(0 0 0 / 0.28);
-  box-shadow: inset 0 1px 0 rgb(244 241 236 / 0.07);
-  transition: height 0.25s var(--ease-soft);
-}
-.history__term.is-on {
-  height: 30px;
-}
-.history.is-away .history__code {
-  opacity: 0.22;
-}
-.history__away {
+.note::before {
+  content: '';
   position: absolute;
-  left: 50%;
-  top: 46%;
-  translate: -50% -50%;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 8px;
+  background: currentColor;
+}
+.note > span {
+  display: inline-block;
+  translate: calc(var(--x) * -100%) 0;
+}
+.note--span {
+  width: calc(var(--w) * 100%);
+  text-align: center;
+}
+.note--span::before {
+  width: 100%;
+  height: 4px;
+  background: none;
+  border: 1px solid currentColor;
+  border-top: 0;
+}
+.note--span > span {
+  translate: none;
+}
+.note--accent {
+  color: var(--accent-n);
+}
+.note.is-on {
+  opacity: 1;
+}
+.note__short {
+  display: none;
+}
+
+.records__foot {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 10px 24px;
+  margin-top: clamp(20px, 3vh, 32px);
+  padding-top: clamp(18px, 2.6vh, 26px);
+  border-top: 1px solid var(--rule);
+}
+.records__digests {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  font-size: 0.75rem;
+  color: rgb(244 241 236 / 0.5);
+}
+.records__digest {
+  color: var(--accent-n);
+}
+.records__verdict {
+  grid-column: 1;
+  font-size: clamp(1rem, 0.92rem + 0.3vw, 1.1875rem);
+  letter-spacing: -0.01em;
+}
+.records__replay {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: center;
   padding: 8px 14px;
   border-radius: 999px;
   font-size: 0.75rem;
-  color: var(--porcelain);
+  color: rgb(244 241 236 / 0.75);
   box-shadow: inset 0 0 0 1px rgb(244 241 236 / 0.2);
-  opacity: 0;
-  transition: opacity 0.4s var(--ease-soft);
-  white-space: nowrap;
+  transition:
+    color 0.3s var(--ease-soft),
+    box-shadow 0.3s var(--ease-soft);
 }
-.history.is-away .history__away {
+.records__replay:hover {
+  color: var(--porcelain);
+  box-shadow: inset 0 0 0 1px rgb(244 241 236 / 0.45);
+}
+/* The ending holds back until the playhead gets there. */
+html.motion .records :is(.records__digests, .records__verdict, .records__replay) {
+  opacity: 0;
+  translate: 0 8px;
+  transition:
+    opacity 0.7s var(--ease-soft),
+    translate 0.7s var(--ease-out);
+}
+html.motion .records.is-done :is(.records__digests, .records__verdict, .records__replay) {
+  opacity: 1;
+  translate: 0 0;
+}
+html.motion .records.is-done .records__verdict {
+  transition-delay: 0.25s;
+}
+html.motion .records.is-done .records__replay {
+  transition-delay: 0.6s;
+}
+html.no-js .records__digests,
+html.no-js .records__replay {
+  display: none;
+}
+html.no-js .note {
   opacity: 1;
 }
-.history__track {
-  height: 46px;
-  box-shadow: inset 0 1px 0 rgb(244 241 236 / 0.07);
-}
-.history__track svg {
-  width: 100%;
-  height: 100%;
-}
-.history__caption {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 16px;
-  padding: 12px 16px 14px;
-  box-shadow: inset 0 1px 0 rgb(244 241 236 / 0.07);
-  font-size: 0.875rem;
-}
-.history__caption strong {
-  font-weight: 500;
-}
-.history__caption .mono {
-  font-size: 0.72rem;
-  color: rgb(244 241 236 / 0.45);
-  transition: color 0.5s var(--ease-soft);
-}
-.history__caption .mono.is-match {
-  color: var(--accent-n);
-}
-.histories__verdict {
-  min-height: 1.4em;
-  font-size: 0.8125rem;
-  color: rgb(244 241 236 / 0.75);
-}
+
 @media (max-width: 900px) {
   .histories__head {
     grid-template-columns: 1fr;
   }
-  .histories__head .lead {
-    font-size: 0.95rem;
+}
+@media (max-width: 640px) {
+  .record__stats {
+    gap: 12px;
+    font-size: 0.6875rem;
   }
-  .histories__panes {
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr;
+  .record__track {
+    margin-top: 10px;
   }
-  .history__code {
-    font-size: 0.6rem;
-    padding-top: 8px;
-  }
-  .history__track {
-    height: 30px;
-  }
-  .history__caption {
-    padding: 8px 12px;
-    font-size: 0.75rem;
-  }
-  .history__caption .mono {
+  .note__long {
     display: none;
+  }
+  .note__short {
+    display: inline;
+  }
+  .records__replay {
+    grid-column: 1;
+    grid-row: auto;
+    justify-self: start;
   }
 }
 
