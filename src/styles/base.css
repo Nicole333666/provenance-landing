@@ -243,14 +243,17 @@ button {
   color: color-mix(in srgb, currentColor 62%, transparent);
 }
 
-/* Split-line reveals: each line clips its own words. */
-.line {
+/* Line reveals: each line rises out of its own mask (SplitText's .line-mask, or the
+   hero's static .line). Display leading is tighter than the glyphs, so the mask
+   reaches below the line box: without it, descenders (g, y, p) are cut off. */
+.line-mask,
+.hero__title .line {
   display: block;
   overflow: clip;
-  overflow-clip-margin: 0.12em;
-  padding-bottom: 0.06em;
-  margin-bottom: -0.06em;
+  padding-bottom: 0.2em;
+  margin-bottom: -0.2em;
 }
+.line,
 .line__inner {
   display: block;
 }

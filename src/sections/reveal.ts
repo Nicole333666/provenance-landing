@@ -25,7 +25,7 @@ export function setupReveals(): () => void {
           el.style.visibility = 'visible';
           if (inHow) return; // the pinned chapter crossfades its copy as a whole
           return gsap.from(self.lines, {
-            yPercent: 108,
+            yPercent: 130, // clears the mask, which reaches 0.2em below the line
             duration: 1.25,
             ease: EASE,
             stagger: 0.085,
