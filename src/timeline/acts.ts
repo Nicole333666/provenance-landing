@@ -1,7 +1,7 @@
 import type { SceneState } from '../scene/state';
 import { KF } from '../scene/keyframes';
 
-export type HowPhase = 'chain' | 'tamper' | 'try';
+export type HowPhase = 'chain' | 'tamper' | 'cover';
 
 export interface ActsSnapshot {
   /** pinned chain chapter progress, 0..1 */
@@ -10,8 +10,12 @@ export interface ActsSnapshot {
   phase: HowPhase;
   /** the self-playing tamper: 0 nothing, 1 the link fully pulled */
   autoTamper: number;
+  /** the cover-up: 0 nothing recomputed, 1 every hash after the edit recomputed */
+  cover: number;
   /** two-histories progress, 0..1 */
   histories: number;
+  /** try-it chapter progress, 0..1 */
+  tryit: number;
   day: number;
 }
 
@@ -73,7 +77,7 @@ export class Acts {
     this.copies = {
       chain: q('.how__copy[data-phase="chain"]'),
       tamper: q('.how__copy[data-phase="tamper"]'),
-      try: q('.how__copy[data-phase="try"]'),
+      cover: q('.how__copy[data-phase="cover"]'),
     };
   }
 
@@ -136,7 +140,7 @@ export class Acts {
           ? 1
           : 0
         : ramp(howP, 0.45, 0.5) * (1 - ramp(howP, 0.69, 0.73)),
-      try: reduced ? (howP >= 0.72 ? 1 : 0) : ramp(howP, 0.73, 0.77),
+      cover: reduced ? (howP >= 0.72 ? 1 : 0) : ramp(howP, 0.73, 0.77),
     };
     (Object.keys(show) as HowPhase[]).forEach((k) => {
       const v = show[k];
@@ -145,15 +149,16 @@ export class Acts {
       el.style.transform = `translateY(${((1 - v) * 18).toFixed(1)}px)`;
       el.style.visibility = v < 0.01 ? 'hidden' : 'visible';
     });
-    const phase: HowPhase = howP >= 0.73 ? 'try' : howP >= 0.45 ? 'tamper' : 'chain';
+    const phase: HowPhase = howP >= 0.73 ? 'cover' : howP >= 0.45 ? 'tamper' : 'chain';
     this.el.ledger.style.setProperty('--ledger', ramp(howP, 0.14, 0.2).toFixed(3));
     const autoTamper = clamp((howP - 0.5) / 0.12);
+    const cover = reduced ? (howP >= 0.8 ? 1 : 0) : clamp((howP - 0.77) / 0.15);
 
     // The annotated evening draws itself left to right as it scrolls up.
     const ev = r(this.el.evening);
     this.el.evening.style.setProperty(
       '--reveal',
-      reduced ? '1' : travel(ev.top, vh * 0.92, vh * 0.3).toFixed(4),
+      reduced ? '1' : travel(ev.top, vh * 1.0, vh * 0.62).toFixed(4),
     );
 
     // Ground.
@@ -176,7 +181,16 @@ export class Acts {
         );
     }
 
-    const snap: ActsSnapshot = { how: howP, growth, phase, autoTamper, histories: historiesP, day };
+    const snap: ActsSnapshot = {
+      how: howP,
+      growth,
+      phase,
+      autoTamper,
+      cover,
+      histories: historiesP,
+      tryit: travel(tryit.top, 0, -(tryit.height - vh)),
+      day,
+    };
     for (const fn of this.listeners) fn(snap);
   }
 }

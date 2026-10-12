@@ -10,7 +10,7 @@ import {
   Replay,
 } from './session';
 import { canonical, chainSession, GENESIS, hashEvent } from './chain-hash';
-import { tamper, verifyChain } from './verify';
+import { checkpointHolds, forge, tamper, verifyChain } from './verify';
 
 const fast = { yieldFn: async () => {} };
 
@@ -46,10 +46,15 @@ describe('session', () => {
     }
   });
 
-  it('the pasted history is one paste after a long time away', () => {
+  it('the pasted history is select all, delete, one paste, after a long time away', () => {
     const s = buildPastedSession();
     expect(s.events.filter((e) => e.kind === 'paste')).toHaveLength(1);
-    expect(s.events.filter((e) => e.kind === 'doc.change')).toHaveLength(0);
+    const changes = s.events.filter((e) => e.kind === 'doc.change');
+    expect(changes).toHaveLength(1);
+    expect(changes[0]!.data.text).toBe('');
+    const replay = new Replay(s);
+    const del = s.events.indexOf(changes[0]!);
+    expect(replay.textAfter(del)).toBe('');
     expect(s.marks.away.to - s.marks.away.from).toBeGreaterThan(2 * 3600_000);
   });
 
@@ -139,5 +144,23 @@ describe('verify', () => {
     const v = await verifyChain(forged);
     expect(v.ok).toBe(false);
     if (!v.ok) expect(v.brokenAt).toBe(5);
+  });
+});
+
+describe('forge', () => {
+  it('recomputing every hash after an edit makes the chain verify again', async () => {
+    const chain = await chainSession(buildSession().events.slice(0, 120), fast);
+    const forged = await forge(chain, 40);
+    expect(await verifyChain(forged)).toEqual({ ok: true, count: 120 });
+    expect(forged[40]!.hash).not.toBe(chain[40]!.hash);
+  });
+
+  it('but a checkpoint signed over the original hash no longer holds', async () => {
+    const chain = await chainSession(buildSession().events.slice(0, 120), fast);
+    const forged = await forge(chain, 40);
+    expect(checkpointHolds(chain, 100, chain[100]!.hash)).toBe(true);
+    expect(checkpointHolds(forged, 100, chain[100]!.hash)).toBe(false);
+    // Events before the edit are untouched.
+    expect(checkpointHolds(forged, 30, chain[30]!.hash)).toBe(true);
   });
 });

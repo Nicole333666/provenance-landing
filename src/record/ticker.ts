@@ -69,6 +69,35 @@ export class Ticker {
     this.paint(Math.min(this.chain.length - 1, v.brokenAt + 3), v);
   }
 
+  /** The cover-up: hashes recomputed, the chain whole, the signed checkpoint not. */
+  showForged(forged: ChainedEvent[], edited: number, checkpoint: number, signed: string): void {
+    this.verdict = { ok: true, count: forged.length };
+    this.status.classList.add('is-broken');
+    this.status.textContent = `All ${fmt.format(forged.length - edited)} hashes after event ${fmt.format(
+      edited,
+    )} recomputed. The chain checks out until the checkpoint at event ${fmt.format(
+      checkpoint,
+    )}: it was signed, and the signature no longer matches.`;
+    const last = Math.min(forged.length - 1, checkpoint + 3);
+    for (let r = 0; r < ROWS; r++) {
+      const li = this.rows[r]!;
+      const idx = last - (ROWS - 1 - r);
+      const e = forged[idx];
+      const [c, s, k, h] = li.children as unknown as HTMLSpanElement[];
+      if (!e) continue;
+      c!.textContent = berkeleyClock(e.wall);
+      s!.textContent = String(e.seq).padStart(4, '0');
+      k!.textContent = idx === checkpoint ? 'checkpoint' : e.kind;
+      if (idx === checkpoint) {
+        h!.textContent = `sig ${signed.slice(0, 6)} \u2260 ${e.hash.slice(0, 6)}`;
+        li.className = 'is-broken';
+      } else {
+        h!.textContent = e.hash.slice(0, 12);
+        li.className = '';
+      }
+    }
+  }
+
   private paint(last: number, v: Verdict | null): void {
     for (let r = 0; r < ROWS; r++) {
       const li = this.rows[r]!;

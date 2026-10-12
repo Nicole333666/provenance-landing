@@ -370,11 +370,13 @@ export function buildPastedSession(seed = 62): Session {
   const awayTo = r.t;
   const lines = FINAL.split('\n').length - 1;
   const [l1, c1] = lineCol(r.doc, r.doc.length);
+  // Select all, delete, paste.
   r.push('selection.change', { path: FILE, range: [0, 0, l1, c1], was_selection: true }, 2600);
+  r.remove(0, r.doc.length, 900);
   r.doc = FINAL;
   const pasteSeq = r.push(
     'paste',
-    { path: FILE, range: [0, 0, l1, c1], length: FINAL.length, lines, content: FINAL },
+    { path: FILE, range: [0, 0, 0, 0], length: FINAL.length, lines, content: FINAL },
     1400,
   );
   const pasteAt = r.t;

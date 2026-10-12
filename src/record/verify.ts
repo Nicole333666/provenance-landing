@@ -47,3 +47,32 @@ export function tamper(events: readonly ChainedEvent[], index: number): ChainedE
     i === index ? { ...e, data: { ...e.data, edited: true }, t: e.t + 1 } : e,
   );
 }
+
+/**
+ * A cover-up: the event is rewritten and every hash from it to the end is
+ * recomputed, so the chain itself verifies again. What it cannot redo is a signed
+ * checkpoint: the signature covers the original hash at that point.
+ */
+export async function forge(
+  events: readonly ChainedEvent[],
+  index: number,
+): Promise<ChainedEvent[]> {
+  const out = tamper(events, index);
+  let prev = index > 0 ? out[index - 1]!.hash : GENESIS;
+  for (let i = index; i < out.length; i++) {
+    const e = out[i]!;
+    const hash = await hashEvent(e, prev);
+    out[i] = { ...e, prev_hash: prev, hash };
+    prev = hash;
+  }
+  return out;
+}
+
+/** Does a checkpoint signed over `signedHash` still match the chain at `index`? */
+export function checkpointHolds(
+  events: readonly ChainedEvent[],
+  index: number,
+  signedHash: string,
+): boolean {
+  return events[index]?.hash === signedHash;
+}

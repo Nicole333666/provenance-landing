@@ -162,7 +162,7 @@ section {
 /* ------------------------------------------------------- two histories */
 
 .histories {
-  height: 400vh;
+  height: 500vh;
 }
 .histories__sticky {
   position: sticky;
@@ -194,7 +194,7 @@ section {
 .history {
   position: relative;
   display: grid;
-  grid-template-rows: auto minmax(0, 1fr) auto auto;
+  grid-template-rows: auto minmax(0, 1fr) auto auto auto;
   min-height: 0;
   background: rgb(244 241 236 / 0.025);
   box-shadow: inset 0 0 0 1px rgb(244 241 236 / 0.09);
@@ -215,6 +215,7 @@ section {
   margin: 0;
   padding: 14px 16px 14px 0;
   overflow: hidden;
+  scroll-behavior: smooth;
   font-size: clamp(0.68rem, 0.55rem + 0.32vw, 0.84rem);
   line-height: 1.62;
   color: rgb(244 241 236 / 0.74);
@@ -242,13 +243,38 @@ section {
 .history__code .caret {
   display: inline-block;
   width: 2px;
-  height: 1.15em;
+  height: 1.2em;
   margin: 0 -1px;
-  vertical-align: -0.2em;
+  vertical-align: -0.22em;
   background: var(--accent-n);
+  animation: caret 1.05s steps(1) infinite;
 }
-.history__code .pasted {
+@keyframes caret {
+  50% {
+    opacity: 0;
+  }
+}
+.history__code .sel,
+.history__code .ln.is-sel {
+  background: rgb(80 120 220 / 0.38);
+  color: var(--porcelain);
+}
+.history__code.is-pasted .ln {
   background: rgb(249 115 22 / var(--flash, 0));
+}
+.history__term {
+  height: 0;
+  overflow: hidden;
+  padding: 0 16px;
+  font-size: 0.75rem;
+  line-height: 30px;
+  color: rgb(244 241 236 / 0.85);
+  background: rgb(0 0 0 / 0.28);
+  box-shadow: inset 0 1px 0 rgb(244 241 236 / 0.07);
+  transition: height 0.25s var(--ease-soft);
+}
+.history__term.is-on {
+  height: 30px;
 }
 .history.is-away .history__code {
   opacity: 0.22;
@@ -370,66 +396,6 @@ html.no-js .how__copy[data-phase='chain'] {
 }
 .how__copy .lead {
   max-width: 40ch;
-}
-
-.hint--coarse,
-.hint--still {
-  display: none;
-}
-@media (pointer: coarse) {
-  .hint--fine {
-    display: none;
-  }
-  .hint--coarse {
-    display: inline;
-  }
-}
-html.no-stage .hint--fine,
-html.no-stage .hint--coarse {
-  display: none !important;
-}
-html.no-stage .hint--still {
-  display: inline;
-}
-.tamper__still {
-  display: none;
-}
-html.no-stage .tamper__still {
-  display: inline-flex;
-}
-
-.tamper {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  touch-action: pan-y;
-}
-.tamper.is-live {
-  pointer-events: auto;
-}
-.tamper.is-hovering {
-  cursor: grab;
-}
-.tamper.is-dragging {
-  cursor: grabbing;
-}
-.tamper__target {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  translate: -50% -50%;
-  padding: 10px 16px;
-  border-radius: 999px;
-  font-size: 0.875rem;
-  background: var(--porcelain);
-  color: var(--ink);
-  opacity: 0;
-  pointer-events: none;
-}
-.tamper__target:focus-visible {
-  opacity: 1;
-  outline-color: var(--accent-n);
 }
 
 /* The ledger: the record, as text. */
@@ -874,21 +840,36 @@ html.no-stage .tamper__still {
 /* ----------------------------------------------------------------- try it */
 
 .tryit {
-  padding: clamp(80px, 12vh, 160px) 0;
+  height: 320vh;
+}
+.tryit__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: clip;
 }
 .tryit__inner {
   display: grid;
-  gap: clamp(36px, 6vh, 64px);
+  align-content: start;
+  gap: clamp(28px, 4.5vh, 56px);
+  padding-top: calc(var(--nav-h) + clamp(16px, 5vh, 64px));
 }
 .tryit__copy {
   display: grid;
-  gap: 24px;
+  gap: 22px;
   max-width: 780px;
+  transition: opacity 0.3s linear;
+}
+.tryit__slot {
+  height: clamp(320px, 44vh, 460px);
 }
 .playground {
+  position: absolute;
+  z-index: 2;
   display: grid;
   grid-template-columns: 1.15fr 1fr;
-  min-height: 400px;
+  contain: layout paint;
   background: #141416;
   color: var(--porcelain);
   box-shadow: 0 40px 100px -40px rgb(60 40 20 / 0.45);
@@ -930,7 +911,7 @@ html.no-stage .tamper__still {
 .playground__input {
   width: 100%;
   height: 100%;
-  min-height: 340px;
+  min-height: 0;
   padding: 18px 20px;
   border: 0;
   resize: none;
@@ -996,12 +977,7 @@ html.no-stage .tamper__still {
 @media (max-width: 900px) {
   .playground {
     grid-template-columns: 1fr;
-  }
-  .playground__input {
-    min-height: 220px;
-  }
-  .playground__rows {
-    min-height: 220px;
+    grid-template-rows: 1.1fr 1fr;
   }
   .playground__log {
     box-shadow: inset 0 1px 0 rgb(244 241 236 / 0.08);
@@ -1129,4 +1105,25 @@ html.no-stage .tamper__still {
     flex-wrap: wrap;
     gap: 12px 24px;
   }
+}
+
+/* Reduced motion or no script: the editor simply sits in the page. */
+html:not(.motion) .tryit {
+  height: auto;
+  padding-bottom: clamp(80px, 12vh, 160px);
+}
+html:not(.motion) .tryit__sticky {
+  position: relative;
+  height: auto;
+  overflow: visible;
+}
+html:not(.motion) .tryit__slot {
+  display: none;
+}
+html:not(.motion) .playground {
+  position: relative;
+  height: clamp(360px, 50vh, 520px);
+}
+html:not(.motion) .tryit__copy {
+  opacity: 1 !important;
 }

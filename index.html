@@ -215,6 +215,7 @@
               </div>
               <pre class="history__code mono" data-code aria-hidden="true"></pre>
               <div class="history__away mono" data-away>editor in the background</div>
+              <div class="history__term mono" data-term aria-hidden="true"></div>
               <div class="history__track" data-track aria-hidden="true"></div>
               <figcaption class="history__caption">
                 <strong data-count>Typed, tested, rewritten.</strong>
@@ -228,9 +229,10 @@
               </div>
               <pre class="history__code mono" data-code aria-hidden="true"></pre>
               <div class="history__away mono" data-away>editor in the background</div>
+              <div class="history__term mono" data-term aria-hidden="true"></div>
               <div class="history__track" data-track aria-hidden="true"></div>
               <figcaption class="history__caption">
-                <strong data-count>Away, then one paste.</strong>
+                <strong data-count>Away, then select all, delete, paste.</strong>
                 <span class="mono" data-digest></span>
               </figcaption>
             </figure>
@@ -272,8 +274,9 @@
             <h2 class="display-2" data-split>Every edit is a link.</h2>
             <p class="lead">
               The recorder writes down every change, paste, save and switch of focus. Each event is
-              sealed to the one before it, so the record runs in one unbroken line, from the first
-              keystroke to the hand-in.
+              sealed to the one before it, and every hundred events it signs a checkpoint, like the
+              orange link. The record runs in one unbroken line, from the first keystroke to the
+              hand-in.
             </p>
           </div>
 
@@ -285,31 +288,13 @@
             </p>
           </div>
 
-          <div class="how__copy" data-phase="try">
-            <h2 class="display-2" data-split>Now you try.</h2>
+          <div class="how__copy" data-phase="cover">
+            <h2 class="display-2" data-split>Covering it up doesn&rsquo;t work either.</h2>
             <p class="lead">
-              <span class="hint hint--fine">Pull any link out of the chain.</span>
-              <span class="hint hint--coarse">Tap any link to tamper with it.</span>
-              <span class="hint hint--still">Tamper with one event and watch the record.</span>
+              Recompute every hash after the edit and the chain looks whole again, right up to the
+              signed checkpoint. Its signature no longer matches, and a new one takes the
+              recorder&rsquo;s signing key.
             </p>
-            <div class="actions">
-              <button class="btn btn--ghost btn--small" type="button" data-reset hidden>
-                <span>Repair the chain</span>
-              </button>
-              <button
-                class="btn btn--primary btn--small tamper__still"
-                type="button"
-                data-tamper-still
-              >
-                <span>Tamper with an event</span>
-              </button>
-            </div>
-          </div>
-
-          <div class="tamper" data-tamper>
-            <button class="tamper__target" type="button" data-tamper-key>
-              Tamper with the link in the center of the chain
-            </button>
           </div>
 
           <div class="ledger">
@@ -486,38 +471,42 @@
 
       <!-- 8. Try it ----------------------------------------------------------- -->
       <section class="tryit" data-theme="day" aria-labelledby="tryit-title">
-        <div class="wrap tryit__inner">
-          <div class="tryit__copy">
-            <h2 class="display-2" id="tryit-title" data-split>See it for yourself.</h2>
-            <p class="lead" data-fade>
-              Type in the editor. Everything the recorder would write down appears beside it, sealed
-              link by link. Paste something, click away, come back. Nothing leaves this page.
-            </p>
-          </div>
-          <div class="playground" data-playground>
-            <div class="playground__editor">
-              <div class="playground__bar mono">
-                <span>scratch.py</span>
-                <button class="playground__replay mono" type="button" data-replay>Replay</button>
-              </div>
-              <label class="visually-hidden" for="scratch"
-                >A small code editor whose edits are recorded on this page</label
-              >
-              <textarea
-                id="scratch"
-                class="playground__input mono"
-                spellcheck="false"
-                autocapitalize="off"
-                autocomplete="off"
-                data-input
-              ></textarea>
+        <div class="tryit__sticky">
+          <div class="wrap tryit__inner">
+            <div class="tryit__copy">
+              <h2 class="display-2" id="tryit-title" data-split>See it for yourself.</h2>
+              <p class="lead" data-fade>
+                Type in the editor. Everything the recorder would write down appears beside it,
+                sealed link by link. Paste something, click away, come back. Nothing leaves this
+                page.
+              </p>
             </div>
-            <div class="playground__log">
-              <div class="playground__bar mono">
-                <span>scratch.slog</span>
-                <span data-log-status>0 events</span>
+            <div class="tryit__slot" data-slot aria-hidden="true"></div>
+            <div class="playground" data-playground>
+              <div class="playground__editor">
+                <div class="playground__bar mono">
+                  <span>scratch.py</span>
+                  <button class="playground__replay mono" type="button" data-replay>Replay</button>
+                </div>
+                <label class="visually-hidden" for="scratch"
+                  >A small code editor whose edits are recorded on this page</label
+                >
+                <textarea
+                  id="scratch"
+                  class="playground__input mono"
+                  spellcheck="false"
+                  autocapitalize="off"
+                  autocomplete="off"
+                  data-input
+                ></textarea>
               </div>
-              <ol class="playground__rows mono" data-log role="log" aria-live="off"></ol>
+              <div class="playground__log">
+                <div class="playground__bar mono">
+                  <span>scratch.slog</span>
+                  <span data-log-status>0 events</span>
+                </div>
+                <ol class="playground__rows mono" data-log role="log" aria-live="off"></ol>
+              </div>
             </div>
           </div>
         </div>

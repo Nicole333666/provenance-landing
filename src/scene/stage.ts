@@ -11,7 +11,6 @@ import {
   PerspectiveCamera,
   PlaneGeometry,
   Quaternion,
-  Raycaster,
   Scene,
   ShadowMaterial,
   SRGBColorSpace,
@@ -38,6 +37,10 @@ const COLORS = {
 };
 
 const FOV = 22;
+/** Direction a tampered link is pulled, in link heights. */
+const PULL = new Vector3(0.16, 0.42, 0.3);
+/** How the signed checkpoint sits once it no longer fits. */
+const UNSEATED = new Vector3(0.05, -0.16, 0.22);
 const CAMERA_Z = 16;
 const DEG = Math.PI / 180;
 
@@ -74,9 +77,11 @@ export class Stage {
   private readonly offsets = Array.from({ length: LINK_COUNT }, () => new Vector3());
   private readonly offsetTargets = Array.from({ length: LINK_COUNT }, () => new Vector3());
   private brokenSlot: number | null = null;
+  private pulled: number | null = null;
+  private cover = 0;
+  private coverTarget = 0;
   private wave = 0;
   private waveTarget = 0;
-  private dragging: number | null = null;
 
   /** carries the flat-to-round morph weight into setMorphAt */
   private readonly morph = Object.assign(new Mesh(), { morphTargetInfluences: [0] });
@@ -198,105 +203,52 @@ export class Stage {
 
   // ---------------------------------------------------------------- tamper
 
-  private readonly raycaster = new Raycaster();
-
-  /** Returns the chain slot under the pointer, or null. */
-  pick(clientX: number, clientY: number): number | null {
-    if (Math.abs(this.state.s - KF.chain) > 0.02) return null;
-    const ndc = new Vector2((clientX / this.width) * 2 - 1, -(clientY / this.height) * 2 + 1);
-    this.raycaster.setFromCamera(ndc, this.camera);
-    const hit = this.raycaster.intersectObject(this.mesh, false)[0];
-    if (!hit || hit.instanceId === undefined) return null;
-    return hit.instanceId;
-  }
-
-  /** Link index nearest the centre of the viewport, for keyboard use. */
-  centreLink(): number {
-    let best = 0;
-    let bestD = Infinity;
-    const v = new Vector3();
-    const m = new Matrix4();
-    for (let i = 0; i < LINK_COUNT; i++) {
-      this.mesh.getMatrixAt(i, m);
-      v.setFromMatrixPosition(m).project(this.camera);
-      const d = v.x * v.x + v.y * v.y;
-      if (d < bestD && this.poses[i]!.scale > 0.5) {
-        bestD = d;
-        best = i;
-      }
-    }
-    return best;
-  }
-
-  beginDrag(link: number): void {
-    this.dragging = link;
-  }
-
-  /** Pointer delta in CSS px since drag start. */
-  drag(dx: number, dy: number): number {
-    if (this.dragging === null) return 0;
-    const pxToWorld = this.visibleH / this.height;
-    const limit = this.placeA.scale * 0.75;
-    const v = new Vector3(dx * pxToWorld, -dy * pxToWorld, 0);
-    if (v.length() > limit) v.setLength(limit + (v.length() - limit) * 0.15);
-    this.offsetTargets[this.dragging]!.copy(v);
-    const slot = chainSlot(this.dragging);
-    for (let i = 0; i < LINK_COUNT; i++) {
-      const ds = Math.abs(chainSlot(i) - slot);
-      if (ds === 1) this.offsetTargets[i]!.copy(v).multiplyScalar(0.28);
-      if (ds === 2) this.offsetTargets[i]!.copy(v).multiplyScalar(0.08);
-    }
-    return v.length() / Math.max(1e-6, this.placeA.scale);
-  }
-
-  /** Ends a drag. Returns the slot that broke, or null if it sprang back. */
-  endDrag(commit: boolean): number | null {
-    const link = this.dragging;
-    this.dragging = null;
-    if (link === null) return null;
-    if (!commit) {
-      for (const t of this.offsetTargets) t.set(0, 0, 0);
-      return null;
-    }
-    return this.breakAt(link);
-  }
-
   /**
-   * Pulls a link out of line by a fraction of the full pull, without breaking the
-   * chain (used when the demo plays itself on scroll).
+   * Pulls a link out of line by a fraction of the full pull, before it breaks
+   * (the demo plays itself on scroll).
    */
   setPull(link: number, amount: number): void {
-    if (this.dragging !== null) return;
     const s = this.placeA.scale;
     const slot = chainSlot(link);
     for (let i = 0; i < LINK_COUNT; i++) {
       const ds = Math.abs(chainSlot(i) - slot);
       const k = ds === 0 ? 1 : ds === 1 ? 0.22 : 0;
-      this.offsetTargets[i]!.set(0.16, 0.42, 0.3).multiplyScalar(s * amount * k);
+      this.offsetTargets[i]!.copy(PULL).multiplyScalar(s * amount * k);
     }
   }
 
-  /** Breaks the chain at a link (tap, click or keyboard). */
+  /** Breaks the chain at a link: it runs hot, and everything after it goes dark. */
   breakAt(link: number): number {
     const slot = chainSlot(link);
-    const t = this.offsetTargets[link]!;
-    if (t.lengthSq() < 1e-6) {
-      // A tap: knock it out of line, away from the chain axis.
-      t.set(0.18, 0.34, 0.25).multiplyScalar(this.placeA.scale);
-    }
     for (let i = 0; i < LINK_COUNT; i++) {
-      if (i !== link && Math.abs(chainSlot(i) - slot) <= 2) this.offsetTargets[i]!.set(0, 0, 0);
+      if (i !== link) this.offsetTargets[i]!.set(0, 0, 0);
     }
+    this.offsetTargets[link]!.copy(PULL).multiplyScalar(this.placeA.scale);
+    this.pulled = link;
     this.brokenSlot = slot;
-    this.waveTarget = 30;
+    this.waveTarget = 32;
     if (this.state.reduced) this.wave = this.waveTarget;
     return slot;
+  }
+
+  /**
+   * The cover-up: every hash after the edit recomputed. Links turn back to normal
+   * one by one, except the signed checkpoint (the orange link), which no longer fits.
+   */
+  setCover(k: number): void {
+    this.coverTarget = Math.min(1, Math.max(0, k));
+    if (this.state.reduced) this.cover = this.coverTarget;
   }
 
   repair(): void {
     for (const t of this.offsetTargets) t.set(0, 0, 0);
     this.waveTarget = 0;
-    if (this.state.reduced) this.wave = 0;
+    this.coverTarget = 0;
+    this.pulled = null;
+    if (this.state.reduced) {
+      this.wave = 0;
+      this.cover = 0;
+    }
   }
 
   // ----------------------------------------------------------------- frame
@@ -375,7 +327,7 @@ export class Stage {
     }
 
     // Tamper springs and the break wave.
-    const spring = 1 - Math.exp(-dt * (this.dragging !== null ? 18 : 7));
+    const spring = 1 - Math.exp(-dt * 7);
     for (let i = 0; i < LINK_COUNT; i++) {
       this.offsets[i]!.lerp(this.offsetTargets[i]!, state.reduced ? 1 : spring);
     }
@@ -386,6 +338,20 @@ export class Stage {
         Math.min(Math.abs(this.waveTarget - this.wave), waveSpeed * dt);
     }
     if (this.wave <= 0 && this.waveTarget === 0) this.brokenSlot = null;
+    this.cover += (this.coverTarget - this.cover) * (state.reduced ? 1 : 1 - Math.exp(-dt * 6));
+
+    // The cover-up: the pulled link slides back into line; the checkpoint unseats.
+    const coverWave = this.cover * 34;
+    if (this.brokenSlot !== null && this.pulled !== null && this.cover > 0.001) {
+      this.offsetTargets[this.pulled]!.copy(PULL).multiplyScalar(
+        this.placeA.scale * (1 - this.cover),
+      );
+      const dSeal = chainSlot(1) - this.brokenSlot;
+      if (dSeal > 0) {
+        const k = MathUtils.clamp(coverWave - dSeal, 0, 1);
+        this.offsetTargets[1]!.copy(UNSEATED).multiplyScalar(this.placeA.scale * k);
+      }
+    }
 
     const m = new Matrix4();
     const group = new Matrix4().compose(pos, quat, new Vector3(scale, scale, scale));
@@ -417,10 +383,16 @@ export class Stage {
       if (this.brokenSlot !== null) {
         const slot = chainSlot(i);
         const d = slot - this.brokenSlot;
-        if (d === 0) color.lerp(COLORS.hot, MathUtils.clamp(this.wave, 0, 1));
-        else if (d > 0) color.lerp(COLORS.ash, MathUtils.clamp(this.wave - d, 0, 1) * 0.92);
-        // Only the pulled link stays orange; the accent link stands down.
-        else if (isAccent) color.lerp(COLORS.porcelain, MathUtils.clamp(this.wave, 0, 1));
+        const healed = MathUtils.clamp(coverWave - d, 0, 1);
+        if (d === 0) {
+          color.lerp(COLORS.hot, MathUtils.clamp(this.wave, 0, 1));
+          color.lerp(COLORS.porcelain, MathUtils.clamp(this.cover * 4, 0, 1));
+        } else if (d > 0) {
+          const dark = MathUtils.clamp(this.wave - d, 0, 1) * (isAccent ? 1 : 0.92 * (1 - healed));
+          color.lerp(COLORS.ash, dark);
+          // The signed checkpoint can't be recomputed: once the rest heals, it runs hot.
+          if (isAccent) color.lerp(COLORS.hot, healed);
+        }
       }
       this.mesh.setColorAt(i, color);
     }

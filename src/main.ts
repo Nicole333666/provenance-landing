@@ -3,13 +3,13 @@ import { detect } from './capabilities';
 import { chainSession, type ChainedEvent } from './record/chain-hash';
 import { Playground } from './record/playground';
 import { buildPastedSession, buildSession } from './record/session';
-import { TamperControl } from './record/tamper-control';
+import { ChainDemo } from './record/tamper-control';
 import { Ticker } from './record/ticker';
-import type { Stage } from './scene/stage';
 import { createSceneState } from './scene/state';
 import { mountEvening } from './sections/evening';
 import { mountField } from './sections/field';
 import { mountHistories } from './sections/histories';
+import { mountTryit } from './sections/tryit';
 import { signalPattern } from './sections/outline';
 import { setupReveals } from './sections/reveal';
 import { Acts } from './timeline/acts';
@@ -57,7 +57,10 @@ async function boot(): Promise<void> {
 
   // The record: an illustrative session, hash-chained in the browser.
   const session = buildSession();
-  const histories = mountHistories($<HTMLElement>('.histories')!, session, buildPastedSession());
+  const histories = mountHistories($<HTMLElement>('.histories')!, session, buildPastedSession(), {
+    reduced,
+  });
+  disposers.push(() => histories.dispose());
   const evening = $<HTMLElement>('[data-evening-plot]');
   if (evening)
     disposers.push(mountEvening(evening, $<HTMLElement>('[data-evening-axis]')!, session));
@@ -96,21 +99,15 @@ async function boot(): Promise<void> {
   near.observe($('.how')!);
   window.addEventListener('load', () => setTimeout(startHashing, 2500), { once: true });
 
-  let tamper: TamperControl | null = null;
-  const makeTamper = (stage: Stage | null) =>
-    new TamperControl(
-      $<HTMLElement>('[data-tamper]')!,
-      $<HTMLButtonElement>(stage ? '[data-tamper-key]' : '[data-tamper-still]')!,
-      $<HTMLButtonElement>('[data-reset]')!,
-      stage,
-      ticker,
-      () => chain,
-    );
+  const tryit = mountTryit($<HTMLElement>('.tryit')!);
+  window.addEventListener('resize', () => tryit.measure());
+  document.fonts?.ready.then(() => tryit.measure());
+  let demo: ChainDemo | null = null;
   acts.onChange((snap) => {
     if (chain) ticker.show(snap.growth * (chain.length - 1));
     histories.update(snap.histories);
-    tamper?.setPhase(snap.phase);
-    tamper?.setAuto(snap.autoTamper);
+    tryit.update(snap.tryit);
+    demo?.update(snap.phase, snap.autoTamper, snap.cover);
   });
 
   scroller.onScroll(() => acts.update());
@@ -145,8 +142,7 @@ async function boot(): Promise<void> {
           stage.dispose();
           root.classList.remove('has-stage');
           root.classList.add('no-stage');
-          tamper?.dispose();
-          tamper = makeTamper(null);
+          demo = new ChainDemo(null, ticker, () => chain);
           acts.update();
         }
       };
@@ -155,8 +151,7 @@ async function boot(): Promise<void> {
         stage.resize();
         acts.update();
       });
-      tamper = makeTamper(stage);
-      disposers.push(() => tamper?.dispose());
+      demo = new ChainDemo(stage, ticker, () => chain);
       acts.update();
     } catch (err) {
       console.warn('3D unavailable, using stills', err);
@@ -166,10 +161,9 @@ async function boot(): Promise<void> {
     root.classList.add('no-stage');
   }
 
-  // Without the 3D, the demo still edits and re-verifies the real chain.
-  if (!tamper) {
-    tamper = makeTamper(null);
-    disposers.push(() => tamper?.dispose());
+  // Without the 3D, the demo still edits, re-verifies and forges the real chain.
+  if (!demo) {
+    demo = new ChainDemo(null, ticker, () => chain);
     acts.update();
   }
 
