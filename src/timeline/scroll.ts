@@ -9,6 +9,8 @@ export interface Scroller {
   /** Called on every scroll position change (smooth or native). */
   onScroll(fn: () => void): void;
   scrollTo(target: string | HTMLElement): void;
+  /** Moves there instantly (no smooth travel). */
+  jumpTo(target: HTMLElement | number): void;
   dispose(): void;
 }
 
@@ -33,6 +35,10 @@ export function createScroller(smooth: boolean): Scroller {
       scrollTo: (target) => {
         const el = typeof target === 'string' ? document.querySelector(target) : target;
         el?.scrollIntoView({ behavior: 'auto' });
+      },
+      jumpTo: (target) => {
+        if (typeof target === 'number') window.scrollTo(0, target);
+        else target.scrollIntoView({ behavior: 'auto' });
       },
       dispose: () => {
         st.kill();
@@ -60,6 +66,7 @@ export function createScroller(smooth: boolean): Scroller {
     lenis,
     onScroll: (fn) => listeners.push(fn),
     scrollTo: (target) => lenis.scrollTo(target, { offset: 0, duration: 1.6 }),
+    jumpTo: (target) => lenis.scrollTo(target, { immediate: true, force: true }),
     dispose: () => {
       gsap.ticker.remove(tick);
       lenis.destroy();

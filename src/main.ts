@@ -9,6 +9,7 @@ import { createSceneState } from './scene/state';
 import { mountEvening } from './sections/evening';
 import { mountField } from './sections/field';
 import { mountHistories } from './sections/histories';
+import { mountCohort } from './sections/cohort';
 import { mountSuite } from './sections/suite';
 import { mountTryit } from './sections/tryit';
 import { signalPattern } from './sections/outline';
@@ -29,21 +30,49 @@ async function boot(): Promise<void> {
   disposers.push(() => scroller.dispose());
   const acts = new Acts(state, { reduced });
 
-  // In-page links go through the scroller so smooth scrolling stays in charge.
+  // In-page links fade through rather than racing down the page: the screen
+  // fades to the destination's ground, jumps there, and fades back in.
+  const veil = $<HTMLElement>('.veil')!;
+  const GROUNDS: Record<string, string> = { night: '#0c0806', day: '#f1ece6', signal: '#dc520b' };
+  let jumping = false;
+  const jump = (target: HTMLElement | null) => {
+    if (jumping) return;
+    if (reduced) {
+      scroller.jumpTo(target ?? 0);
+      return;
+    }
+    jumping = true;
+    const theme = target?.closest<HTMLElement>('[data-theme]')?.dataset.theme ?? 'night';
+    veil.style.background = GROUNDS[theme] ?? GROUNDS.night!;
+    veil.classList.add('is-on');
+    window.setTimeout(() => {
+      scroller.jumpTo(target ?? 0);
+      acts.update();
+      // Two frames for the scene and layout to settle under the veil.
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => {
+          veil.classList.remove('is-on');
+          jumping = false;
+        }),
+      );
+    }, 380);
+  };
   document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((a) => {
     a.addEventListener('click', (e) => {
       const id = a.getAttribute('href')!;
-      const target = id === '#top' ? document.body : $<HTMLElement>(id);
-      if (!target) return;
+      const target = id === '#top' ? null : $<HTMLElement>(id);
+      if (id !== '#top' && !target) return;
       e.preventDefault();
-      scroller.scrollTo(target);
-      if (id !== '#top') history.replaceState(null, '', id);
+      jump(target);
+      history.replaceState(null, '', id === '#top' ? location.pathname : id);
     });
   });
 
   // 2D graphics.
   const pattern = $<HTMLElement>('[data-pattern]');
   if (pattern) pattern.style.backgroundImage = signalPattern('#b83f06', '#dc520b');
+  const cohort = $<HTMLElement>('[data-cohort]');
+  if (cohort) disposers.push(mountCohort(cohort, $<HTMLElement>('[data-count]'), { reduced }));
   const suite = $<HTMLElement>('[data-suite]');
   if (suite) disposers.push(mountSuite(suite, { reduced }));
   const field = $<HTMLElement>('[data-field]');

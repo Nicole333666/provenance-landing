@@ -94,13 +94,24 @@ section {
 .proof__courses li:nth-child(even) {
   color: color-mix(in srgb, currentColor 52%, transparent);
 }
+.cohort {
+  position: relative;
+  height: clamp(150px, 22vh, 230px);
+  margin-top: clamp(36px, 5vw, 64px);
+}
+.cohort canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
 .proof__stat {
   display: flex;
   align-items: baseline;
   flex-wrap: wrap;
   gap: 8px 18px;
-  margin-top: clamp(28px, 4vw, 56px);
-  padding-top: 22px;
+  margin-top: clamp(20px, 3vw, 36px);
+  padding-top: 20px;
   border-top: 1px solid var(--hair);
 }
 .proof__number {
@@ -375,8 +386,9 @@ section {
   transform: translateY(-50%);
 }
 .how__anchor--mark {
-  top: 54%;
-  height: 26vh;
+  left: 72%;
+  top: 56%;
+  height: 22vh;
 }
 .how__copy {
   position: absolute;
@@ -514,8 +526,9 @@ html.no-js .how__copy[data-phase='chain'] {
     height: clamp(60px, 8.5vh, 92px);
   }
   .how__anchor--mark {
-    top: 56%;
-    height: 18vh;
+    left: 50%;
+    top: 62%;
+    height: 17vh;
   }
 }
 

@@ -332,3 +332,17 @@ main {
     display: none;
   }
 }
+
+/* Fade-through for in-page links: the whole screen, nav included. */
+.veil {
+  position: fixed;
+  inset: 0;
+  z-index: 11;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.42s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.veil.is-on {
+  opacity: 1;
+  transition-duration: 0.36s;
+}
