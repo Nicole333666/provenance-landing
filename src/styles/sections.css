@@ -1259,3 +1259,41 @@ a.tool:hover {
   stroke-dasharray: 0.008 0.01;
   transition: none;
 }
+
+.privacy__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 28px;
+}
+.privacy__get {
+  font-size: 0.75rem;
+  color: rgb(24 24 27 / 0.55);
+}
+.editors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.editors a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 46px;
+  padding: 0 20px;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  box-shadow: inset 0 0 0 1px rgb(24 24 27 / 0.2);
+  transition:
+    box-shadow 0.3s var(--ease-soft),
+    background-color 0.3s var(--ease-soft);
+}
+.editors a:hover {
+  background: rgb(255 255 255 / 0.6);
+  box-shadow: inset 0 0 0 1px rgb(24 24 27 / 0.5);
+}
+.editors span {
+  font-family: var(--mono);
+  color: var(--accent-d);
+}
