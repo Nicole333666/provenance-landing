@@ -340,6 +340,11 @@ export class Stage {
     if (this.wave <= 0 && this.waveTarget === 0) this.brokenSlot = null;
     this.cover += (this.coverTarget - this.cover) * (state.reduced ? 1 : 1 - Math.exp(-dt * 6));
 
+    // The tamper demo belongs to the chain act. Leaving it (the chain closing back
+    // into the pair) retracts the displacement and the colours, so the pair is
+    // always seated and woven, whatever state the demo was left in.
+    const demo = MathUtils.smoothstep(1 - Math.abs(s - KF.chain), 0, 1);
+
     // The cover-up: the pulled link slides back into line; the checkpoint unseats.
     const coverWave = this.cover * 34;
     if (this.brokenSlot !== null && this.pulled !== null && this.cover > 0.001) {
@@ -368,10 +373,10 @@ export class Stage {
       local.compose(p.position, p.quaternion, new Vector3(p.scale, p.scale, p.scale));
       m.multiplyMatrices(group, local);
       const off = this.offsets[i]!;
-      if (off.lengthSq() > 0) {
-        m.elements[12] += off.x;
-        m.elements[13] += off.y;
-        m.elements[14] += off.z;
+      if (demo > 0 && off.lengthSq() > 0) {
+        m.elements[12] += off.x * demo;
+        m.elements[13] += off.y * demo;
+        m.elements[14] += off.z * demo;
       }
       this.mesh.setMatrixAt(i, m);
 
@@ -380,7 +385,8 @@ export class Stage {
       color.copy(isAccent ? COLORS.accent : COLORS.porcelain);
       dayColor.copy(isAccent ? COLORS.accentDay : COLORS.ink);
       color.lerp(dayColor, colorDay);
-      if (this.brokenSlot !== null) {
+      if (this.brokenSlot !== null && demo > 0) {
+        const base = dayColor.copy(color);
         const slot = chainSlot(i);
         const d = slot - this.brokenSlot;
         const healed = MathUtils.clamp(coverWave - d, 0, 1);
@@ -393,6 +399,7 @@ export class Stage {
           // The signed checkpoint can't be recomputed: once the rest heals, it runs hot.
           if (isAccent) color.lerp(COLORS.hot, healed);
         }
+        color.lerp(base, 1 - demo);
       }
       this.mesh.setColorAt(i, color);
     }
