@@ -1127,3 +1127,135 @@ html:not(.motion) .playground {
 html:not(.motion) .tryit__copy {
   opacity: 1 !important;
 }
+
+/* ------------------------------------------------------------------ suite */
+
+.suite {
+  padding: clamp(80px, 12vh, 160px) 0;
+}
+.suite__copy {
+  display: grid;
+  gap: 26px;
+  max-width: 760px;
+}
+.suite__map {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.15fr 1fr 1fr 1fr;
+  column-gap: clamp(36px, 5vw, 96px);
+  align-items: center;
+  margin-top: clamp(80px, 11vh, 136px);
+}
+.suite__wires {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+.suite__wires path {
+  fill: none;
+  stroke: rgb(24 24 27 / 0.28);
+  stroke-width: 1;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1.4s var(--ease-out);
+}
+.suite__map.is-in .suite__wires path {
+  stroke-dashoffset: 0;
+}
+.suite__wires .packet {
+  fill: var(--accent-d);
+  opacity: 0;
+  transition: opacity 0.6s var(--ease-soft) 1.2s;
+}
+.suite__map.is-in .suite__wires .packet {
+  opacity: 1;
+}
+.suite__col {
+  display: grid;
+  gap: 14px;
+  align-content: center;
+}
+/* All stage labels sit on one line above the map, each over its own column. */
+.suite__stage {
+  position: absolute;
+  top: -2.8em;
+  font-size: 0.72rem;
+  color: rgb(24 24 27 / 0.5);
+}
+.tool {
+  position: relative;
+  display: grid;
+  gap: 6px;
+  padding: 18px 20px 20px;
+  background: rgb(255 255 255 / 0.45);
+  box-shadow:
+    inset 0 0 0 1px rgb(24 24 27 / 0.1),
+    0 1px 0 rgb(255 255 255 / 0.6);
+  transition:
+    box-shadow 0.4s var(--ease-soft),
+    transform 0.6s var(--ease-out),
+    background-color 0.4s var(--ease-soft);
+}
+a.tool:hover {
+  background: rgb(255 255 255 / 0.75);
+  box-shadow:
+    inset 0 0 0 1px rgb(24 24 27 / 0.24),
+    0 18px 40px -24px rgb(90 60 30 / 0.35);
+  transform: translateY(-2px);
+}
+.tool__code {
+  justify-self: start;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  letter-spacing: 0.02em;
+  color: var(--accent-d);
+  box-shadow: inset 0 0 0 1px rgb(234 88 12 / 0.35);
+}
+.tool__name {
+  margin-top: 4px;
+  font-size: clamp(1.2rem, 1.5vw, 1.45rem);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  font-weight: 500;
+  font-stretch: 90%;
+}
+.tool__line {
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: rgb(24 24 27 / 0.68);
+  max-width: 34ch;
+}
+.tool--bundle {
+  background: var(--ink);
+  color: var(--porcelain);
+  box-shadow: 0 24px 50px -28px rgb(24 24 27 / 0.6);
+  --mark-ink: var(--porcelain);
+  --mark-accent: var(--accent-n);
+}
+.tool--bundle .tool__line {
+  color: rgb(244 241 236 / 0.66);
+}
+.tool__mark {
+  width: 46px;
+  height: auto;
+  margin-bottom: 6px;
+}
+@media (max-width: 1000px) {
+  .suite__map {
+    grid-template-columns: 1fr;
+    row-gap: 44px;
+    max-width: 520px;
+  }
+  .suite__stage {
+    position: static;
+    margin-bottom: 2px;
+  }
+}
+.suite__map.is-in .suite__wires path.direct {
+  stroke-dasharray: 0.008 0.01;
+  transition: none;
+}

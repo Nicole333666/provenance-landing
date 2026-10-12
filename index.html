@@ -101,6 +101,7 @@
       </a>
       <nav class="nav__island" aria-label="Primary">
         <a class="nav__link" href="#histories">How it works</a>
+        <a class="nav__link" href="#suite">Tools</a>
         <a class="nav__link" href="#students">For students</a>
         <a class="nav__link" href="https://github.com/ProvenanceTools">GitHub</a>
         <a
@@ -409,6 +410,115 @@
               every test passing at 23:40.
             </figcaption>
           </figure>
+        </div>
+      </section>
+
+      <!-- The suite -------------------------------------------------------- -->
+      <section class="suite" id="suite" data-theme="day" aria-labelledby="suite-title">
+        <div class="wrap">
+          <div class="suite__copy">
+            <h2 class="display-2" id="suite-title" data-split>One record. Every tool.</h2>
+            <p class="lead" data-fade>
+              Three editors write the same signed log. Everything downstream reads it. Every piece
+              is open source.
+            </p>
+          </div>
+
+          <div class="suite__map" data-suite>
+            <svg class="suite__wires" data-wires aria-hidden="true"></svg>
+
+            <div class="suite__col">
+              <p class="suite__stage mono">Record</p>
+              <a
+                class="tool"
+                data-node="code"
+                href="https://marketplace.visualstudio.com/items?itemName=itsgeagle.provenance-recorder"
+              >
+                <span class="tool__code mono">provcode</span>
+                <span class="tool__name">Provenance for VS&nbsp;Code</span>
+                <span class="tool__line"
+                  >The original recorder. On the VS&nbsp;Code Marketplace.</span
+                >
+              </a>
+              <a
+                class="tool"
+                data-node="jet"
+                href="https://github.com/ProvenanceTools/provenance-jetbrains-recorder"
+              >
+                <span class="tool__code mono">provjet</span>
+                <span class="tool__name">Provenance for JetBrains</span>
+                <span class="tool__line"
+                  >IntelliJ, PyCharm, CLion and the rest. Written in Kotlin.</span
+                >
+              </a>
+              <a
+                class="tool"
+                data-node="nvim"
+                href="https://github.com/ProvenanceTools/provenance-neovim-recorder"
+              >
+                <span class="tool__code mono">provnvim</span>
+                <span class="tool__name">Provenance for Neovim</span>
+                <span class="tool__line">Pure Lua, no native dependencies.</span>
+              </a>
+            </div>
+
+            <div class="suite__col suite__col--mid">
+              <p class="suite__stage mono">Hand in</p>
+              <div class="tool tool--bundle" data-node="bundle">
+                <svg class="mark tool__mark" viewBox="40 64 176 124" aria-hidden="true">
+                  <defs>
+                    <clipPath id="suite-cross">
+                      <rect x="96" y="50" width="64" height="78" />
+                    </clipPath>
+                  </defs>
+                  <rect class="mark__ink" x="50" y="74" width="96" height="104" rx="34" />
+                  <rect class="mark__accent" x="110" y="74" width="96" height="104" rx="34" />
+                  <g clip-path="url(#suite-cross)">
+                    <rect class="mark__ink" x="50" y="74" width="96" height="104" rx="34" />
+                  </g>
+                </svg>
+                <span class="tool__name">The signed bundle</span>
+                <span class="tool__line"
+                  >The log, sealed with a per-session key. One format, from every editor.</span
+                >
+              </div>
+              <a
+                class="tool"
+                data-node="gate"
+                href="https://github.com/ProvenanceTools/provenance-gradescope-gateway"
+              >
+                <span class="tool__code mono">provgate</span>
+                <span class="tool__name">Gradescope gateway</span>
+                <span class="tool__line"
+                  >Pulls new submissions from Gradescope into the server, on a schedule.</span
+                >
+              </a>
+            </div>
+
+            <div class="suite__col">
+              <p class="suite__stage mono">Check</p>
+              <div class="tool" data-node="server">
+                <span class="tool__code mono">provd</span>
+                <span class="tool__name">Provenance server</span>
+                <span class="tool__line">
+                  Ingests a whole cohort, verifies every chain and signature, then keeps the log and
+                  drops the source. A documented API for everything else.
+                </span>
+              </div>
+            </div>
+
+            <div class="suite__col">
+              <p class="suite__stage mono">Review</p>
+              <div class="tool" data-node="lens">
+                <span class="tool__code mono">provlens</span>
+                <span class="tool__name">Provenance analyzer</span>
+                <span class="tool__line">
+                  The cohort, the replay, and every signal. It can also run entirely in a browser,
+                  on a single dropped file.
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 

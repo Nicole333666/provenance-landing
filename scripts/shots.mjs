@@ -29,6 +29,7 @@ const stops = [
   ['fair', '.fair', 0],
   ['principles', '.principles', -0.2],
   ['insight', '.evening', -0.45],
+  ['suite', '.suite__map', -0.3],
   ['privacy', '.privacy', 0.05],
   ['field', '.field', -0.3],
   ['pledges', '.sees', -0.1],

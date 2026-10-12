@@ -9,6 +9,7 @@ import { createSceneState } from './scene/state';
 import { mountEvening } from './sections/evening';
 import { mountField } from './sections/field';
 import { mountHistories } from './sections/histories';
+import { mountSuite } from './sections/suite';
 import { mountTryit } from './sections/tryit';
 import { signalPattern } from './sections/outline';
 import { setupReveals } from './sections/reveal';
@@ -43,6 +44,8 @@ async function boot(): Promise<void> {
   // 2D graphics.
   const pattern = $<HTMLElement>('[data-pattern]');
   if (pattern) pattern.style.backgroundImage = signalPattern('#b83f06', '#dc520b');
+  const suite = $<HTMLElement>('[data-suite]');
+  if (suite) disposers.push(mountSuite(suite, { reduced }));
   const field = $<HTMLElement>('[data-field]');
   if (field) disposers.push(mountField(field));
   const flag = $<HTMLElement>('[data-flag]');
