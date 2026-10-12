@@ -110,16 +110,16 @@
           </picture>
         </div>
         <div class="wrap hero__inner">
-          <h1 class="hero__title display" id="hero-title" data-split>
-            Every line has<br />
-            a history.
+          <h1 class="hero__title display" id="hero-title">
+            <span class="line"><span class="line__inner">Every line has</span></span>
+            <span class="line"><span class="line__inner">a history.</span></span>
           </h1>
           <div class="hero__side">
-            <p class="lead hero__lead" data-fade>
+            <p class="lead hero__lead">
               Provenance records how student code gets written, edit by edit, in a tamper-evident
               log that travels with the submission.
             </p>
-            <div class="actions" data-fade>
+            <div class="actions hero__actions">
               <a
                 class="btn btn--primary"
                 href="mailto:aaryanm@berkeley.edu?subject=Provenance%20for%20my%20course"
@@ -198,9 +198,9 @@
               it. What you get is the work itself, in the order it happened, sealed into a chain.
             </p>
             <ol class="beats mono" role="list">
-              <li data-beat>sha-256, each event bound to the one before</li>
+              <li data-beat>SHA-256, each event bound to the one before</li>
               <li data-beat>checkpoints signed as the student works</li>
-              <li data-beat>sealed when the work is handed in</li>
+              <li data-beat>handed in with the work</li>
             </ol>
           </div>
 
@@ -333,7 +333,7 @@
             <article class="station station--bundle" data-fade>
               <h3 class="station__name">The bundle</h3>
               <p class="station__where mono">with the submission</p>
-              <p>One signed file, handed in with the code.</p>
+              <p>The signed log, handed in alongside the code.</p>
             </article>
             <article class="station" data-fade>
               <h3 class="station__name">The analyzer</h3>

@@ -329,6 +329,17 @@ export class Stage {
     formPoses(k1.form, state.growth, this.posesB, k1.stream);
     blendPoses(this.posesA, this.posesB, f, this.poses);
 
+    // A chain at rest is never quite still: a slow ripple runs along it.
+    const chainWeight = (k0.form === 'chain' ? 1 - f : 0) + (k1.form === 'chain' ? f : 0);
+    if (chainWeight > 0 && !state.reduced) {
+      for (let i = 0; i < LINK_COUNT; i++) {
+        const slot = chainSlot(i);
+        const p = this.poses[i]!;
+        p.position.y += Math.sin(t * 0.85 - slot * 0.42) * 0.045 * chainWeight;
+        p.position.z += Math.cos(t * 0.6 - slot * 0.31) * 0.03 * chainWeight;
+      }
+    }
+
     // Tamper springs and the break wave.
     const spring = 1 - Math.exp(-dt * (this.dragging !== null ? 18 : 7));
     for (let i = 0; i < LINK_COUNT; i++) {

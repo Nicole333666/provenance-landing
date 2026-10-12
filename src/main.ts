@@ -80,11 +80,28 @@ async function boot(): Promise<void> {
         ? requestIdleCallback(() => r(), { timeout: 60 })
         : setTimeout(r, 0),
     );
-  void chainSession(session.events, { batch: 48, yieldFn: idle }).then((c) => {
-    chain = c;
-    ticker.setChain(c);
-    acts.update();
-  });
+  // Hash the session when the reader is heading for the chain, or once the page is idle.
+  let hashing = false;
+  const startHashing = () => {
+    if (hashing) return;
+    hashing = true;
+    void chainSession(session.events, { batch: 48, yieldFn: idle }).then((c) => {
+      chain = c;
+      ticker.setChain(c);
+      acts.update();
+    });
+  };
+  const near = new IntersectionObserver(
+    (entries) => {
+      if (entries.some((e) => e.isIntersecting)) {
+        near.disconnect();
+        startHashing();
+      }
+    },
+    { rootMargin: '150% 0px' },
+  );
+  near.observe($('.how')!);
+  window.addEventListener('load', () => setTimeout(startHashing, 2500), { once: true });
 
   let tamper: TamperControl | null = null;
   acts.onChange((snap) => {
@@ -96,7 +113,7 @@ async function boot(): Promise<void> {
   window.addEventListener('resize', () => acts.update());
   acts.update();
 
-  if (!reduced) disposers.push(setupReveals({ heroDelay: caps.webgl ? 0.55 : 0.15 }));
+  if (!reduced) disposers.push(setupReveals());
 
   // Pointer, for the object's slow parallax.
   if (!caps.coarse) {
@@ -110,9 +127,10 @@ async function boot(): Promise<void> {
     );
   }
 
-  // The 3D, loaded after first paint.
+  // The 3D, loaded once the page has finished loading and the main thread is free.
   const canvas = $<HTMLCanvasElement>('.stage');
   if (caps.webgl && !caps.saveData && canvas) {
+    await settled();
     try {
       const { Stage } = await import('./scene/stage');
       const stage = new Stage(canvas, state, { lowPower: caps.lowPower });
@@ -174,6 +192,21 @@ async function boot(): Promise<void> {
 
   ScrollTrigger.refresh();
   window.addEventListener('pagehide', () => disposers.forEach((d) => d()), { once: true });
+}
+
+function settled(): Promise<void> {
+  const loaded =
+    document.readyState === 'complete'
+      ? Promise.resolve()
+      : new Promise<void>((r) => window.addEventListener('load', () => r(), { once: true }));
+  return loaded.then(
+    () =>
+      new Promise<void>((r) =>
+        'requestIdleCallback' in window
+          ? requestIdleCallback(() => r(), { timeout: 500 })
+          : setTimeout(r, 60),
+      ),
+  );
 }
 
 void boot();

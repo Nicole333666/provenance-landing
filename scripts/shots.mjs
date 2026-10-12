@@ -26,6 +26,10 @@ const stops = [
   ['limits', '.limits', 0.05],
   ['close', '.close', 0],
   ['foot', '.foot', -0.6],
+  ['tx-a', '.thesis', -0.5],
+  ['tx-b', '.how', -0.75],
+  ['tx-c', '.relight', -0.2],
+  ['tx-d', '.relight', 0.7],
 ];
 
 const browser = await chromium.launch({

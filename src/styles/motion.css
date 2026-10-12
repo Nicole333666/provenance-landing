@@ -1,6 +1,32 @@
 /* Initial states that only apply when motion is allowed and JS is running.
    Without JS, or with reduced motion, everything is simply visible. */
 
+/* The hero needs no script: it rises on its own, so it paints immediately. */
+@keyframes rise {
+  from {
+    transform: translateY(140%);
+  }
+}
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+}
+html.motion .hero__title .line__inner {
+  animation: rise 1.5s var(--ease-out) both;
+  animation-delay: calc(0.35s + var(--i, 0) * 0.09s);
+}
+html.motion .hero__title .line:nth-child(2) .line__inner {
+  --i: 1;
+}
+html.motion .hero__lead {
+  animation: fade-up 1.3s var(--ease-out) 0.85s both;
+}
+html.motion .hero__actions {
+  animation: fade-up 1.3s var(--ease-out) 0.97s both;
+}
+
 html.motion [data-split] {
   visibility: hidden;
 }

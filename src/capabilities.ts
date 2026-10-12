@@ -29,7 +29,11 @@ function hasWebGL2(): boolean {
   try {
     const c = document.createElement('canvas');
     const gl = c.getContext('webgl2');
-    const ok = Boolean(gl);
+    let ok = Boolean(gl);
+    // A software renderer would draw the scene at a few frames per second.
+    const info = gl?.getExtension('WEBGL_debug_renderer_info');
+    const renderer = info && gl ? String(gl.getParameter(info.UNMASKED_RENDERER_WEBGL)) : '';
+    if (/swiftshader|llvmpipe|software|basic render/i.test(renderer)) ok = false;
     gl?.getExtension('WEBGL_lose_context')?.loseContext();
     return ok;
   } catch {

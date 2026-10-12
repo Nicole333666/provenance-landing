@@ -70,11 +70,11 @@ Dials: `DESIGN_VARIANCE 7`, `MOTION_INTENSITY 6`, `VISUAL_DENSITY 2`.
 
 The page is one journey with exactly two ground transitions, each graded on scroll (never a cut):
 
-| Act      | Ground                         | Chapters                                  | Light reference         |
-| -------- | ------------------------------ | ----------------------------------------- | ----------------------- |
-| Night    | warm near-black                | Hero, Proof, Thesis, Chain, Tamper        | *Monolith*, *Crossing*  |
-| Daylight | the renders' paper             | Evidence, System, Students, Limits        | *Late Sun*, *Custody*   |
-| Signal   | brand orange                   | Close, footer                             | *Signal*                |
+| Act      | Ground             | Chapters                           | Light reference        |
+| -------- | ------------------ | ---------------------------------- | ---------------------- |
+| Night    | warm near-black    | Hero, Proof, Thesis, Chain, Tamper | _Monolith_, _Crossing_ |
+| Daylight | the renders' paper | Evidence, System, Students, Limits | _Late Sun_, _Custody_  |
+| Signal   | brand orange       | Close, footer                      | _Signal_               |
 
 Night is the mechanism. Daylight is the people. Signal is the call to act. The page is
 art-directed and does not follow `prefers-color-scheme`; there is no theme toggle.
@@ -152,11 +152,11 @@ with heavy damping. A slow light "breath" (8 s period, very low amplitude) is th
 
 Layout: full-width typographic band directly under the hero.
 
-> In use this semester at UC Berkeley *(one of the 3 allowed small labels)*
+> In use this semester at UC Berkeley _(one of the 3 allowed small labels)_
 >
-> CS 61A   CS 61B   CS 61C   CS 10   DATA C88C *(set very large, porcelain, wrapping naturally)*
+> CS 61A CS 61B CS 61C CS 10 DATA C88C _(set very large, porcelain, wrapping naturally)_
 >
-> **2,800+** students recording their work *(number in Plex Mono)*
+> **2,800+** students recording their work _(number in Plex Mono)_
 
 No logos (no Berkeley marks). Course names reveal left to right as the band enters.
 
@@ -194,7 +194,7 @@ Ticker caption (small, muted):
 > An illustrative session. Every hash shown is computed in your browser.
 
 Scene: the camera pulls back from the pair; links are added one per ticker line until a chain of
-~160 links crosses the frame on a diagonal (the *Custody* composition, in night lighting). The
+~160 links crosses the frame on a diagonal (the _Custody_ composition, in night lighting). The
 accent link stays the one nearest the camera.
 
 ### 4. Change one link (night)
@@ -220,7 +220,7 @@ Behaviour: see section 5.4.
 ### Transition to daylight
 
 Over ~1 viewport height the scene relights: the night ground grades to `--day-0`, the softbox
-fades, a low warm sun comes in from the upper left and casts the long *Late Sun* shadow; the chain
+fades, a low warm sun comes in from the upper left and casts the long _Late Sun_ shadow; the chain
 collapses back to the woven pair in ink + accent (the light-ground colourway). The nav and grain
 blend switch at the midpoint.
 
@@ -251,10 +251,10 @@ Layout: horizontal engineering-outline diagram across the full width (stacks ver
 
 > **Two halves, one record.**
 
-| Station      | Copy                                                                                                                                                                                                                                                     |
-| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| The recorder | Runs in VS Code, JetBrains IDEs and Neovim. Works offline. Watches the assignment folder and nothing else.                                                                                                                                             |
-| The bundle   | One signed file, handed in with the code.                                                                                                                                                                                                                |
+| Station      | Copy                                                                                                                                                                                                                                                 |
+| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| The recorder | Runs in VS Code, JetBrains IDEs and Neovim. Works offline. Watches the assignment folder and nothing else.                                                                                                                                           |
+| The bundle   | One signed file, handed in with the code.                                                                                                                                                                                                            |
 | The analyzer | Where course staff review. See a whole cohort at once, then replay any submission edit by edit. Every signal can be weighted or switched off by your staff, and cross-submission checks catch the same paste turning up in different students' work. |
 
 The outline chain draws itself left to right on scroll (stroke-dashoffset), with the gap at each
@@ -270,19 +270,19 @@ between them, then a closing line and button. Columns stack below 768 px.
 > If you did the work, the record is the best evidence you have that you did it. Here is exactly
 > what it sees.
 
-| Recorded                                   | Never recorded                                   |
-| ------------------------------------------ | ------------------------------------------------ |
-| Edits and pastes in the assignment folder  | Anything outside the assignment folder           |
-| Saves, opened files and editor focus       | Your browser, screen, camera or other projects   |
-| Commands run in the editor's terminal      | Keystrokes at the system level                   |
-| Which editor extensions are installed      | Your clipboard, unless you paste into the work   |
+| Recorded                                  | Never recorded                                 |
+| ----------------------------------------- | ---------------------------------------------- |
+| Edits and pastes in the assignment folder | Anything outside the assignment folder         |
+| Saves, opened files and editor focus      | Your browser, screen, camera or other projects |
+| Commands run in the editor's terminal     | Keystrokes at the system level                 |
+| Which editor extensions are installed     | Your clipboard, unless you paste into the work |
 
 > No network requests while you work. The log stays on your computer until you hand it in, and
 > it's plain text you can read.
 >
 > [Install guide]
 
-The section background carries the *Blind Emboss* treatment: the mark as a very faint relief in
+The section background carries the _Blind Emboss_ treatment: the mark as a very faint relief in
 the paper, bottom right, CSS-rendered from the mark SVG with two offset drop-shadow filters.
 
 ### 8. What it can't do (day)
@@ -298,7 +298,7 @@ Layout: pull quote. Narrow column, quote set large.
 > "We will know if you do something obvious, and we will know enough to ask questions if you do
 > something subtle."
 >
-> Provenance design document, section 6 *(attribution, smaller)*
+> Provenance design document, section 6 _(attribution, smaller)_
 
 ### Transition to signal
 
@@ -306,14 +306,14 @@ The day ground floods to `--signal` over ~0.6 viewport heights, wiping up from t
 
 ### 9. Close (signal)
 
-Layout: poster. The *Signal* woven pattern (rows of chain in `--signal-rule` outlines) fills the
+Layout: poster. The _Signal_ woven pattern (rows of chain in `--signal-rule` outlines) fills the
 ground as texture; one link, solid ink, sits whole above it, rendered in 3D.
 
 > **Bring Provenance to your course.**
 >
 > It's open source, and it already runs at the scale of a large intro course. Tell us about yours.
 >
-> [Talk to us] *(ink pill, signal text)* [Read the source] *(outline pill)*
+> [Talk to us] _(ink pill, signal text)_ [Read the source] _(outline pill)_
 
 ### Footer (signal, continued)
 
@@ -325,7 +325,7 @@ Small and low. Left: lockup in ink. Right: `GitHub`, `Install guide`, `Admin gui
 - `<title>`: `Provenance: every line has a history`
 - description: "Provenance records how student code gets written, edit by edit, in a tamper-evident
   log. Process evidence for academic integrity, not AI detection. Open source."
-- OG / Twitter image: 1200x630 crop of the *Monolith* render with the lockup.
+- OG / Twitter image: 1200x630 crop of the _Monolith_ render with the lockup.
 - Favicon: brand `favicon.svg`.
 
 ## 4. Visual assets
@@ -334,8 +334,8 @@ Small and low. Left: lockup in ink. Right: `GitHub`, `Install guide`, `Admin gui
   produces AVIF + WebP at 640/1280/1920/2560 widths into `public/img/`, from the 16x10 desktop
   and phone masters. The script runs locally; generated files are committed so the build has no
   image step.
-- Uses: hero poster (*Monolith*) shown until the WebGL scene is ready, and permanently when 3D is
-  off; no-WebGL stills for the chain (*Custody*), daylight (*Late Sun*) and close (*Signal*); OG
+- Uses: hero poster (_Monolith_) shown until the WebGL scene is ready, and permanently when 3D is
+  off; no-WebGL stills for the chain (_Custody_), daylight (_Late Sun_) and close (_Signal_); OG
   image.
 - Brand SVGs (mark, lockup) copied from `provenance/brand/`.
 
@@ -480,7 +480,7 @@ Every loop, observer and listener is owned by something with a `dispose()`, call
   `session` (deterministic for a seed, envelope fields present, `seq` monotonic), `capabilities`.
 - Playwright: load the built site at 390x844, 820x1180, 1440x900 and 2560x1440, with and without
   reduced motion; screenshot every chapter; assert no horizontal overflow, nav on one line at
-  >= 1024 px, hero CTAs within the first viewport, no console errors.
+  > = 1024 px, hero CTAs within the first viewport, no console errors.
 - Visual review: screenshots reviewed by eye against the wallpaper renders while iterating.
 - Copy check (scripted): zero `—` and `–` characters in `index.html`; count of small uppercase
   labels <= 3.
@@ -500,3 +500,25 @@ Every loop, observer and listener is owned by something with a `dispose()`, call
 - "Built at UC Berkeley." in the footer is a factual claim to confirm.
 - "It already runs at the scale of a large intro course" rests on the 2,800+ figure across five
   courses; confirm the phrasing.
+
+## 9. As built (2026-10-12)
+
+Where the build departs from the sections above, deliberately:
+
+- **No wallpaper renders.** The owner allowed replacing them. Fallback stills and the social card
+  are rendered from the live scene (`scripts/stills.mjs`, `scripts/og.mjs`), so every image
+  matches the 3D.
+- **Relight** is a diagonal light wipe from the upper left (where the sun is), not a crossfade;
+  a crossfade passed through a muddy grey.
+- **The chain streams off** along its own axis when it collapses back to the pair, instead of
+  shrinking in place.
+- **System diagram**: a single hairline record (event ticks, the woven mark sealing them at the
+  bundle, a clean line to the analyzer) instead of an outline chain, which read as a coil at that
+  size. The outline-chain language is used for the signal ground pattern.
+- **Session**: about 4,300 events spanning 20:55 to 23:41, so the replay strip and ledger read
+  like a real evening; the status line is computed.
+- **Hero** animates in CSS, not SplitText, so it paints without waiting on script (LCP).
+- **Narrow screens** cut from hero to thesis while both positions are off-screen, so the object
+  never travels across full-width copy.
+- **Copy**: "sealed when the work is handed in" became "handed in with the work", and "one
+  signed file" became "the signed log", because git-based submissions have no seal step.

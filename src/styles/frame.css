@@ -26,7 +26,18 @@
 
 /* Day: paper under a low sun, slightly warmer where the light lands. */
 .ground__day {
-  opacity: var(--day, 0);
+  /* Daylight floods in from the upper left, where the sun is, with a soft edge. */
+  --edge: calc(var(--day-pos, -10) * 1%);
+  -webkit-mask-image: linear-gradient(
+    128deg,
+    #000 calc(var(--edge) - 30%),
+    transparent calc(var(--edge) + 10%)
+  );
+  mask-image: linear-gradient(
+    128deg,
+    #000 calc(var(--edge) - 30%),
+    transparent calc(var(--edge) + 10%)
+  );
   background:
     radial-gradient(90% 70% at 18% 8%, rgb(255 251 244 / 0.9) 0%, transparent 60%),
     radial-gradient(120% 100% at 50% 50%, var(--day-0) 50%, #e8e2db 100%);

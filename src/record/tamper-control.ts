@@ -1,5 +1,5 @@
 import type { Stage } from '../scene/stage';
-import { chainSlot, LINK_COUNT } from '../scene/poses';
+import { chainSlot, LINK_COUNT } from '../scene/slots';
 import type { ChainedEvent } from './chain-hash';
 import type { Ticker } from './ticker';
 import { tamper, verifyChain } from './verify';

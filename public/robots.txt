@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://provtools.com/sitemap.xml

@@ -7,14 +7,14 @@ gsap.registerPlugin(ScrollTrigger, SplitText);
 const EASE = 'expo.out';
 
 /**
- * Entrances. Headlines rise line by line out of a mask; supporting copy fades up.
- * Everything here is skipped under reduced motion (the CSS leaves it visible).
+ * Entrances below the hero (the hero animates in CSS, so it never waits on script).
+ * Headlines rise line by line out of a mask; supporting copy fades up. Skipped
+ * under reduced motion, where the CSS leaves everything visible.
  */
-export function setupReveals(opts: { heroDelay: number }): () => void {
+export function setupReveals(): () => void {
   const ctx = gsap.context(() => {
     // Headlines.
     document.querySelectorAll<HTMLElement>('[data-split]').forEach((el) => {
-      const inHero = Boolean(el.closest('.hero'));
       const inHow = Boolean(el.closest('.how'));
       SplitText.create(el, {
         type: 'lines',
@@ -26,11 +26,10 @@ export function setupReveals(opts: { heroDelay: number }): () => void {
           if (inHow) return; // the pinned chapter crossfades its copy as a whole
           return gsap.from(self.lines, {
             yPercent: 108,
-            duration: inHero ? 1.5 : 1.25,
+            duration: 1.25,
             ease: EASE,
             stagger: 0.085,
-            delay: inHero ? opts.heroDelay : 0,
-            scrollTrigger: inHero ? undefined : { trigger: el, start: 'top 86%', once: true },
+            scrollTrigger: { trigger: el, start: 'top 86%', once: true },
           });
         },
       });
@@ -38,7 +37,6 @@ export function setupReveals(opts: { heroDelay: number }): () => void {
 
     // Supporting copy.
     document.querySelectorAll<HTMLElement>('[data-fade]').forEach((el) => {
-      const inHero = Boolean(el.closest('.hero'));
       gsap.fromTo(
         el,
         { autoAlpha: 0, y: 26 },
@@ -47,8 +45,7 @@ export function setupReveals(opts: { heroDelay: number }): () => void {
           y: 0,
           duration: 1.3,
           ease: EASE,
-          delay: inHero ? opts.heroDelay + 0.45 + (el.classList.contains('actions') ? 0.12 : 0) : 0,
-          scrollTrigger: inHero ? undefined : { trigger: el, start: 'top 90%', once: true },
+          scrollTrigger: { trigger: el, start: 'top 90%', once: true },
         },
       );
     });

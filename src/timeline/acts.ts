@@ -107,12 +107,13 @@ export class Acts {
     // Ground.
     const day = reduced ? (p23 > 0.5 ? 1 : 0) : smooth((p23 - 0.12) / 0.6);
     this.root.style.setProperty('--day', day.toFixed(4));
+    this.root.style.setProperty('--day-pos', (-10 + 140 * day).toFixed(2));
     const signalTop = clamp(close.top, 0, vh);
     this.root.style.setProperty('--signal-top', `${signalTop.toFixed(1)}px`);
     this.root.classList.toggle('past-hero', hero.bottom < vh * 0.55);
 
     // Nav theme: whatever ground sits under it.
-    const navTheme = close.top < 38 ? 'signal' : day > 0.5 ? 'day' : 'night';
+    const navTheme = close.top < 38 ? 'signal' : day > 0.28 ? 'day' : 'night';
     if (navTheme !== this.navTheme) {
       this.navTheme = navTheme;
       this.el.nav.dataset.theme = navTheme;
