@@ -100,3 +100,21 @@ export function signalPattern(rule: string, ground: string): string {
   const svg = `<svg xmlns="${NS}" width="${tileW.toFixed(2)}" height="${tileH.toFixed(2)}" viewBox="0 0 ${tileW.toFixed(2)} ${tileH.toFixed(2)}">${body}</svg>`;
   return `url("data:image/svg+xml;utf8,${encodeURIComponent(svg)}")`;
 }
+
+/** The mark, set into the paper as a blind emboss: paper on paper, edges only. */
+export function mountEmboss(host: HTMLElement): void {
+  host.innerHTML = `<svg viewBox="30 54 196 144" aria-hidden="true">
+    <defs>
+      <clipPath id="emboss-cross"><rect x="96" y="50" width="64" height="78"/></clipPath>
+      <filter id="emboss" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
+        <feDropShadow dx="-0.7" dy="-0.7" stdDeviation="0.35" flood-color="#ffffff" flood-opacity="0.95"/>
+        <feDropShadow dx="0.9" dy="1.1" stdDeviation="0.9" flood-color="#5e4a36" flood-opacity="0.2"/>
+      </filter>
+    </defs>
+    <g fill="none" stroke="#efeae4" stroke-width="18">
+      <rect filter="url(#emboss)" x="50" y="74" width="96" height="104" rx="34"/>
+      <rect filter="url(#emboss)" x="110" y="74" width="96" height="104" rx="34"/>
+      <g clip-path="url(#emboss-cross)"><rect filter="url(#emboss)" x="50" y="74" width="96" height="104" rx="34"/></g>
+    </g>
+  </svg>`;
+}

@@ -271,11 +271,7 @@ export function mountHistories(
     `Away ${duration(awayMs)}, then select all, delete, paste.`;
 
   let finalDigest: string | null = null;
-  const heartbeats = pasted.events.filter((e) => e.kind === 'session.heartbeat').length;
-  const verdictText = () =>
-    `Same SHA-256. ${fmt.format(written.events.length)} events of work on one side. On the other, ${fmt.format(
-      pasted.events.length,
-    )}, and ${fmt.format(heartbeats)} of those are heartbeats from an editor nobody was using.`;
+  const verdictText = () => 'Identical files. Completely different records.';
 
   let current = 0;
   const paint = (u: number) => {

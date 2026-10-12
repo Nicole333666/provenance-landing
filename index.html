@@ -176,9 +176,7 @@
           <div class="cohort" data-cohort aria-hidden="true"><canvas></canvas></div>
           <p class="proof__stat" data-fade>
             <span class="proof__number mono" data-count>2,800+</span>
-            <span class="proof__caption"
-              >students recording their work. Each mark above is one of them.</span
-            >
+            <span class="proof__caption">students recording their work</span>
           </p>
         </div>
       </section>
@@ -278,27 +276,24 @@
           <div class="how__copy" data-phase="chain">
             <h2 class="display-2" data-split>Every edit is a link.</h2>
             <p class="lead">
-              The recorder writes down every change, paste, save and switch of focus. Each event is
-              sealed to the one before it, and every hundred events it signs a checkpoint, like the
-              orange link. The record runs in one unbroken line, from the first keystroke to the
-              hand-in.
+              Every change, paste and save is sealed to the one before it, in one unbroken line from
+              the first keystroke to the hand-in. Along the way the recorder signs checkpoints, like
+              the orange link.
             </p>
           </div>
 
           <div class="how__copy" data-phase="tamper">
             <h2 class="display-2" data-split>Change one link, and the chain says so.</h2>
             <p class="lead">
-              Rewrite a single event after the fact and its seal stops matching. Every event after
-              it stops verifying, all the way to the end.
+              Rewrite one event and its seal stops matching. So does every event after it.
             </p>
           </div>
 
           <div class="how__copy" data-phase="cover">
             <h2 class="display-2" data-split>Covering it up doesn&rsquo;t work either.</h2>
             <p class="lead">
-              Recompute every hash after the edit and the chain looks whole again, right up to the
-              signed checkpoint. Its signature no longer matches, and a new one takes the
-              recorder&rsquo;s signing key.
+              Reseal everything after the edit and the chain looks whole again, until the signed
+              checkpoint. That signature can&rsquo;t be redone.
             </p>
           </div>
 
@@ -323,8 +318,8 @@
           <div class="fair__copy">
             <h2 class="display-2" id="fair-title" data-split>Built not to accuse.</h2>
             <p class="lead" data-fade>
-              Provenance surfaces patterns for a person to look at. Everything about it is designed
-              so that honest work stays out of the way.
+              Provenance points a person at the moments worth a look. Honest work stays out of the
+              way.
             </p>
           </div>
           <div class="fair__anchor" data-anchor="day">
@@ -381,10 +376,7 @@
           </article>
           <article class="principle" data-fade>
             <h3 class="principle__title">A person decides.</h3>
-            <p>
-              Every flag opens the exact moment in the replay. Nothing happens automatically, and
-              nothing is a verdict.
-            </p>
+            <p>Every flag opens the exact moment in the replay. Nothing happens automatically.</p>
           </article>
         </div>
 
@@ -395,6 +387,7 @@
 
       <!-- 6. See the process -------------------------------------------------- -->
       <section class="insight" data-theme="day" aria-labelledby="insight-title">
+        <div class="emboss" aria-hidden="true"></div>
         <div class="wrap">
           <div class="insight__copy">
             <h2 class="display-2" id="insight-title" data-split>
@@ -505,8 +498,7 @@
                 <span class="tool__code mono">provd</span>
                 <span class="tool__name">Provenance server</span>
                 <span class="tool__line">
-                  Ingests a whole cohort, verifies every chain and signature, then keeps the log and
-                  drops the source. A documented API for everything else.
+                  Ingests a cohort, verifies every chain, keeps the log and drops the source.
                 </span>
               </div>
             </div>
@@ -532,8 +524,7 @@
           <div class="privacy__copy">
             <h2 class="display-2" id="privacy-title" data-split>One folder. Nothing else.</h2>
             <p class="lead" data-fade>
-              The recorder watches the assignment folder and nothing else on the computer. If you
-              did the work, the record is the best evidence you have that you did it.
+              If you did the work, the record is the best evidence you have that you did.
             </p>
           </div>
           <div class="field" data-field aria-hidden="true"></div>
@@ -551,7 +542,6 @@
             <div class="sees__col sees__col--never" data-fade>
               <h3 class="sees__head mono">Never recorded</h3>
               <ul role="list">
-                <li>Anything outside the assignment folder</li>
                 <li>Your browser, screen, camera or other projects</li>
                 <li>Keystrokes at the system level</li>
                 <li>Your clipboard, unless you paste into the work</li>
@@ -565,7 +555,7 @@
               <strong>Yours to read.</strong> The log is plain text, on your computer until you hand
               it in.
             </li>
-            <li><strong>Open.</strong> Every line of the recorder is public.</li>
+
             <li>
               <strong>Not forever.</strong> Stored logs are deleted on a schedule your school sets.
             </li>
@@ -609,9 +599,8 @@
             <div class="tryit__copy">
               <h2 class="display-2" id="tryit-title" data-split>See it for yourself.</h2>
               <p class="lead" data-fade>
-                Type in the editor. Everything the recorder would write down appears beside it,
-                sealed link by link. Paste something, click away, come back. Nothing leaves this
-                page.
+                Type something. Paste something. Click away and come back. The record writes itself
+                alongside.
               </p>
             </div>
             <div class="tryit__slot" data-slot aria-hidden="true"></div>
@@ -650,17 +639,16 @@
         <div class="wrap limits__inner">
           <h2 class="display-2" id="limits-title" data-split>What it can&rsquo;t do.</h2>
           <p class="lead" data-fade>
-            No log is impossible to forge. Someone with enough time and skill can fake one, and our
-            own design documents say so. Provenance is built so the easy shortcuts leave marks, and
-            the hard ones cost more effort than the assignment. The source is public, and the design
-            assumes it.
+            No log is impossible to forge, and our own design documents say so. Provenance makes the
+            easy shortcuts leave marks, and the hard ones cost more than doing the work. The source
+            is public, and the design assumes it.
           </p>
           <blockquote class="quote" data-fade>
             <p>
               &ldquo;We will know if you do something obvious, and we will know enough to ask
               questions if you do something subtle.&rdquo;
             </p>
-            <footer class="mono">Provenance design document, section 6</footer>
+            <footer class="mono">From the Provenance design document</footer>
           </blockquote>
         </div>
       </section>

@@ -12,7 +12,7 @@ import { mountHistories } from './sections/histories';
 import { mountCohort } from './sections/cohort';
 import { mountSuite } from './sections/suite';
 import { mountTryit } from './sections/tryit';
-import { signalPattern } from './sections/outline';
+import { mountEmboss, signalPattern } from './sections/outline';
 import { setupReveals } from './sections/reveal';
 import { Acts } from './timeline/acts';
 import { createScroller } from './timeline/scroll';
@@ -69,6 +69,8 @@ async function boot(): Promise<void> {
   });
 
   // 2D graphics.
+  const emboss = $<HTMLElement>('.emboss');
+  if (emboss) mountEmboss(emboss);
   const pattern = $<HTMLElement>('[data-pattern]');
   if (pattern) pattern.style.backgroundImage = signalPattern('#b83f06', '#dc520b');
   const cohort = $<HTMLElement>('[data-cohort]');

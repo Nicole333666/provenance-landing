@@ -30,7 +30,7 @@ export class Ticker {
 
   setChain(chain: ChainedEvent[]): void {
     this.chain = chain;
-    this.status.textContent = `Chain verified. ${fmt.format(chain.length)} events, no breaks.`;
+    this.status.textContent = 'Chain verified.';
     const i = this.index;
     this.index = -1;
     this.show(Math.max(0, i));
@@ -54,7 +54,7 @@ export class Ticker {
     this.verdict = v;
     if (!v) {
       this.status.classList.remove('is-broken');
-      this.status.textContent = `Chain verified. ${fmt.format(this.chain.length)} events, no breaks.`;
+      this.status.textContent = 'Chain verified.';
       const i = this.index;
       this.index = -1;
       this.show(i);
@@ -62,9 +62,7 @@ export class Ticker {
     }
     if (v.ok) return;
     this.status.classList.add('is-broken');
-    this.status.textContent = `Broken at event ${fmt.format(v.brokenAt)}. The ${fmt.format(
-      v.downstream,
-    )} events after it no longer verify.`;
+    this.status.textContent = `Broken at event ${fmt.format(v.brokenAt)}. Nothing after it verifies.`;
     // Frame the break: a few verified rows, the broken one, then the unverified.
     this.paint(Math.min(this.chain.length - 1, v.brokenAt + 3), v);
   }
@@ -73,11 +71,9 @@ export class Ticker {
   showForged(forged: ChainedEvent[], edited: number, checkpoint: number, signed: string): void {
     this.verdict = { ok: true, count: forged.length };
     this.status.classList.add('is-broken');
-    this.status.textContent = `All ${fmt.format(forged.length - edited)} hashes after event ${fmt.format(
-      edited,
-    )} recomputed. The chain checks out until the checkpoint at event ${fmt.format(
+    this.status.textContent = `Resealed from event ${fmt.format(edited)}. Checkpoint at ${fmt.format(
       checkpoint,
-    )}: it was signed, and the signature no longer matches.`;
+    )}: signature mismatch.`;
     const last = Math.min(forged.length - 1, checkpoint + 3);
     for (let r = 0; r < ROWS; r++) {
       const li = this.rows[r]!;

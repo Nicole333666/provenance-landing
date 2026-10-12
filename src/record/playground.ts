@@ -176,11 +176,11 @@ export class Playground {
       note.className = 'is-note';
       note.textContent =
         Number(d.length) >= 40
-          ? 'A paste this size is shown to a person, with exactly what was pasted.'
-          : 'Small pastes are recorded too. Moving your own code is normal.';
+          ? 'A paste this size gets a second look from a person.'
+          : 'Small pastes are normal.';
       this.append(note);
     }
-    this.status.textContent = `${this.rows.length} event${this.rows.length === 1 ? '' : 's'}, chain verified`;
+    this.status.textContent = `${this.rows.length} event${this.rows.length === 1 ? '' : 's'}`;
   }
 
   private append(li: HTMLLIElement): void {
