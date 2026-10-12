@@ -2,13 +2,11 @@
    Without JS, or with reduced motion, everything is simply visible. */
 
 /* The hero needs no script: it rises on its own, so it paints immediately. */
+/* Transform only: the headline is the page's largest paint, and an element first
+   painted at opacity 0 is never counted as one. The mask hides it instead. */
 @keyframes rise {
   from {
-    transform: translateY(115%);
-    opacity: 0;
-  }
-  40% {
-    opacity: 1;
+    transform: translateY(140%);
   }
 }
 @keyframes fade-up {
@@ -22,7 +20,10 @@
     opacity: 0;
   }
 }
-html.motion:not(.ready) :is(.hero__title .line__inner, .hero__lead, .hero__actions, .nav) {
+html.motion:not(.ready) .hero__title .line__inner {
+  transform: translateY(140%);
+}
+html.motion:not(.ready) :is(.hero__lead, .hero__actions) {
   opacity: 0;
 }
 html.motion.ready .hero__title .line__inner {
@@ -37,9 +38,6 @@ html.motion.ready .hero__lead {
 }
 html.motion.ready .hero__actions {
   animation: fade-up 1.3s var(--ease-out) 0.77s both;
-}
-html.motion.ready .nav {
-  animation: fade-in 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.9s both;
 }
 
 html.motion [data-split] {
