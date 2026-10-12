@@ -522,3 +522,34 @@ Where the build departs from the sections above, deliberately:
   never travels across full-width copy.
 - **Copy**: "sealed when the work is handed in" became "handed in with the work", and "one
   signed file" became "the signed log", because git-based submissions have no seal step.
+
+## 10. Round 2 (approved 2026-10-12)
+
+Approved scope: items 1 to 7 of the round-2 proposal.
+
+**Order.** Night: hero, proof, thesis, _two histories_, the chain (logo, morph, chain, tamper
+that plays itself, then "now you try"). Relight. Day: _built not to accuse_, _see the process_,
+_one folder_, _try it_, limits. Signal: close. Cut: "two halves, one record", the "87%" figure,
+the old replay strip, "Every hash shown is computed in your browser".
+
+**Logo system.** Flat 2D mark: nav, footer, favicon, emboss, social avatar. Extruded mark (the
+2D mark with depth: flat face, softened edges, satin glaze), seen face-on first: hero, thesis,
+day, close. Round tubes only where links must work as a chain. The flat mark rounds out into
+chain links on screen (a cross-section morph on one shared geometry).
+
+**Illustrative assignment.** Fictional `trails.py` (no real course solutions on a public page;
+the round-1 session used live CS 61A Cats code). One final file, two histories that both
+reconstruct to it byte for byte: an evening of typing (about 4,000 events) and a tab-away plus a
+single paste. The page shows both SHA-256 digests, equal.
+
+**Fairness claims** (from `docs/heuristics.md`): pasting code you already typed is relabelled
+"code moved" at info severity and leaves the queue, never hidden; checks that cannot run report
+skipped, never failed; signals can be weighted or switched off, and some capture can be turned
+off by the course before recording; every flag opens its moment in the replay; a person decides.
+
+**Privacy claims:** assignment folder only; no network while recording; plain-text log; open
+source; course can turn capture signals off; stored logs deleted on a retention schedule the
+school sets. Not claimed: that code is not kept (edits are in the log by design).
+
+**Try it:** a small editor on the page records the visitor's typing, pastes and focus changes
+as hash-chained events, shows them live, and replays them. Nothing leaves the page.
