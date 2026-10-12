@@ -11,7 +11,7 @@ await page.goto(base, { waitUntil: 'networkidle' });
 await page.waitForTimeout(3000);
 await page.evaluate(() => {
   const el = document.querySelector('.how');
-  window.scrollTo(0, el.getBoundingClientRect().top + scrollY + 2.55 * innerHeight);
+  window.scrollTo(0, el.getBoundingClientRect().top + scrollY + 3.6 * innerHeight);
 });
 await page.waitForTimeout(2000);
 const status = () => page.locator('#chain-status').innerText();

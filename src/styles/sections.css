@@ -650,16 +650,19 @@ html.no-stage .tamper__still {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  white-space: nowrap;
 }
 .checks i {
+  flex: none;
+  display: block;
   width: 9px;
   height: 9px;
   border-radius: 50%;
 }
-.checks .ok {
+.checks .is-ok {
   background: var(--ink);
 }
-.checks .skip {
+.checks .is-skipped {
   box-shadow: inset 0 0 0 1.25px rgb(24 24 27 / 0.55);
 }
 .fair__pull {

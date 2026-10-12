@@ -112,7 +112,9 @@ export class Acts {
     // Object: hero -> thesis, then a cut to the mark while the two histories fill the
     // screen, the mark rounds into the chain, the relight, and a cut to the close.
     let s: number;
-    if (how.top >= vh) s = KF.hero + p01;
+    // Narrow: the close-up leaves (off-screen) once the histories take the screen.
+    if (narrow && how.top >= vh && histories.top < vh * 0.4) s = KF.mark;
+    else if (how.top >= vh) s = KF.hero + p01;
     else if (p23 <= 0) s = KF.mark + ramp(howP, 0.05, 0.22);
     else if (tryit.top + tryit.height / 2 > vh / 2) s = KF.chain + p23;
     else s = KF.close;

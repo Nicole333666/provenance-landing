@@ -1,8 +1,10 @@
 # provtools.com
 
 The landing page for [Provenance](https://github.com/ProvenanceTools): a single long scroll
-built around one real-time 3D object, the woven mark, which becomes a chain, breaks when you
-tamper with it, and is relit by daylight before the page closes on signal orange.
+built around the logo as a real-time 3D object. The extruded mark faces you as the logo, rounds
+out into a working chain, tears itself to show tamper-evidence, and is relit by daylight before
+the page closes on signal orange. Between those: two replays of the same file with different
+histories, the fairness and privacy design, and a live recorder visitors can type into.
 
 Static site: Vite + TypeScript, no UI framework. `three` for the scene, `gsap` (ScrollTrigger,
 SplitText) and `lenis` for scroll. Design spec: `docs/superpowers/specs/2026-10-12-landing-page-design.md`.
@@ -47,11 +49,15 @@ the fallback frames and the social card match the live scene.
 - **`src/timeline/`**: `Acts` turns scroll position into scene state (`state.s` between
   keyframes, chain growth), the ground mix (`--day-pos`, `--signal-top`) and the nav theme.
   Lenis drives smooth scrolling; there are no `window` scroll listeners.
-- **`src/record/`**: a deterministic illustrative session (event kinds from recorder PRD 4.2),
-  hash-chained in the browser with WebCrypto SHA-256, and a verifier that reports the first broken
-  event. The tamper demo edits the real chain and shows what the verifier finds.
-- **`src/sections/`**: entrances, the replay strip, the system line, the signal pattern and the
-  blind emboss.
+- **`src/record/`**: two deterministic sessions for a fictional assignment (`trails.py`; never a
+  real course's solution): an evening of work and a tab-away plus one paste, both rebuilding the
+  same file byte for byte (`Replay`). Hash-chained with WebCrypto SHA-256, a verifier that reports
+  the first broken event, the self-playing tamper demo, and the in-page `Playground` recorder.
+- **`src/sections/`**: entrances, the two-histories replays, the annotated evening, the privacy
+  field, and the signal pattern.
+- **Logo system**: flat 2D mark in the nav, footer and favicon; the extruded mark (same
+  proportions, with depth) wherever it is the hero; round links only where it works as a chain.
+  One swept geometry (`link-geometry.ts`) carries both cross-sections as a morph target.
 
 ### Fallbacks
 

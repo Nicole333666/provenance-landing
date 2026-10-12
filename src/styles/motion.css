@@ -75,7 +75,7 @@ html.no-js .still {
 }
 .still--cover img {
   object-fit: cover;
-  object-position: 50% 52%;
+  object-position: 50% 57%;
 }
 
 @media (prefers-reduced-motion: reduce) {

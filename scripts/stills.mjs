@@ -11,9 +11,9 @@ await mkdir(out, { recursive: true });
 // name, query, viewport, output widths
 const jobs = [
   ['still-hero', 's=0&ah=300', [1000, 1000], [520, 1040]],
-  ['still-chain', 's=2&g=1&ah=146&cy=0.52', [1920, 1080], [960, 1920]],
-  ['still-day', 's=3&ah=300', [1400, 1400], [700, 1400]],
-  ['still-close', 's=4&ah=300', [1000, 1000], [520, 1040]],
+  ['still-chain', 's=3&g=1&ah=146&cy=0.57', [1920, 1080], [960, 1920]],
+  ['still-day', 's=4&ah=300', [1400, 1400], [700, 1400]],
+  ['still-close', 's=5&ah=300', [1000, 1000], [520, 1040]],
 ];
 
 const browser = await chromium.launch({
