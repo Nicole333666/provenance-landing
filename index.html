@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Provenance: every line has a history</title>
+    <meta
+      name="description"
+      content="Provenance records how student code gets written, edit by edit, in a tamper-evident log. Process evidence for academic integrity, not AI detection. Open source."
+    />
+    <meta name="theme-color" content="#0c0806" />
+    <link rel="icon" href="/brand/favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://provtools.com/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://provtools.com/" />
+    <meta property="og:title" content="Provenance: every line has a history" />
+    <meta
+      property="og:description"
+      content="A tamper-evident record of how student code gets written. Process evidence, not AI detection. Open source, in use at UC Berkeley."
+    />
+    <meta property="og:image" content="https://provtools.com/img/og.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link
+      rel="preload"
+      href="/fonts/instrument-sans-var.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/ibm-plex-mono-400.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <script>
+      document.documentElement.classList.replace('no-js', 'js');
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.documentElement.classList.add('motion');
+      }
+    </script>
+  </head>
+
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <!-- The ground: night studio, daylight paper, signal orange. Scroll drives the mix. -->
+    <div class="ground" aria-hidden="true">
+      <div class="ground__night"></div>
+      <div class="ground__day"></div>
+      <div class="ground__signal"><div class="ground__pattern" data-pattern></div></div>
+    </div>
+
+    <canvas class="stage" aria-hidden="true"></canvas>
+    <div class="grain" aria-hidden="true"></div>
+
+    <header class="nav" data-theme="night">
+      <a class="nav__brand" href="#top" aria-label="Provenance, back to top">
+        <svg class="mark" viewBox="40 64 176 124" aria-hidden="true">
+          <defs>
+            <clipPath id="nav-cross"><rect x="96" y="50" width="64" height="78" /></clipPath>
+          </defs>
+          <rect class="mark__ink" x="50" y="74" width="96" height="104" rx="34" />
+          <rect class="mark__accent" x="110" y="74" width="96" height="104" rx="34" />
+          <g clip-path="url(#nav-cross)">
+            <rect class="mark__ink" x="50" y="74" width="96" height="104" rx="34" />
+          </g>
+        </svg>
+        <span class="wordmark">Provenance</span>
+      </a>
+      <nav class="nav__island" aria-label="Primary">
+        <a class="nav__link" href="#how">How it works</a>
+        <a class="nav__link" href="#students">For students</a>
+        <a class="nav__link" href="https://github.com/ProvenanceTools">GitHub</a>
+        <a
+          class="btn btn--primary btn--small"
+          href="mailto:aaryanm@berkeley.edu?subject=Provenance%20for%20my%20course"
+        >
+          <span>Talk to us</span>
+          <span class="btn__icon" aria-hidden="true">&#8599;</span>
+        </a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <!-- 0. Hero ------------------------------------------------------------ -->
+      <section class="hero" id="top" data-theme="night" aria-labelledby="hero-title">
+        <div class="hero__anchor" data-anchor="hero">
+          <picture class="still" style="--k: 333%">
+            <source
+              type="image/avif"
+              srcset="/img/still-hero-520.avif 520w, /img/still-hero-1040.avif 1040w"
+              sizes="(max-width: 640px) 70vw, 34vw"
+            />
+            <img
+              src="/img/still-hero-1040.webp"
+              srcset="/img/still-hero-520.webp 520w, /img/still-hero-1040.webp 1040w"
+              sizes="(max-width: 640px) 70vw, 34vw"
+              alt=""
+              width="1040"
+              height="1040"
+              decoding="async"
+            />
+          </picture>
+        </div>
+        <div class="wrap hero__inner">
+          <h1 class="hero__title display" id="hero-title" data-split>
+            Every line has<br />
+            a history.
+          </h1>
+          <div class="hero__side">
+            <p class="lead hero__lead" data-fade>
+              Provenance records how student code gets written, edit by edit, in a tamper-evident
+              log that travels with the submission.
+            </p>
+            <div class="actions" data-fade>
+              <a
+                class="btn btn--primary"
+                href="mailto:aaryanm@berkeley.edu?subject=Provenance%20for%20my%20course"
+              >
+                <span>Talk to us</span>
+                <span class="btn__icon" aria-hidden="true">&#8599;</span>
+              </a>
+              <a class="btn btn--ghost" href="https://github.com/ProvenanceTools">
+                <span>Read the source</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 1. Proof ----------------------------------------------------------- -->
+      <section class="proof" data-theme="night" aria-labelledby="proof-title">
+        <div class="wrap">
+          <h2 class="label" id="proof-title" data-fade>In use this semester at UC Berkeley</h2>
+          <ul class="proof__courses" role="list">
+            <li data-course>CS 61A</li>
+            <li data-course>CS 61B</li>
+            <li data-course>CS 61C</li>
+            <li data-course>CS 10</li>
+            <li data-course>DATA C88C</li>
+          </ul>
+          <p class="proof__stat" data-fade>
+            <span class="proof__number mono" data-count="2800">2,800+</span>
+            <span class="proof__caption">students recording their work</span>
+          </p>
+        </div>
+      </section>
+
+      <!-- 2. Thesis ---------------------------------------------------------- -->
+      <section class="thesis" data-theme="night" aria-labelledby="thesis-title">
+        <div class="thesis__anchor" data-anchor="thesis"></div>
+        <div class="wrap thesis__inner">
+          <h2 class="thesis__title statement" id="thesis-title" data-split>
+            The finished file is the easiest part to fake.
+          </h2>
+          <p class="lead thesis__body" data-fade>
+            Similarity checkers compare final submissions, and AI tools now produce final
+            submissions on demand. What&rsquo;s much harder to produce is the afternoon behind one:
+            the false starts, the deleted lines, the test that finally passed at 11:40&nbsp;p.m.
+          </p>
+        </div>
+      </section>
+
+      <!-- 3 + 4. The chain, then the tamper demo ------------------------------ -->
+      <section class="how" id="how" data-theme="night" aria-label="How it works">
+        <div class="how__sticky">
+          <div class="how__anchor" data-anchor="chain"></div>
+          <picture class="still still--cover" style="--k: none">
+            <source
+              type="image/avif"
+              srcset="/img/still-chain-960.avif 960w, /img/still-chain-1920.avif 1920w"
+              sizes="100vw"
+            />
+            <img
+              src="/img/still-chain-1920.webp"
+              srcset="/img/still-chain-960.webp 960w, /img/still-chain-1920.webp 1920w"
+              sizes="100vw"
+              alt=""
+              width="1920"
+              height="1080"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+
+          <div class="how__copy how__copy--chain" data-phase="chain">
+            <h2 class="display-2" data-split>Every edit is a link.</h2>
+            <p class="lead">
+              The recorder runs inside the student&rsquo;s editor. Each change, paste, save and
+              shift of focus becomes an event, and each event is hashed together with the one before
+              it. What you get is the work itself, in the order it happened, sealed into a chain.
+            </p>
+            <ol class="beats mono" role="list">
+              <li data-beat>sha-256, each event bound to the one before</li>
+              <li data-beat>checkpoints signed as the student works</li>
+              <li data-beat>sealed when the work is handed in</li>
+            </ol>
+          </div>
+
+          <div class="how__copy how__copy--tamper" data-phase="tamper">
+            <h2 class="display-2" data-split>Change one link, and the chain says so.</h2>
+            <p class="lead">
+              Rewrite an event after the fact and its hash stops matching. Every event after it
+              fails too, all the way to the end.
+              <span class="hint hint--fine">Go ahead: pull a link out of the chain.</span>
+              <span class="hint hint--coarse">Go ahead: tap a link to tamper with it.</span>
+              <span class="hint hint--still"
+                >Go ahead: tamper with one event and watch the ledger.</span
+              >
+            </p>
+            <button
+              class="btn btn--primary btn--small tamper__still"
+              type="button"
+              data-tamper-still
+            >
+              <span>Tamper with an event</span>
+            </button>
+          </div>
+
+          <div class="tamper" data-tamper aria-describedby="chain-status">
+            <button class="tamper__target" type="button" data-tamper-key>
+              Tamper with the link in the center of the chain
+            </button>
+          </div>
+
+          <div class="ledger">
+            <div class="ledger__head mono">
+              <span>cats.slog</span>
+              <span class="ledger__status" id="chain-status" role="status" aria-live="polite"
+                >Chain verified. 4,296 events, no breaks.</span
+              >
+            </div>
+            <ol class="ledger__rows mono" data-ticker role="list" aria-hidden="true"></ol>
+            <div class="ledger__foot">
+              <p class="ledger__note">
+                An illustrative session. Every hash shown is computed in your browser.
+              </p>
+              <button class="btn btn--ghost btn--small" type="button" data-reset hidden>
+                <span>Reset the chain</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- The relight: night becomes day ------------------------------------- -->
+      <div class="relight" aria-hidden="true"></div>
+
+      <!-- 5. Evidence -------------------------------------------------------- -->
+      <section class="evidence" data-theme="day" aria-labelledby="evidence-title">
+        <div class="wrap evidence__top">
+          <div class="evidence__copy">
+            <h2 class="display-2" id="evidence-title" data-split>Evidence, not a guess.</h2>
+            <p class="lead" data-fade>
+              AI detectors read finished code and return a probability. The scores are unreliable,
+              and no student can argue with one. Provenance doesn&rsquo;t score code at all. It
+              shows how the code came to exist: what was typed, what was pasted, and what changed
+              while the editor wasn&rsquo;t looking.
+            </p>
+          </div>
+          <div class="evidence__anchor" data-anchor="day">
+            <picture class="still" style="--k: 467%">
+              <source
+                type="image/avif"
+                srcset="/img/still-day-700.avif 700w, /img/still-day-1400.avif 1400w"
+                sizes="(max-width: 900px) 80vw, 46vw"
+              />
+              <img
+                src="/img/still-day-1400.webp"
+                srcset="/img/still-day-700.webp 700w, /img/still-day-1400.webp 1400w"
+                sizes="(max-width: 900px) 80vw, 46vw"
+                alt=""
+                width="1400"
+                height="1400"
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
+          </div>
+        </div>
+
+        <figure class="wrap verdicts">
+          <p class="verdicts__refused" data-strike>
+            <span class="verdicts__phrase">87% likely AI-generated</span>
+            <span class="verdicts__rule" aria-hidden="true"></span>
+          </p>
+          <figcaption class="verdicts__caption mono">
+            The kind of answer Provenance will never give.
+          </figcaption>
+          <div class="replay" data-replay>
+            <div class="replay__strip" data-replay-strip></div>
+            <div class="replay__axis mono" aria-hidden="true">
+              <span>20:55</span><span>22:00</span><span>23:00</span><span>23:41</span>
+            </div>
+            <p class="visually-hidden">
+              A replay timeline of the illustrative session: steady typing from 20:55 to 23:41, one
+              paste of 212 lines, and one file changed outside the editor.
+            </p>
+          </div>
+        </figure>
+
+        <div class="wrap evidence__verdict">
+          <p class="pull" data-fade>
+            <strong>A flag is a question, not a verdict.</strong>
+            Every case goes to a person, with the whole session to replay.
+          </p>
+        </div>
+      </section>
+
+      <!-- 6. System ---------------------------------------------------------- -->
+      <section class="system" data-theme="day" aria-labelledby="system-title">
+        <div class="wrap">
+          <h2 class="display-2 system__title" id="system-title" data-split>
+            Two halves, one record.
+          </h2>
+          <div class="system__diagram">
+            <div class="system__line" data-outline-chain aria-hidden="true"></div>
+            <article class="station" data-fade>
+              <h3 class="station__name">The recorder</h3>
+              <p class="station__where mono">in the editor</p>
+              <p>
+                Runs in VS Code, JetBrains IDEs and Neovim. Works offline. Watches the assignment
+                folder and nothing else.
+              </p>
+            </article>
+            <article class="station station--bundle" data-fade>
+              <h3 class="station__name">The bundle</h3>
+              <p class="station__where mono">with the submission</p>
+              <p>One signed file, handed in with the code.</p>
+            </article>
+            <article class="station" data-fade>
+              <h3 class="station__name">The analyzer</h3>
+              <p class="station__where mono">in the browser</p>
+              <p>
+                Where course staff review. See a whole cohort at once, then replay any submission
+                edit by edit. Every signal can be weighted or switched off by your staff, and
+                cross-submission checks catch the same paste turning up in different students&rsquo;
+                work.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. Students -------------------------------------------------------- -->
+      <section class="students" id="students" data-theme="day" aria-labelledby="students-title">
+        <div class="emboss" aria-hidden="true"></div>
+        <div class="wrap">
+          <div class="students__intro">
+            <h2 class="display-2" id="students-title" data-split>It works for you, too.</h2>
+            <p class="lead" data-fade>
+              If you did the work, the record is the best evidence you have that you did it. Here is
+              exactly what it sees.
+            </p>
+          </div>
+
+          <div class="sees">
+            <div class="sees__col" data-fade>
+              <h3 class="sees__head mono">Recorded</h3>
+              <ul role="list">
+                <li>Edits and pastes in the assignment folder</li>
+                <li>Saves, opened files and editor focus</li>
+                <li>Commands run in the editor&rsquo;s terminal</li>
+                <li>Which editor extensions are installed</li>
+              </ul>
+            </div>
+            <div class="sees__col sees__col--never" data-fade>
+              <h3 class="sees__head mono">Never recorded</h3>
+              <ul role="list">
+                <li>Anything outside the assignment folder</li>
+                <li>Your browser, screen, camera or other projects</li>
+                <li>Keystrokes at the system level</li>
+                <li>Your clipboard, unless you paste into the work</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="students__foot" data-fade>
+            <p>
+              No network requests while you work. The log stays on your computer until you hand it
+              in, and it&rsquo;s plain text you can read.
+            </p>
+            <a
+              class="btn btn--ink"
+              href="https://github.com/ProvenanceTools/provenance/blob/main/docs/student-guide.md"
+            >
+              <span>Install guide</span>
+              <span class="btn__icon" aria-hidden="true">&#8599;</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8. Limits ---------------------------------------------------------- -->
+      <section class="limits" data-theme="day" aria-labelledby="limits-title">
+        <div class="wrap limits__inner">
+          <h2 class="display-2" id="limits-title" data-split>What it can&rsquo;t do.</h2>
+          <p class="lead" data-fade>
+            No log is impossible to forge. Someone with enough time and skill can fake one, and our
+            own design documents say so. Provenance is built so the easy shortcuts leave marks, and
+            the hard ones cost more effort than the assignment. The source is public, and the design
+            assumes it.
+          </p>
+          <blockquote class="quote" data-fade>
+            <p>
+              &ldquo;We will know if you do something obvious, and we will know enough to ask
+              questions if you do something subtle.&rdquo;
+            </p>
+            <footer class="mono">Provenance design document, section 6</footer>
+          </blockquote>
+        </div>
+      </section>
+
+      <!-- 9. Close ----------------------------------------------------------- -->
+      <section class="close" data-theme="signal" aria-labelledby="close-title">
+        <div class="close__anchor" data-anchor="close">
+          <picture class="still" style="--k: 333%">
+            <source
+              type="image/avif"
+              srcset="/img/still-close-520.avif 520w, /img/still-close-1040.avif 1040w"
+              sizes="(max-width: 900px) 50vw, 30vw"
+            />
+            <img
+              src="/img/still-close-1040.webp"
+              srcset="/img/still-close-520.webp 520w, /img/still-close-1040.webp 1040w"
+              sizes="(max-width: 900px) 50vw, 30vw"
+              alt=""
+              width="1040"
+              height="1040"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+        </div>
+        <div class="wrap close__inner">
+          <h2 class="close__title display" id="close-title" data-split>
+            Bring Provenance<br />
+            to your course.
+          </h2>
+          <p class="lead close__lead" data-fade>
+            It&rsquo;s open source, and it already runs at the scale of a large intro course. Tell
+            us about yours.
+          </p>
+          <div class="actions" data-fade>
+            <a
+              class="btn btn--ink"
+              href="mailto:aaryanm@berkeley.edu?subject=Provenance%20for%20my%20course"
+            >
+              <span>Talk to us</span>
+              <span class="btn__icon" aria-hidden="true">&#8599;</span>
+            </a>
+            <a class="btn btn--outline" href="https://github.com/ProvenanceTools">
+              <span>Read the source</span>
+            </a>
+          </div>
+        </div>
+
+        <footer class="foot wrap">
+          <a class="foot__brand" href="#top" aria-label="Provenance, back to top">
+            <svg class="mark" viewBox="40 64 176 124" aria-hidden="true">
+              <defs>
+                <clipPath id="foot-cross"><rect x="96" y="50" width="64" height="78" /></clipPath>
+              </defs>
+              <rect class="mark__ink" x="50" y="74" width="96" height="104" rx="34" />
+              <rect class="mark__accent" x="110" y="74" width="96" height="104" rx="34" />
+              <g clip-path="url(#foot-cross)">
+                <rect class="mark__ink" x="50" y="74" width="96" height="104" rx="34" />
+              </g>
+            </svg>
+            <span class="wordmark">Provenance</span>
+          </a>
+          <ul class="foot__links" role="list">
+            <li><a href="https://github.com/ProvenanceTools">GitHub</a></li>
+            <li>
+              <a
+                href="https://github.com/ProvenanceTools/provenance/blob/main/docs/student-guide.md"
+                >Install guide</a
+              >
+            </li>
+            <li>
+              <a href="https://github.com/ProvenanceTools/provenance/blob/main/docs/admin-guide.md"
+                >Admin guide</a
+              >
+            </li>
+          </ul>
+          <p class="foot__made">Built at UC Berkeley.</p>
+        </footer>
+      </section>
+    </main>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

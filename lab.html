@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>lab</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        background: var(--bg, #0c0806);
+        overflow: hidden;
+      }
+      body {
+        background: radial-gradient(120% 80% at 50% -10%, #241a13 0%, #0c0806 45%, #050201 100%);
+      }
+      body.day {
+        background: #f1ece6;
+      }
+      body.signal {
+        background: #dc520b;
+      }
+      canvas {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+      [data-anchor] {
+        position: fixed;
+        outline: 1px dashed rgba(255, 0, 0, 0);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="c"></canvas>
+    <div data-anchor="hero" style="left: 52%; top: 24%; width: 20vh; height: 30vh"></div>
+    <div data-anchor="thesis" style="left: 58%; top: -30%; width: 80vh; height: 130vh"></div>
+    <div data-anchor="chain" style="left: 45%; top: 44%; width: 9vh; height: 12vh"></div>
+    <div data-anchor="day" style="left: 55%; top: 30%; width: 30vh; height: 36vh"></div>
+    <div data-anchor="close" style="left: 45%; top: 30%; width: 30vh; height: 30vh"></div>
+    <script type="module" src="/src/lab.ts"></script>
+  </body>
+</html>
