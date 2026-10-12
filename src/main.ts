@@ -1,8 +1,3 @@
-import './styles/base.css';
-import './styles/frame.css';
-import './styles/sections.css';
-import './styles/motion.css';
-
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { detect } from './capabilities';
 import { chainSession, type ChainedEvent } from './record/chain-hash';

@@ -4,7 +4,11 @@
 /* The hero needs no script: it rises on its own, so it paints immediately. */
 @keyframes rise {
   from {
-    transform: translateY(140%);
+    transform: translateY(115%);
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
   }
 }
 @keyframes fade-up {
@@ -13,18 +17,29 @@
     transform: translateY(26px);
   }
 }
-html.motion .hero__title .line__inner {
-  animation: rise 1.5s var(--ease-out) both;
-  animation-delay: calc(0.35s + var(--i, 0) * 0.09s);
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
 }
-html.motion .hero__title .line:nth-child(2) .line__inner {
+html.motion:not(.ready) :is(.hero__title .line__inner, .hero__lead, .hero__actions, .nav) {
+  opacity: 0;
+}
+html.motion.ready .hero__title .line__inner {
+  animation: rise 1.5s var(--ease-out) both;
+  animation-delay: calc(0.15s + var(--i, 0) * 0.09s);
+}
+html.motion.ready .hero__title .line:nth-child(2) .line__inner {
   --i: 1;
 }
-html.motion .hero__lead {
-  animation: fade-up 1.3s var(--ease-out) 0.85s both;
+html.motion.ready .hero__lead {
+  animation: fade-up 1.3s var(--ease-out) 0.65s both;
 }
-html.motion .hero__actions {
-  animation: fade-up 1.3s var(--ease-out) 0.97s both;
+html.motion.ready .hero__actions {
+  animation: fade-up 1.3s var(--ease-out) 0.77s both;
+}
+html.motion.ready .nav {
+  animation: fade-in 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.9s both;
 }
 
 html.motion [data-split] {

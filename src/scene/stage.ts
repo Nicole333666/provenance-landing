@@ -306,18 +306,21 @@ export class Stage {
     this.pointer.y += (state.pointer.y - this.pointer.y) * damp;
 
     const t = (now - this.born) / 1000;
-    const intro = state.reduced ? 1 : smooth(MathUtils.clamp(t / 2.2, 0, 1));
+    // Arrival: the object is lit from its first frame. It turns and rises into
+    // place while the canvas fades in, and the key light sweeps across the glaze.
+    const intro = state.reduced ? 1 : 1 - Math.pow(1 - MathUtils.clamp(t / 2.8, 0, 1), 4);
 
     // Group placement.
     const pos = new Vector3().lerpVectors(a.position, b.position, f);
-    const scale = a.scale + (b.scale - a.scale) * f;
+    const scale = (a.scale + (b.scale - a.scale) * f) * (0.94 + 0.06 * intro);
+    pos.y -= (1 - intro) * scale * 0.16;
     const quat = new Quaternion().slerpQuaternions(a.quaternion, b.quaternion, f);
     const parallax = k0.parallax + (k1.parallax - k0.parallax) * f;
-    const settle = (1 - intro) * 0.35;
+    const settle = (1 - intro) * 0.6;
     const breathe = state.reduced ? 0 : Math.sin(t * 0.55) * 0.02;
     const pq = new Quaternion().setFromEuler(
       new Euler(
-        -this.pointer.y * 0.16 * parallax + breathe,
+        -this.pointer.y * 0.16 * parallax + breathe + (1 - intro) * 0.22,
         this.pointer.x * 0.24 * parallax - settle,
         0,
       ),
@@ -396,13 +399,13 @@ export class Stage {
     // Light: night softbox above, or the low day sun from the upper left.
     const env = this.studio.update(day);
     if (env) this.scene.environment = env;
-    this.scene.environmentIntensity = (0.95 + day * 0.1) * (0.08 + 0.92 * intro);
-    const dir = new Vector3(0.18, 1, 0.34)
+    this.scene.environmentIntensity = (0.95 + day * 0.1) * (0.8 + 0.2 * intro);
+    const dir = new Vector3(0.18 + (1 - intro) * 0.9, 1, 0.34 - (1 - intro) * 0.5)
       .normalize()
       .lerp(new Vector3(-1, 0.62, 0.5).normalize(), day)
       .normalize();
     const breath = state.reduced ? 1 : 1 + Math.sin((t * Math.PI * 2) / 8) * 0.045;
-    this.key.intensity = (2.6 + day * 1.6) * intro * breath;
+    this.key.intensity = (2.6 + day * 1.6) * (0.7 + 0.3 * intro) * breath;
     this.key.color.setRGB(1, 0.94 - day * 0.03, 0.86 - day * 0.06);
     const reach = Math.max(
       scale * 3.2,
