@@ -75,5 +75,8 @@ address (`aaryanm@berkeley.edu`) is temporary.
 
 ## Deploying
 
-`npm run build` produces a plain static `dist/`. Any static host works. `public/robots.txt` and
-`public/sitemap.xml` assume the site is served at `https://provtools.com/`.
+Every push to `main` runs `.github/workflows/pages.yml`: `npm ci`, the tests, `npm run build`,
+then a GitHub Pages deploy of `dist/`. The custom domain is set in the repo's Pages settings.
+Assets are referenced from `/`, so the site expects to be served at a domain root (it will not
+render correctly under the default `/provenance-landing/` project path). `public/robots.txt` and
+`public/sitemap.xml` assume `https://provtools.com/`.
