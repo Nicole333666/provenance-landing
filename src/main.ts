@@ -33,7 +33,7 @@ async function boot(): Promise<void> {
   // In-page links fade through rather than racing down the page: the screen
   // fades to the destination's ground, jumps there, and fades back in.
   const veil = $<HTMLElement>('.veil')!;
-  const GROUNDS: Record<string, string> = { night: '#0c0806', day: '#f1ece6', signal: '#dc520b' };
+  const GROUNDS: Record<string, string> = { night: '#06142a', day: '#f7f7f5', signal: '#fdb515' };
   let jumping = false;
   const jump = (target: HTMLElement | null) => {
     if (jumping) return;
@@ -72,7 +72,7 @@ async function boot(): Promise<void> {
   const emboss = $<HTMLElement>('.emboss');
   if (emboss) mountEmboss(emboss);
   const pattern = $<HTMLElement>('[data-pattern]');
-  if (pattern) pattern.style.backgroundImage = signalPattern('#b83f06', '#dc520b');
+  if (pattern) pattern.style.backgroundImage = signalPattern('#fc9313', '#fdb515');
   const cohort = $<HTMLElement>('[data-cohort]');
   if (cohort) disposers.push(mountCohort(cohort, $<HTMLElement>('[data-count]'), { reduced }));
   const suite = $<HTMLElement>('[data-suite]');

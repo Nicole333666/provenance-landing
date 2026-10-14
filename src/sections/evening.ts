@@ -26,7 +26,7 @@ export function mountEvening(plot: HTMLElement, axis: HTMLElement, session: Sess
       if (!c) return;
       const px = ((i + 0.5) / bins) * W;
       const h = 6 + Math.sqrt(c / max) * H * 0.5;
-      ink += `<line x1="${px.toFixed(1)}" x2="${px.toFixed(1)}" y1="${base}" y2="${(base - h).toFixed(1)}" stroke="rgb(24 24 27 / .55)" stroke-width="1"/>`;
+      ink += `<line x1="${px.toFixed(1)}" x2="${px.toFixed(1)}" y1="${base}" y2="${(base - h).toFixed(1)}" stroke="rgb(4 30 66 / .55)" stroke-width="1"/>`;
     });
     // The editor in use: a line while it has focus, nothing while it doesn't.
     let focused = true;
@@ -36,22 +36,22 @@ export function mountEvening(plot: HTMLElement, axis: HTMLElement, session: Sess
       if (e.kind !== 'focus.change') continue;
       const on = Boolean(e.data.focused);
       if (focused && !on)
-        band += `<line x1="${x(from).toFixed(1)}" x2="${x(e.t).toFixed(1)}" y1="${base}" y2="${base}" stroke="rgb(24 24 27 / .8)" stroke-width="2"/>`;
+        band += `<line x1="${x(from).toFixed(1)}" x2="${x(e.t).toFixed(1)}" y1="${base}" y2="${base}" stroke="rgb(4 30 66 / .8)" stroke-width="2"/>`;
       if (!focused && on) from = e.t;
       focused = on;
     }
-    band += `<line x1="${x(from).toFixed(1)}" x2="${W}" y1="${base}" y2="${base}" stroke="rgb(24 24 27 / .8)" stroke-width="2"/>`;
+    band += `<line x1="${x(from).toFixed(1)}" x2="${W}" y1="${base}" y2="${base}" stroke="rgb(4 30 66 / .8)" stroke-width="2"/>`;
     ink = band + ink;
     // The stuck stretch, softly shaded.
     ink =
-      `<rect x="${x(marks.stuck.from).toFixed(1)}" y="${(H * 0.22).toFixed(1)}" width="${(x(marks.stuck.to) - x(marks.stuck.from)).toFixed(1)}" height="${(base - H * 0.22).toFixed(1)}" fill="rgb(234 88 12 / .07)"/>` +
+      `<rect x="${x(marks.stuck.from).toFixed(1)}" y="${(H * 0.22).toFixed(1)}" width="${(x(marks.stuck.to) - x(marks.stuck.from)).toFixed(1)}" height="${(base - H * 0.22).toFixed(1)}" fill="rgb(253 181 21 / .16)"/>` +
       ink;
 
     // Test runs: small ticks below the line of work.
     for (const e of events) {
       if (e.kind === 'terminal.command') {
         const px = x(e.t).toFixed(1);
-        ink += `<line x1="${px}" x2="${px}" y1="${base - 3}" y2="${base + 6}" stroke="rgb(24 24 27 / .8)" stroke-width="1.25"/>`;
+        ink += `<line x1="${px}" x2="${px}" y1="${base - 3}" y2="${base + 6}" stroke="rgb(4 30 66 / .8)" stroke-width="1.25"/>`;
       }
     }
 
@@ -59,7 +59,7 @@ export function mountEvening(plot: HTMLElement, axis: HTMLElement, session: Sess
       const a = x(t0);
       const b = x(t1);
       const cls = accent ? 'evening__note evening__note--accent' : 'evening__note';
-      const color = accent ? '#ea580c' : 'rgb(24 24 27 / .7)';
+      const color = accent ? '#002676' : 'rgb(4 30 66 / .7)';
       const span = Math.abs(b - a) > 2;
       return `<g class="evening__mark" data-at="${(t0 / duration).toFixed(3)}">
         ${span ? `<line x1="${a}" x2="${b}" y1="${y}" y2="${y}" stroke="${color}" stroke-width="1.25"/>` : ''}
@@ -102,7 +102,7 @@ export function mountEvening(plot: HTMLElement, axis: HTMLElement, session: Sess
       );
 
     plot.innerHTML = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" aria-hidden="true">
-      <line x1="0" x2="${W}" y1="${base}" y2="${base}" stroke="rgb(24 24 27 / .25)"/>
+      <line x1="0" x2="${W}" y1="${base}" y2="${base}" stroke="rgb(4 30 66 / .25)"/>
       <g class="evening__ink">${ink}${notes}</g>
     </svg>`;
 

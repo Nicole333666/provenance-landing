@@ -3,7 +3,7 @@
 The landing page for [Provenance](https://github.com/ProvenanceTools): a single long scroll
 built around the logo as a real-time 3D object. The extruded mark faces you as the logo, rounds
 out into a working chain, tears itself to show tamper-evidence, and is relit by daylight before
-the page closes on signal orange. Between those: two records of the same file with different
+the page closes on California Gold. Between those: two records of the same file with different
 histories, the fairness and privacy design, and a live recorder visitors can type into.
 
 Static site: Vite + TypeScript, no UI framework. `three` for the scene, `gsap` (ScrollTrigger,

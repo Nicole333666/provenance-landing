@@ -41,17 +41,22 @@
 /* ----------------------------------------------------------------- tokens */
 
 :root {
-  --night-0: #050201;
-  --night-1: #0c0806;
-  --night-2: #1f1711;
-  --porcelain: #f4f1ec;
-  --accent-n: #f97316;
-  --day-0: #f1ece6;
-  --day-1: #e4dfd9;
-  --ink: #18181b;
-  --accent-d: #ea580c;
-  --signal: #dc520b;
-  --signal-rule: #b83f06;
+  /* UC Berkeley. Night is Pantone 282 navy taken toward black; blue and gold are used solid,
+     never as tints. On navy the mark is white and gold; on paper, Berkeley Blue and gold. */
+  --night-0: #020a16;
+  --night-1: #06142a;
+  --night-2: #0d2240;
+  --porcelain: #f5f5f2;
+  --accent-n: #fdb515;
+  --day-0: #f7f7f5;
+  --day-1: #e9e9e5;
+  --ink: #041e42;
+  --blue: #002676;
+  --gold: #fdb515;
+  --gold-hover: #ffc31b;
+  --accent-d: #002676;
+  --signal: #fdb515;
+  --signal-rule: #fc9313;
 
   --sans: 'Instrument Sans', 'Instrument Sans Fallback', ui-sans-serif, system-ui, sans-serif;
   --mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
@@ -72,7 +77,7 @@
   --z-nav: 10;
   --z-sheet: 20;
 
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 /* ------------------------------------------------------------------- base */
@@ -86,13 +91,13 @@
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  background: var(--night-1);
+  background: var(--day-0);
 }
 
 body {
   margin: 0;
-  background: var(--night-1);
-  color: var(--porcelain);
+  background: var(--day-0);
+  color: var(--ink);
   font-family: var(--sans);
   font-size: 1rem;
   line-height: 1.5;
@@ -143,7 +148,7 @@ button {
 }
 
 :focus-visible {
-  outline: 2px solid currentColor;
+  outline: 2px solid var(--focus, currentColor);
   outline-offset: 4px;
   border-radius: 4px;
 }

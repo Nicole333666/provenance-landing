@@ -50,6 +50,22 @@ describe('formPoses', () => {
   });
 });
 
+describe('chain <-> pair', () => {
+  it('the pair never passes through itself on the way to or from the chain', () => {
+    // The second link's top edge stays on the far side of the first link's plane.
+    const chain = formPoses('chain', 0, makePoses());
+    const pair = formPoses('pair', 0, makePoses());
+    const out = makePoses();
+    const up = new Vector3(0, 1, 0);
+    for (let t = 0; t <= 1.0001; t += 0.05) {
+      blendPoses(chain, pair, t, out);
+      const relative = out[0]!.quaternion.clone().invert().multiply(out[1]!.quaternion);
+      const edge = up.clone().applyQuaternion(relative);
+      expect(edge.z).toBeLessThan(-Math.sin((20 * Math.PI) / 180));
+    }
+  });
+});
+
 describe('blendPoses', () => {
   it('interpolates position and scale', () => {
     const a = formPoses('pair', 0, makePoses());

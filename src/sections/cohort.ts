@@ -54,10 +54,10 @@ export function mountCohort(
       const x = (i % cols) * cell + (cell - mark) / 2;
       const y = Math.floor(i / cols) * cell + (cell - mark) / 2;
       const on = rank[i]! < lit;
-      // The newest marks are briefly warm, then settle to porcelain.
+      // The newest marks are briefly gold, then settle to Berkeley Blue.
       const age = lit - rank[i]!;
-      if (on && age < 90 && progress < 1) ctx.fillStyle = 'rgb(249 115 22 / .9)';
-      else ctx.fillStyle = on ? 'rgb(244 241 236 / .62)' : 'rgb(244 241 236 / .07)';
+      if (on && age < 90 && progress < 1) ctx.fillStyle = 'rgb(253 181 21)';
+      else ctx.fillStyle = on ? 'rgb(0 38 118 / .7)' : 'rgb(4 30 66 / .07)';
       ctx.beginPath();
       ctx.roundRect(x, y, mark, mark, r);
       ctx.fill();

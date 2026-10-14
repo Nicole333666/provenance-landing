@@ -11,7 +11,7 @@ const MAX_SLOT = Math.max(...SLOTS);
 
 /** The link the demo pulls: left of the signed checkpoint, so the checkpoint is downstream. */
 const PULLED = SLOTS.indexOf(-2);
-/** The signed checkpoint is the orange link. */
+/** The signed checkpoint is the gold link. */
 const CHECKPOINT_SLOT = chainSlot(1);
 
 /** The event a chain slot stands for: slots run in time order along the chain. */

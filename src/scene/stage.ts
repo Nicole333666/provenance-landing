@@ -15,6 +15,7 @@ import {
   Scene,
   ShadowMaterial,
   SRGBColorSpace,
+  ShaderChunk,
   Vector2,
   Vector3,
   VSMShadowMap,
@@ -28,13 +29,24 @@ import { createLinkGeometry, LINK, LINK_OUTER } from './link-geometry';
 import { blendPoses, chainSlot, formPoses, LINK_COUNT, makePoses, type Pose } from './poses';
 import type { SceneState } from './state';
 
+// Neutral tone mapping blends anything bright 15% toward white. California Gold's red
+// channel is always bright, so it washed to cream; keep a trace of the roll-off for highlights.
+ShaderChunk.tonemapping_pars_fragment = ShaderChunk.tonemapping_pars_fragment.replace(
+  'const float Desaturation = 0.15;',
+  'const float Desaturation = 0.03;',
+);
+
 const COLORS = {
-  porcelain: new Color('#f2ede4'),
-  accent: new Color('#f2621a'),
-  accentDay: new Color('#ec5a12'),
-  ink: new Color('#141416'),
-  ash: new Color('#2b2724'),
-  hot: new Color('#ff6d1f'),
+  porcelain: new Color('#f2f2ef'),
+  // California Gold, a touch more yellow at night: the softbox lights it less than the sun,
+  // and the lit face should still read bright gold, not amber.
+  accent: new Color('#ffc21f'),
+  accentDay: new Color('#fdb515'),
+  // Berkeley Blue.
+  ink: new Color('#002676'),
+  // Broken links go dark into the navy, not to grey steel.
+  ash: new Color('#17223c'),
+  hot: new Color('#ffc31b'),
 };
 
 const FOV = 22;
@@ -137,9 +149,12 @@ export class Stage {
       color: 0xffffff,
       roughness: 0.44,
       metalness: 0,
-      clearcoat: 1,
+      clearcoat: 0.8,
+      // A broad base reflection of the bright studio veiled every colour; the clearcoat
+      // keeps the sharp highlights.
+      specularIntensity: 0.3,
       clearcoatRoughness: 0.09,
-      sheen: opts.lowPower ? 0 : 0.12,
+      sheen: opts.lowPower ? 0 : 0.04,
       sheenRoughness: 0.55,
       sheenColor: new Color(1, 1, 1),
     });
@@ -168,7 +183,7 @@ export class Stage {
     this.catcher.receiveShadow = true;
     this.scene.add(this.catcher);
 
-    this.scene.fog = new Fog(new Color('#0a0705'), 14, 42);
+    this.scene.fog = new Fog(new Color('#020a16'), 14, 42);
     this.camera.position.set(0, 0, CAMERA_Z);
     this.resolveAnchors();
     this.resize();
@@ -246,7 +261,7 @@ export class Stage {
 
   /**
    * The cover-up: every hash after the edit recomputed. Links turn back to normal
-   * one by one, except the signed checkpoint (the orange link), which no longer fits.
+   * one by one, except the signed checkpoint (the gold link), which no longer fits.
    */
   setCover(k: number): void {
     this.coverTarget = Math.min(1, Math.max(0, k));
@@ -381,10 +396,20 @@ export class Stage {
     const local = new Matrix4();
     const lp = this.poses;
     const color = new Color();
-    const dayColor = new Color();
+    const scratch = new Color();
     const day = k0.day + (k1.day - k0.day) * f;
-    const colorDay =
-      (k0.colorway === 'day' ? 1 : 0) * (1 - f) + (k1.colorway === 'day' ? 1 : 0) * f;
+    // Blue to porcelain in display space, eased: a linear-light blend sits in a washed grey.
+    const blue = MathUtils.smootherstep(
+      (k0.ink === 'blue' ? 1 : 0) * (1 - f) + (k1.ink === 'blue' ? 1 : 0) * f,
+      0.2,
+      0.8,
+    );
+    const inkColor = new Color()
+      .copy(COLORS.porcelain)
+      .convertLinearToSRGB()
+      .lerp(new Color().copy(COLORS.ink).convertLinearToSRGB(), blue)
+      .convertSRGBToLinear();
+    const accentColor = new Color().copy(COLORS.accent).lerp(COLORS.accentDay, day);
 
     for (let i = 0; i < LINK_COUNT; i++) {
       const p = lp[i]!;
@@ -400,11 +425,9 @@ export class Stage {
 
       // Colour: base colourway, then the break.
       const isAccent = i === 1;
-      color.copy(isAccent ? COLORS.accent : COLORS.porcelain);
-      dayColor.copy(isAccent ? COLORS.accentDay : COLORS.ink);
-      color.lerp(dayColor, colorDay);
+      color.copy(isAccent ? accentColor : inkColor);
       if (this.brokenSlot !== null && demo > 0) {
-        const base = dayColor.copy(color);
+        const base = scratch.copy(color);
         const slot = chainSlot(i);
         const d = slot - this.brokenSlot;
         const healed = MathUtils.clamp(coverWave - d, 0, 1);
@@ -428,13 +451,21 @@ export class Stage {
     const env = this.studio.update(day);
     if (env) this.scene.environment = env;
     this.scene.environmentIntensity = (0.95 + day * 0.1) * (0.8 + 0.2 * intro);
+    const sun = (k0.sun ?? 1) + ((k1.sun ?? 1) - (k0.sun ?? 1)) * f;
+    const sunDir = new Vector3(-0.3, 0.95, 0.75)
+      .normalize()
+      .lerp(new Vector3(-1, 0.62, 0.5).normalize(), sun)
+      .normalize();
     const dir = new Vector3(0.22 + (1 - intro) * 0.9, 0.95, 0.72 - (1 - intro) * 0.6)
       .normalize()
-      .lerp(new Vector3(-1, 0.62, 0.5).normalize(), day)
+      .lerp(sunDir, day)
       .normalize();
     const breath = idle ? 1 + Math.sin((t * Math.PI * 2) / 8) * 0.045 : 1;
     this.key.intensity = (2.6 + day * 1.6) * (0.7 + 0.3 * intro) * breath;
-    this.key.color.setRGB(1, 0.94 - day * 0.03, 0.86 - day * 0.06);
+    // The studio is dim: lift the object (only the object: the ground is CSS) so the gold
+    // still reads bright at night.
+    this.renderer.toneMappingExposure = MathUtils.lerp(1.15, 1, day);
+    this.key.color.setRGB(1, 0.97 - day * 0.02, 0.93 - day * 0.05);
     const reach = Math.max(
       scale * 3.2,
       k0.form === 'chain' || k1.form === 'chain' ? this.visibleW * 0.7 : 0,
@@ -449,7 +480,7 @@ export class Stage {
     sc.near = 0.1;
     sc.far = reach * 6;
     sc.updateProjectionMatrix();
-    this.key.shadow.radius = MathUtils.lerp(14, 5, day);
+    this.key.shadow.radius = MathUtils.lerp(14, 5, day * sun);
 
     // Night fog gives the chain depth; daylight is clear.
     const fog = this.scene.fog as Fog;

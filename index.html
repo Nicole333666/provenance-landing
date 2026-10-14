@@ -8,7 +8,7 @@
       name="description"
       content="Provenance records how student code gets written, edit by edit, in a tamper-evident log. Process evidence for academic integrity, not AI detection. Open source."
     />
-    <meta name="theme-color" content="#0c0806" />
+    <meta name="theme-color" content="#f7f7f5" />
     <link rel="icon" href="/brand/favicon.svg" type="image/svg+xml" />
     <link rel="canonical" href="https://provtools.com/" />
 
@@ -39,12 +39,12 @@
       crossorigin
     />
 
-    <!-- Paint the night ground before anything else loads: no white frame. -->
+    <!-- Paint the day ground before anything else loads: the page opens on paper. -->
     <style>
       html,
       body {
-        background: #0c0806;
-        color: #f4f1ec;
+        background: #f7f7f5;
+        color: #041e42;
       }
     </style>
     <link rel="stylesheet" href="/src/styles/index.css" />
@@ -75,9 +75,10 @@
   <body>
     <a class="skip" href="#main">Skip to content</a>
 
-    <!-- The ground: night studio, daylight paper, signal orange. Scroll drives the mix. -->
+    <!-- The ground: daylight paper, night studio, signal gold. Scroll drives the mix. -->
     <div class="ground" aria-hidden="true">
       <div class="ground__night"></div>
+      <div class="ground__dawn"></div>
       <div class="ground__day"></div>
       <div class="ground__signal"><div class="ground__pattern" data-pattern></div></div>
     </div>
@@ -86,7 +87,7 @@
     <div class="grain" aria-hidden="true"></div>
     <div class="veil" aria-hidden="true"></div>
 
-    <header class="nav" data-theme="night">
+    <header class="nav" data-theme="day">
       <a class="nav__brand" href="#top" aria-label="Provenance, back to top">
         <svg class="mark" viewBox="40 64 176 124" aria-hidden="true">
           <defs>
@@ -117,7 +118,7 @@
 
     <main id="main">
       <!-- 0. Hero ------------------------------------------------------------ -->
-      <section class="hero" id="top" data-theme="night" aria-labelledby="hero-title">
+      <section class="hero" id="top" data-theme="day" aria-labelledby="hero-title">
         <div class="hero__anchor" data-anchor="hero">
           <picture class="still" style="--k: 333%">
             <source
@@ -163,7 +164,7 @@
       </section>
 
       <!-- 1. Proof ----------------------------------------------------------- -->
-      <section class="proof" data-theme="night" aria-labelledby="proof-title">
+      <section class="proof" data-theme="day" aria-labelledby="proof-title">
         <div class="wrap">
           <h2 class="label" id="proof-title" data-fade>In use this semester at UC Berkeley</h2>
           <ul class="proof__courses" role="list">
@@ -287,7 +288,7 @@
             <p class="lead">
               Every change, paste and save is sealed to the one before it, in one unbroken line from
               the first keystroke to the hand-in. Along the way the recorder signs checkpoints, like
-              the orange link.
+              the gold link.
             </p>
           </div>
 

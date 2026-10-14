@@ -227,7 +227,7 @@ export function mountHistories(
 /**
  * One record on the shared clock: typing as hairlines, a solid baseline while the
  * editor has focus and a dotted one while it sits in the background, test runs as
- * ticks under the line, a paste as one tall orange bar.
+ * ticks under the line, a paste as one tall gold bar.
  */
 function drawTrack(session: Session, span: number, w: number): string {
   const H = 64;

@@ -12,21 +12,41 @@
   inset: 0;
 }
 
-/* Night: one overhead softbox on a black studio wall. */
+/* Night: one overhead softbox on a navy studio wall. */
 .ground__night {
   background:
     radial-gradient(
       70% 55% at 62% 4%,
-      rgb(70 52 38 / 0.55) 0%,
-      rgb(36 26 19 / 0.35) 38%,
+      rgb(24 48 86 / 0.5) 0%,
+      rgb(12 28 54 / 0.32) 38%,
       transparent 72%
     ),
     radial-gradient(140% 100% at 50% 0%, var(--night-1) 40%, var(--night-0) 100%);
 }
 
-/* Day: paper under a low sun, slightly warmer where the light lands. */
+/* Day: paper under a low sun, slightly brighter where the light lands. */
+.ground__dawn,
 .ground__day {
-  /* Daylight floods in from the upper left, where the sun is, with a soft edge. */
+  background:
+    radial-gradient(90% 70% at 18% 8%, rgb(255 254 250 / 0.9) 0%, transparent 60%),
+    radial-gradient(120% 100% at 50% 50%, var(--day-0) 50%, #ebebe7 100%);
+}
+/* The page opens on paper. The night rises with the thesis, its soft edge riding the
+   section's top, so every block of text stays on its own ground. */
+.ground__dawn {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 var(--dawn, 200vh),
+    transparent calc(var(--dawn, 200vh) + 20vh)
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    #000 var(--dawn, 200vh),
+    transparent calc(var(--dawn, 200vh) + 20vh)
+  );
+}
+/* After the mechanism, daylight floods back in from the upper left, where the sun is. */
+.ground__day {
   --edge: calc(var(--day-pos, -10) * 1%);
   -webkit-mask-image: linear-gradient(
     128deg,
@@ -38,12 +58,20 @@
     #000 calc(var(--edge) - 30%),
     transparent calc(var(--edge) + 10%)
   );
-  background:
-    radial-gradient(90% 70% at 18% 8%, rgb(255 251 244 / 0.9) 0%, transparent 60%),
-    radial-gradient(120% 100% at 50% 50%, var(--day-0) 50%, #e8e2db 100%);
 }
 
-/* Signal: an orange sheet that rises with the close section. */
+/* Without script nothing drives the ground, so each section carries its own. */
+html.no-js [data-theme='night'] {
+  background: var(--night-1);
+}
+html.no-js [data-theme='day'] {
+  background: var(--day-0);
+}
+html.no-js [data-theme='signal'] {
+  background: var(--signal);
+}
+
+/* Signal: a gold sheet that rises with the close section. */
 .ground__signal {
   background: var(--signal);
   clip-path: inset(var(--signal-top, 100%) 0 0 0);
@@ -105,21 +133,24 @@ main {
   --mark-ink: var(--porcelain);
   --mark-accent: var(--accent-n);
   --accent: var(--accent-n);
-  --hair: rgb(244 241 236 / 0.14);
+  --focus: var(--gold);
+  --hair: rgb(245 245 242 / 0.14);
 }
 [data-theme='day'] {
   color: var(--ink);
-  --mark-ink: var(--ink);
-  --mark-accent: var(--accent-d);
+  --mark-ink: var(--blue);
+  --mark-accent: var(--gold);
   --accent: var(--accent-d);
-  --hair: rgb(24 24 27 / 0.14);
+  --focus: var(--blue);
+  --hair: rgb(4 30 66 / 0.14);
 }
 [data-theme='signal'] {
   color: var(--ink);
-  --mark-ink: var(--ink);
+  --mark-ink: var(--blue);
   --mark-accent: var(--porcelain);
   --accent: var(--ink);
-  --hair: rgb(24 24 27 / 0.22);
+  --focus: var(--blue);
+  --hair: rgb(4 30 66 / 0.22);
 }
 
 /* ------------------------------------------------------------------- mark */
@@ -201,15 +232,15 @@ main {
 }
 
 .btn--primary {
-  background: var(--porcelain);
+  background: var(--gold);
   color: var(--ink);
 }
 .btn--primary .btn__icon {
-  background: var(--accent-n);
-  color: var(--night-1);
+  background: var(--ink);
+  color: var(--gold);
 }
 .btn--primary:hover {
-  background: #fff9f2;
+  background: var(--gold-hover);
 }
 
 .btn--ghost {
@@ -221,26 +252,26 @@ main {
 }
 
 .btn--ink {
-  background: var(--ink);
+  background: var(--blue);
   color: var(--porcelain);
 }
 .btn--ink .btn__icon {
-  background: var(--accent);
+  background: var(--gold);
   color: var(--ink);
 }
 [data-theme='signal'] .btn--ink .btn__icon {
   background: var(--porcelain);
 }
 .btn--ink:hover {
-  background: #26262b;
+  background: var(--accent-d);
 }
 
 .btn--outline {
   color: var(--ink);
-  box-shadow: inset 0 0 0 1px rgb(24 24 27 / 0.42);
+  box-shadow: inset 0 0 0 1px rgb(4 30 66 / 0.42);
 }
 .btn--outline:hover {
-  box-shadow: inset 0 0 0 1px rgb(24 24 27 / 0.85);
+  box-shadow: inset 0 0 0 1px rgb(4 30 66 / 0.85);
 }
 
 .actions {
@@ -284,8 +315,8 @@ main {
   gap: 4px;
   padding: 5px 5px 5px 10px;
   border-radius: 999px;
-  background: rgb(244 241 236 / 0.06);
-  box-shadow: inset 0 0 0 1px rgb(244 241 236 / 0.1);
+  background: rgb(245 245 242 / 0.06);
+  box-shadow: inset 0 0 0 1px rgb(245 245 242 / 0.1);
   backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
   transition:
@@ -293,16 +324,15 @@ main {
     box-shadow 0.5s var(--ease-soft);
 }
 .nav[data-theme='day'] .nav__island {
-  background: rgb(241 236 230 / 0.72);
-  box-shadow: inset 0 0 0 1px rgb(24 24 27 / 0.08);
+  background: rgb(247 247 245 / 0.72);
+  box-shadow: inset 0 0 0 1px rgb(4 30 66 / 0.08);
 }
 .nav[data-theme='signal'] .nav__island {
-  background: rgb(24 24 27 / 0.08);
-  box-shadow: inset 0 0 0 1px rgb(24 24 27 / 0.12);
+  background: rgb(4 30 66 / 0.08);
+  box-shadow: inset 0 0 0 1px rgb(4 30 66 / 0.12);
 }
-.nav[data-theme='day'] .btn--primary,
 .nav[data-theme='signal'] .btn--primary {
-  background: var(--ink);
+  background: var(--blue);
   color: var(--porcelain);
 }
 .nav[data-theme='signal'] .btn--primary .btn__icon {
@@ -328,15 +358,15 @@ main {
 /* Touch screens: a solid island instead of a live blur over the moving page. */
 @media (pointer: coarse) {
   .nav__island {
-    background: rgb(30 24 20 / 0.86);
+    background: rgb(10 24 46 / 0.86);
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }
   .nav[data-theme='day'] .nav__island {
-    background: rgb(241 236 230 / 0.94);
+    background: rgb(247 247 245 / 0.94);
   }
   .nav[data-theme='signal'] .nav__island {
-    background: rgb(196 72 9 / 0.94);
+    background: rgb(236 166 14 / 0.94);
   }
 }
 

@@ -108,10 +108,10 @@ export function mountEmboss(host: HTMLElement): void {
       <clipPath id="emboss-cross"><rect x="96" y="50" width="64" height="78"/></clipPath>
       <filter id="emboss" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
         <feDropShadow dx="-0.7" dy="-0.7" stdDeviation="0.35" flood-color="#ffffff" flood-opacity="0.95"/>
-        <feDropShadow dx="0.9" dy="1.1" stdDeviation="0.9" flood-color="#5e4a36" flood-opacity="0.2"/>
+        <feDropShadow dx="0.9" dy="1.1" stdDeviation="0.9" flood-color="#2a3140" flood-opacity="0.2"/>
       </filter>
     </defs>
-    <g fill="none" stroke="#efeae4" stroke-width="18">
+    <g fill="none" stroke="#f4f4f2" stroke-width="18">
       <rect filter="url(#emboss)" x="50" y="74" width="96" height="104" rx="34"/>
       <rect filter="url(#emboss)" x="110" y="74" width="96" height="104" rx="34"/>
       <g clip-path="url(#emboss-cross)"><rect filter="url(#emboss)" x="50" y="74" width="96" height="104" rx="34"/></g>

@@ -81,12 +81,12 @@ export class Studio {
     this.lastMix = m;
 
     const lerp = (a: Color, b: Color) => a.clone().lerp(b, m);
-    this.room.color.copy(lerp(new Color(0.006, 0.0045, 0.0035), new Color(0.3, 0.285, 0.27)));
-    this.softbox.color.copy(lerp(new Color(14, 13.2, 12), new Color(2.4, 2.45, 2.6)));
-    this.strip.color.copy(lerp(new Color(4.5, 4.3, 4.0), new Color(0.8, 0.8, 0.82)));
-    this.floor.color.copy(lerp(new Color(0.05, 0.03, 0.02), new Color(0.85, 0.8, 0.74)));
-    this.sun.color.copy(lerp(new Color(0, 0, 0), new Color(30, 25, 19)));
-    this.front.color.copy(lerp(new Color(2.6, 2.5, 2.32), new Color(0.9, 0.88, 0.85)));
+    this.room.color.copy(lerp(new Color(0.003, 0.004, 0.007), new Color(0.29, 0.29, 0.29)));
+    this.softbox.color.copy(lerp(new Color(13.4, 13.5, 13.8), new Color(2.4, 2.45, 2.6)));
+    this.strip.color.copy(lerp(new Color(4.2, 4.3, 4.5), new Color(0.8, 0.8, 0.82)));
+    this.floor.color.copy(lerp(new Color(0.008, 0.014, 0.03), new Color(0.85, 0.85, 0.83)));
+    this.sun.color.copy(lerp(new Color(0, 0, 0), new Color(30, 27, 22)));
+    this.front.color.copy(lerp(new Color(2.5, 2.52, 2.6), new Color(0.88, 0.89, 0.9)));
 
     const next = this.pmrem.fromScene(this.scene, 0, 0.1, 60);
     this.target?.dispose();

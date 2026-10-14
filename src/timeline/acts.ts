@@ -34,15 +34,7 @@ const ramp = (x: number, a: number, b: number) => smooth((x - a) / (b - a));
  */
 export class Acts {
   private readonly el: Record<
-    | 'thesis'
-    | 'histories'
-    | 'how'
-    | 'relight'
-    | 'tryit'
-    | 'close'
-    | 'nav'
-    | 'evening'
-    | 'ledger',
+    'thesis' | 'histories' | 'how' | 'relight' | 'tryit' | 'close' | 'nav' | 'evening' | 'ledger',
     HTMLElement
   >;
   private readonly copies: Record<HowPhase, HTMLElement>;
@@ -162,16 +154,18 @@ export class Acts {
     const ev = r(this.el.evening);
     this.set(this.el.evening, '--reveal', reduced ? '1' : travel(ev.top, vh, vh * 0.62).toFixed(4));
 
-    // Ground. Set on the ground itself, not the root: a custom property on the root
-    // restyles the whole document on every scroll frame.
+    // Ground. The page opens on paper; the night rises with the thesis (night is the
+    // mechanism) and daylight comes back at the relight. Set on the ground itself, not
+    // the root: a custom property on the root restyles the whole document on every frame.
     const day = reduced ? (p23 > 0.5 ? 1 : 0) : smooth((p23 - 0.12) / 0.6);
     if (this.ground) {
+      this.set(this.ground, '--dawn', `${clamp(thesis.top, -vh, 2 * vh).toFixed(0)}px`);
       this.set(this.ground, '--day-pos', (-10 + 140 * day).toFixed(1));
       this.set(this.ground, '--signal-top', `${clamp(close.top, 0, vh).toFixed(0)}px`);
     }
 
     // Nav theme: whatever ground sits under it.
-    const navTheme = close.top < 38 ? 'signal' : day > 0.28 ? 'day' : 'night';
+    const navTheme = close.top < 38 ? 'signal' : thesis.top > 38 || day > 0.28 ? 'day' : 'night';
     if (navTheme !== this.navTheme) {
       this.navTheme = navTheme;
       this.el.nav.dataset.theme = navTheme;
@@ -179,7 +173,7 @@ export class Acts {
         .querySelector('meta[name="theme-color"]')
         ?.setAttribute(
           'content',
-          navTheme === 'night' ? '#0c0806' : navTheme === 'day' ? '#f1ece6' : '#dc520b',
+          navTheme === 'night' ? '#06142a' : navTheme === 'day' ? '#f7f7f5' : '#fdb515',
         );
     }
 

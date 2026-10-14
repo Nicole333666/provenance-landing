@@ -68,36 +68,54 @@ Dials: `DESIGN_VARIANCE 7`, `MOTION_INTENSITY 6`, `VISUAL_DENSITY 2`.
 
 ### The colour arc
 
-The page is one journey with exactly two ground transitions, each graded on scroll (never a cut):
+The page is one journey with three ground transitions, each graded on scroll (never a cut):
 
-| Act      | Ground             | Chapters                           | Light reference        |
-| -------- | ------------------ | ---------------------------------- | ---------------------- |
-| Night    | warm near-black    | Hero, Proof, Thesis, Chain, Tamper | _Monolith_, _Crossing_ |
-| Daylight | the renders' paper | Evidence, System, Students, Limits | _Late Sun_, _Custody_  |
-| Signal   | brand orange       | Close, footer                      | _Signal_               |
+| Act      | Ground                          | Chapters                           | Light reference        |
+| -------- | ------------------------------- | ---------------------------------- | ---------------------- |
+| Daylight | paper                           | Hero, Proof                        | _Late Sun_             |
+| Night    | Cal navy (PMS 282 toward black) | Thesis, Histories, Chain, Tamper   | _Monolith_, _Crossing_ |
+| Daylight | paper                           | Evidence, System, Students, Limits | _Late Sun_, _Custody_  |
+| Signal   | California Gold                 | Close, footer                      | _Signal_               |
 
-Night is the mechanism. Daylight is the people. Signal is the call to act. The page is
-art-directed and does not follow `prefers-color-scheme`; there is no theme toggle.
+Daylight is the people, night is the mechanism, signal is the call to act. The page opens on
+paper so the first thing seen is the mark in its primary pairing, Berkeley Blue and California
+Gold on white. The night rises with the thesis: a soft edge rides the section's top (like the
+gold sheet rides the close), so every block of text sits on its own ground at every scroll
+position. Daylight returns from the upper left at the relight. The page is art-directed and
+does not follow `prefers-color-scheme`; there is no theme toggle.
+
+Colour roles: gold means act (the primary pill is gold on paper and navy, Berkeley Blue on the
+gold close); Berkeley Blue means structure (secondary pills, accent labels on paper, the mark).
+Focus rings are gold on navy and Berkeley Blue on paper and gold. The 3D plain link is Berkeley
+Blue wherever the object is the logo and porcelain only as the chain, so a broken link going
+dark stays legible; the two blend in display space so the change never passes through grey.
 
 ### Tokens
 
-Sampled from the 16x10 renders on 2026-10-12, then rounded.
+UC Berkeley palette (brand.berkeley.edu/visual-identity/colors), rebranded 2026-10-13.
+Blue and gold are used solid, never as tints. The mark follows the brand's logo pairings: White +
+Gold on navy, Berkeley Blue + Gold on paper, Berkeley Blue + White on gold.
 
 ```
---night-0:   #050201   /* floor of the night ground, vignette edge  */
---night-1:   #0c0806   /* night ground                              */
---night-2:   #1c150f   /* lifted pool under the key light           */
---porcelain: #f4f1ec   /* ink on night (off-white, never #fff)      */
---accent-n:  #f97316   /* accent on night (brand)                   */
---day-0:     #f1ece6   /* day ground                                */
---day-1:     #e4dfd9   /* day shade, emboss shadow side             */
---ink:       #18181b   /* ink on day (brand)                        */
---accent-d:  #ea580c   /* accent on day (brand)                     */
---signal:    #dc520b   /* signal ground (lit EA580C)                */
---signal-rule: #b83f06 /* rules and pattern on signal (brand)       */
---muted-n:   rgb(244 241 236 / .58)  /* secondary text on night     */
---muted-d:   rgb(24 24 27 / .62)     /* secondary text on day       */
+--night-0:   #020a16   /* floor of the night ground, vignette edge  */
+--night-1:   #06142a   /* night ground (Pantone 282 navy toward black) */
+--night-2:   #0d2240   /* lifted pool under the key light           */
+--porcelain: #f5f5f2   /* ink on night (off-white, never #fff)      */
+--accent-n:  #fdb515   /* accent on night (California Gold)         */
+--day-0:     #f7f7f5   /* day ground, neutral paper                 */
+--day-1:     #e9e9e5   /* day shade, emboss shadow side             */
+--ink:       #041e42   /* ink on day and on gold (Pantone 282 navy) */
+--blue:      #002676   /* Berkeley Blue: the mark on paper, pills   */
+--gold:      #fdb515   /* California Gold: the mark's accent link   */
+--accent-d:  #002676   /* accent text on day (gold fails on paper)  */
+--signal:    #fdb515   /* signal ground (California Gold)           */
+--signal-rule: #fc9313 /* rules and pattern on signal (Gold Dark)   */
+--muted-n:   rgb(245 245 242 / .58)  /* secondary text on night     */
+--muted-d:   rgb(4 30 66 / .62)      /* secondary text on day       */
 ```
+
+Gold never carries text or hairlines on paper; there it appears only as a solid fill under ink
+(chips, the stuck-period band, the folder ring) and as the mark.
 
 Contrast rule: body text must reach WCAG AA on its ground; muted values are tuned to pass at
 their used sizes and checked in verification. Accent is never used for body text.
@@ -128,11 +146,11 @@ All copy is final draft for review. Bracketed values are computed at runtime, no
 ### Nav (fixed, 64 px, single line)
 
 Left: mark + "Provenance" lockup. Right: `How it works` (#how), `For students` (#students),
-`GitHub` (source URL), and a pill button `Talk to us`. Over night it is porcelain; over day it is
-ink; it crossfades with the ground. Below 768 px: mark left, `Talk to us` right, other links
+`GitHub` (source URL), and a pill button `Talk to us`. Over night it is porcelain with the white
+and gold mark; over day it is ink with the blue and gold mark; it crossfades with the ground. Below 768 px: mark left, `Talk to us` right, other links
 collapse into a two-line menu sheet.
 
-### 0. Hero (night)
+### 0. Hero (day)
 
 Layout: asymmetric. The woven pair sits upper right of centre with a large field around it. Text
 block is set low-left. Fits the initial viewport at every size (`min-height: 100dvh`).
@@ -148,7 +166,7 @@ Motion: on load, the key light rises slowly on the object (1.6 s), then the head
 by line from a mask, then sub and buttons fade up. The object follows the pointer by a few degrees
 with heavy damping. A slow light "breath" (8 s period, very low amplitude) is the only idle motion.
 
-### 1. Proof (night)
+### 1. Proof (day)
 
 Layout: full-width typographic band directly under the hero.
 
@@ -391,13 +409,25 @@ Every loop, observer and listener is owned by something with a `dispose()`, call
   horizontal axis by about +14 degrees, the accent link by about -14 degrees, so the ink link's top
   edge is nearer the camera (passes over) and its bottom edge farther (passes under). Verified by
   rendering the front view and checking the crossings against the mark.
-- **Material.** `MeshPhysicalMaterial`: roughness ~0.38, clearcoat 0.6, clearcoat roughness
-  ~0.25, subtle sheen. Porcelain link on night, ink link on day, accent link in brand orange.
+- **Material.** `MeshPhysicalMaterial`: roughness 0.44, base specular 0.3 (a broad base
+  reflection of the bright studio veils every colour), clearcoat 0.8 for the sharp highlights,
+  faint sheen. The plain link is Berkeley Blue wherever the object is the logo and porcelain as
+  the chain; the accent link is California Gold, a touch more yellow under the night softbox so
+  its lit face still measures as bright gold. Rendered colours are measured against the brand
+  values (`#002676`, `#FDB515`) whenever the lighting or material changes.
+- **Chain <-> pair.** A link looks the same rolled +90 or -90 degrees, so the pair's second
+  link takes the chain roll that matches the sign of its weave tilt. The blend between chain and
+  pair then never turns it flat against the first link, which two linked rings of one size
+  cannot do without passing through each other (unit tested).
 - **Light.** Night: one large overhead softbox (a `RectAreaLight`), plus a PMREM environment
   built at boot from a tiny procedural studio scene (one emissive panel above, dark everywhere
   else) so reflections match the key. Day: a warm `DirectionalLight` sun, low from the upper left,
   with a soft shadow map onto a shadow-only ground plane, plus a cool fill from the environment.
-  Tone mapping: AgX. Output colour space: sRGB.
+  In daylight each keyframe sets how low the sun sits: the hero takes a high, soft light and a
+  short shadow tucked behind the mark (it must never run under the copy); the evidence chapter
+  keeps the long _Late Sun_ shadow. Tone mapping: Neutral, with its highlight desaturation cut
+  from 0.15 to 0.03 (at 0.15 California Gold, whose red channel is always bright, washed to
+  cream). Night lifts the object's exposure slightly (1.15). Output colour space: sRGB.
 - **Ground.** No 3D floor in night (the page background is the ground, with a CSS radial pool for
   the lifted area). In day, a `ShadowMaterial` plane catches the sun shadow over the CSS paper.
 - **Chain.** `InstancedMesh` of up to 200 links, alternating 90 degree roll, laid on a diagonal

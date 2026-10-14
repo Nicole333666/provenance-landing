@@ -191,14 +191,14 @@ section {
 /* Two records on one clock. --p is the playhead, 0..1, shared by both tracks. */
 .records {
   --p: 1;
-  --rule: rgb(244 241 236 / 0.1);
+  --rule: rgb(245 245 242 / 0.1);
   margin: 0;
 }
 .records__axis {
   position: relative;
   height: 22px;
   font-size: 0.6875rem;
-  color: rgb(244 241 236 / 0.4);
+  color: rgb(245 245 242 / 0.5);
   font-variant-numeric: tabular-nums;
 }
 .records__ticks span {
@@ -245,7 +245,7 @@ section {
   display: flex;
   gap: 18px;
   font-size: 0.75rem;
-  color: rgb(244 241 236 / 0.6);
+  color: rgb(245 245 242 / 0.6);
   font-variant-numeric: tabular-nums;
 }
 .record__track {
@@ -261,23 +261,23 @@ section {
   clip-path: inset(-8px calc((1 - var(--p)) * 100%) -8px -8px);
 }
 .record__track .t-rest {
-  stroke: rgb(244 241 236 / 0.1);
+  stroke: rgb(245 245 242 / 0.1);
 }
 .record__track .t-on {
-  stroke: rgb(244 241 236 / 0.6);
+  stroke: rgb(245 245 242 / 0.6);
   stroke-width: 3;
 }
 .record__track .t-off {
-  stroke: rgb(244 241 236 / 0.4);
+  stroke: rgb(245 245 242 / 0.4);
   stroke-width: 1.5;
   stroke-dasharray: 1.5 5;
 }
 .record__track .t-edit {
-  stroke: rgb(244 241 236 / 0.62);
+  stroke: rgb(245 245 242 / 0.62);
   stroke-width: 2.5;
 }
 .record__track .t-run {
-  stroke: rgb(244 241 236 / 0.7);
+  stroke: rgb(245 245 242 / 0.7);
   stroke-width: 1.25;
 }
 .record__track .t-paste {
@@ -305,7 +305,7 @@ section {
   position: relative;
   height: 34px;
   font-size: 0.6875rem;
-  color: rgb(244 241 236 / 0.7);
+  color: rgb(245 245 242 / 0.7);
 }
 .note {
   position: absolute;
@@ -367,7 +367,7 @@ section {
   flex-wrap: wrap;
   gap: 4px 14px;
   font-size: 0.75rem;
-  color: rgb(244 241 236 / 0.5);
+  color: rgb(245 245 242 / 0.5);
 }
 .records__digest {
   color: var(--accent-n);
@@ -384,15 +384,15 @@ section {
   padding: 8px 14px;
   border-radius: 999px;
   font-size: 0.75rem;
-  color: rgb(244 241 236 / 0.75);
-  box-shadow: inset 0 0 0 1px rgb(244 241 236 / 0.2);
+  color: rgb(245 245 242 / 0.75);
+  box-shadow: inset 0 0 0 1px rgb(245 245 242 / 0.2);
   transition:
     color 0.3s var(--ease-soft),
     box-shadow 0.3s var(--ease-soft);
 }
 .records__replay:hover {
   color: var(--porcelain);
-  box-shadow: inset 0 0 0 1px rgb(244 241 236 / 0.45);
+  box-shadow: inset 0 0 0 1px rgb(245 245 242 / 0.45);
 }
 /* The ending holds back until the playhead gets there. */
 html.motion .records :is(.records__digests, .records__verdict, .records__replay) {
@@ -506,7 +506,7 @@ html.no-js .how__copy[data-phase='chain'] {
   position: absolute;
   inset: -40px -40px -40px -60px;
   z-index: -1;
-  background: radial-gradient(closest-side, rgb(8 5 4 / 0.82), rgb(8 5 4 / 0));
+  background: radial-gradient(closest-side, rgb(2 10 22 / 0.82), rgb(2 10 22 / 0));
   pointer-events: none;
 }
 .ledger__head {
@@ -664,7 +664,7 @@ html.no-js .how__copy[data-phase='chain'] {
 }
 .principle p {
   max-width: 44ch;
-  color: rgb(24 24 27 / 0.72);
+  color: rgb(4 30 66 / 0.72);
 }
 .flag {
   display: inline-flex;
@@ -674,7 +674,7 @@ html.no-js .how__copy[data-phase='chain'] {
   margin-top: 10px;
   padding: 7px 14px 7px 7px;
   border-radius: 999px;
-  box-shadow: inset 0 0 0 1px rgb(24 24 27 / 0.14);
+  box-shadow: inset 0 0 0 1px rgb(4 30 66 / 0.14);
   font-size: 0.9rem;
   background: rgb(255 255 255 / 0.35);
 }
@@ -683,15 +683,15 @@ html.no-js .how__copy[data-phase='chain'] {
   border-radius: 999px;
   font-size: 0.7rem;
   letter-spacing: 0.04em;
-  background: var(--accent-d);
-  color: #fff;
+  background: var(--gold);
+  color: var(--ink);
   transition:
     background-color 0.6s var(--ease-soft),
     color 0.6s var(--ease-soft);
 }
 .flag.is-moved .flag__level {
-  background: rgb(24 24 27 / 0.1);
-  color: rgb(24 24 27 / 0.7);
+  background: rgb(4 30 66 / 0.1);
+  color: rgb(4 30 66 / 0.7);
 }
 .flag__text {
   transition: opacity 0.3s var(--ease-soft);
@@ -702,7 +702,7 @@ html.no-js .how__copy[data-phase='chain'] {
   gap: 8px 22px;
   margin-top: 10px;
   font-size: 0.78rem;
-  color: rgb(24 24 27 / 0.7);
+  color: rgb(4 30 66 / 0.7);
 }
 .checks span {
   display: inline-flex;
@@ -721,7 +721,7 @@ html.no-js .how__copy[data-phase='chain'] {
   background: var(--ink);
 }
 .checks .is-skipped {
-  box-shadow: inset 0 0 0 1.25px rgb(24 24 27 / 0.55);
+  box-shadow: inset 0 0 0 1.25px rgb(4 30 66 / 0.55);
 }
 .fair__pull {
   margin-top: clamp(24px, 5vh, 64px);
@@ -785,7 +785,7 @@ html.no-js .how__copy[data-phase='chain'] {
 .evening__note {
   font-family: var(--mono);
   font-size: 11.5px;
-  fill: rgb(24 24 27 / 0.82);
+  fill: rgb(4 30 66 / 0.82);
   transition: opacity 0.6s var(--ease-soft);
 }
 .evening__note--accent {
@@ -798,7 +798,7 @@ html.no-js .how__copy[data-phase='chain'] {
   padding-top: 10px;
   border-top: 1px solid var(--hair);
   font-size: 0.75rem;
-  color: rgb(24 24 27 / 0.55);
+  color: rgb(4 30 66 / 0.64);
 }
 
 /* ------------------------------------------------------------- one folder */
@@ -823,7 +823,7 @@ html.no-js .how__copy[data-phase='chain'] {
   font-family: var(--mono);
   font-size: 0.75rem;
   white-space: nowrap;
-  color: rgb(24 24 27 / var(--dim, 0.46));
+  color: rgb(4 30 66 / var(--dim, 0.46));
   transform: translate(-50%, -50%);
   transition: color 0.8s var(--ease-soft);
 }
@@ -842,9 +842,9 @@ html.no-js .how__copy[data-phase='chain'] {
   border-radius: 999px;
   background: var(--day-0);
   box-shadow:
-    inset 0 0 0 1.5px var(--accent-d),
-    0 0 0 14px rgb(241 236 230 / 0.9),
-    0 18px 60px rgb(120 70 30 / 0.12);
+    inset 0 0 0 2px var(--gold),
+    0 0 0 14px rgb(247 247 245 / 0.9),
+    0 18px 60px rgb(4 30 66 / 0.12);
   font-family: var(--mono);
   font-size: clamp(0.9rem, 1.3vw, 1.15rem);
   color: var(--ink);
@@ -875,7 +875,7 @@ html.no-js .how__copy[data-phase='chain'] {
   color: var(--accent-d);
 }
 .sees__col--never .sees__head {
-  color: rgb(24 24 27 / 0.6);
+  color: rgb(4 30 66 / 0.64);
 }
 .sees ul {
   display: grid;
@@ -893,7 +893,7 @@ html.no-js .how__copy[data-phase='chain'] {
   margin-top: clamp(48px, 8vh, 96px);
   padding-top: 26px;
   border-top: 1px solid var(--hair);
-  color: rgb(24 24 27 / 0.72);
+  color: rgb(4 30 66 / 0.72);
   font-size: 0.95rem;
 }
 .pledges strong {
@@ -962,9 +962,9 @@ html.no-js .how__copy[data-phase='chain'] {
   display: grid;
   grid-template-columns: 1.15fr 1fr;
   contain: layout paint;
-  background: #141416;
+  background: var(--night-1);
   color: var(--porcelain);
-  box-shadow: 0 40px 100px -40px rgb(60 40 20 / 0.45);
+  box-shadow: 0 40px 100px -40px rgb(4 30 66 / 0.45);
 }
 .playground__editor,
 .playground__log {
@@ -973,7 +973,7 @@ html.no-js .how__copy[data-phase='chain'] {
   min-height: 0;
 }
 .playground__log {
-  box-shadow: inset 1px 0 0 rgb(244 241 236 / 0.08);
+  box-shadow: inset 1px 0 0 rgb(245 245 242 / 0.08);
 }
 .playground__bar {
   display: flex;
@@ -982,19 +982,19 @@ html.no-js .how__copy[data-phase='chain'] {
   min-height: 44px;
   padding: 0 16px;
   font-size: 0.75rem;
-  color: rgb(244 241 236 / 0.55);
-  box-shadow: inset 0 -1px 0 rgb(244 241 236 / 0.08);
+  color: rgb(245 245 242 / 0.55);
+  box-shadow: inset 0 -1px 0 rgb(245 245 242 / 0.08);
 }
 .playground__replay {
   padding: 6px 12px;
   border-radius: 999px;
   font-size: 0.72rem;
   color: var(--porcelain);
-  box-shadow: inset 0 0 0 1px rgb(244 241 236 / 0.22);
+  box-shadow: inset 0 0 0 1px rgb(245 245 242 / 0.22);
   transition: box-shadow 0.3s var(--ease-soft);
 }
 .playground__replay:hover {
-  box-shadow: inset 0 0 0 1px rgb(244 241 236 / 0.5);
+  box-shadow: inset 0 0 0 1px rgb(245 245 242 / 0.5);
 }
 .playground__replay:disabled {
   opacity: 0.4;
@@ -1016,7 +1016,7 @@ html.no-js .how__copy[data-phase='chain'] {
 }
 .playground__input:focus-visible {
   outline: none;
-  box-shadow: inset 0 0 0 1px rgb(249 115 22 / 0.5);
+  box-shadow: inset 0 0 0 1px rgb(253 181 21 / 0.5);
 }
 .playground__rows {
   display: flex;
@@ -1033,7 +1033,7 @@ html.no-js .how__copy[data-phase='chain'] {
   grid-template-columns: 3em 1fr auto;
   gap: 12px;
   white-space: nowrap;
-  color: rgb(244 241 236 / 0.6);
+  color: rgb(245 245 242 / 0.6);
   animation: row-in 0.35s var(--ease-out);
 }
 .playground__rows li:last-child {
@@ -1045,10 +1045,10 @@ html.no-js .how__copy[data-phase='chain'] {
 }
 .playground__rows li .k i {
   font-style: normal;
-  color: rgb(244 241 236 / 0.4);
+  color: rgb(245 245 242 / 0.4);
 }
 .playground__rows li .h {
-  color: rgb(244 241 236 / 0.35);
+  color: rgb(245 245 242 / 0.35);
 }
 .playground__rows li.is-paste,
 .playground__rows li.is-paste .h,
@@ -1072,7 +1072,7 @@ html.no-js .how__copy[data-phase='chain'] {
     grid-template-rows: 1.1fr 1fr;
   }
   .playground__log {
-    box-shadow: inset 0 1px 0 rgb(244 241 236 / 0.08);
+    box-shadow: inset 0 1px 0 rgb(245 245 242 / 0.08);
   }
 }
 
@@ -1108,7 +1108,7 @@ html.no-js .how__copy[data-phase='chain'] {
 .quote footer {
   margin-top: 22px;
   font-size: 0.8125rem;
-  color: rgb(24 24 27 / 0.6);
+  color: rgb(4 30 66 / 0.6);
 }
 @media (max-width: 900px) {
   .limits__inner > * {
@@ -1139,7 +1139,7 @@ html.no-js .how__copy[data-phase='chain'] {
   max-width: none;
 }
 .close__lead {
-  color: rgb(24 24 27 / 0.78);
+  color: rgb(4 30 66 / 0.78);
   max-width: 34ch;
 }
 
@@ -1168,14 +1168,14 @@ html.no-js .how__copy[data-phase='chain'] {
   gap: 28px;
 }
 .foot__links a {
-  color: rgb(24 24 27 / 0.78);
+  color: rgb(4 30 66 / 0.78);
   transition: color 0.3s var(--ease-soft);
 }
 .foot__links a:hover {
   color: var(--ink);
 }
 .foot__made {
-  color: rgb(24 24 27 / 0.7);
+  color: rgb(4 30 66 / 0.7);
 }
 @media (max-width: 900px) {
   .close {
@@ -1248,7 +1248,7 @@ html:not(.motion) .tryit__copy {
 }
 .suite__wires path {
   fill: none;
-  stroke: rgb(24 24 27 / 0.28);
+  stroke: rgb(4 30 66 / 0.28);
   stroke-width: 1;
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
@@ -1275,7 +1275,7 @@ html:not(.motion) .tryit__copy {
   position: absolute;
   top: -2.8em;
   font-size: 0.72rem;
-  color: rgb(24 24 27 / 0.5);
+  color: rgb(4 30 66 / 0.64);
 }
 .tool {
   position: relative;
@@ -1284,7 +1284,7 @@ html:not(.motion) .tryit__copy {
   padding: 18px 20px 20px;
   background: rgb(255 255 255 / 0.45);
   box-shadow:
-    inset 0 0 0 1px rgb(24 24 27 / 0.1),
+    inset 0 0 0 1px rgb(4 30 66 / 0.1),
     0 1px 0 rgb(255 255 255 / 0.6);
   transition:
     box-shadow 0.4s var(--ease-soft),
@@ -1294,8 +1294,8 @@ html:not(.motion) .tryit__copy {
 a.tool:hover {
   background: rgb(255 255 255 / 0.75);
   box-shadow:
-    inset 0 0 0 1px rgb(24 24 27 / 0.24),
-    0 18px 40px -24px rgb(90 60 30 / 0.35);
+    inset 0 0 0 1px rgb(4 30 66 / 0.24),
+    0 18px 40px -24px rgb(4 30 66 / 0.35);
   transform: translateY(-2px);
 }
 .tool__code {
@@ -1305,7 +1305,7 @@ a.tool:hover {
   font-size: 0.7rem;
   letter-spacing: 0.02em;
   color: var(--accent-d);
-  box-shadow: inset 0 0 0 1px rgb(234 88 12 / 0.35);
+  box-shadow: inset 0 0 0 1px rgb(0 38 118 / 0.35);
 }
 .tool__name {
   margin-top: 4px;
@@ -1318,18 +1318,18 @@ a.tool:hover {
 .tool__line {
   font-size: 0.9rem;
   line-height: 1.45;
-  color: rgb(24 24 27 / 0.68);
+  color: rgb(4 30 66 / 0.68);
   max-width: 34ch;
 }
 .tool--bundle {
   background: var(--ink);
   color: var(--porcelain);
-  box-shadow: 0 24px 50px -28px rgb(24 24 27 / 0.6);
+  box-shadow: 0 24px 50px -28px rgb(4 30 66 / 0.6);
   --mark-ink: var(--porcelain);
-  --mark-accent: var(--accent-n);
+  --mark-accent: var(--gold);
 }
 .tool--bundle .tool__line {
-  color: rgb(244 241 236 / 0.66);
+  color: rgb(245 245 242 / 0.66);
 }
 .tool__mark {
   width: 46px;
@@ -1360,7 +1360,7 @@ a.tool:hover {
 }
 .privacy__get {
   font-size: 0.75rem;
-  color: rgb(24 24 27 / 0.55);
+  color: rgb(4 30 66 / 0.64);
 }
 .editors {
   display: flex;
@@ -1376,14 +1376,14 @@ a.tool:hover {
   border-radius: 999px;
   font-size: 0.95rem;
   font-weight: 500;
-  box-shadow: inset 0 0 0 1px rgb(24 24 27 / 0.2);
+  box-shadow: inset 0 0 0 1px rgb(4 30 66 / 0.2);
   transition:
     box-shadow 0.3s var(--ease-soft),
     background-color 0.3s var(--ease-soft);
 }
 .editors a:hover {
   background: rgb(255 255 255 / 0.6);
-  box-shadow: inset 0 0 0 1px rgb(24 24 27 / 0.5);
+  box-shadow: inset 0 0 0 1px rgb(4 30 66 / 0.5);
 }
 .editors span {
   font-family: var(--mono);

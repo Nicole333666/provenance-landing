@@ -75,7 +75,11 @@ function chainPose(i: number, p: Pose): void {
   // Centre the chain between the pair's two slots.
   const x = (slot - 0.5) * CHAIN_PITCH;
   const sag = -0.012 * x * x;
-  const roll = (((slot % 2) + 2) % 2) * (Math.PI / 2) + jitter(i) * 0.12;
+  // A link looks the same rolled +90 or -90 degrees. The pair's second link rolls the way
+  // its weave tilts, so blending chain <-> pair never turns it flat against the first link:
+  // two linked rings of one size cannot lie flat together without passing through.
+  const turn = i === 1 ? -1 : 1;
+  const roll = (((slot % 2) + 2) % 2) * turn * (Math.PI / 2) + jitter(i) * 0.12;
   p.position.set(x, sag, 0);
   p.quaternion.setFromEuler(_e.set(roll, jitter(i + 7) * 0.05, Math.atan(-0.024 * x)));
 }
