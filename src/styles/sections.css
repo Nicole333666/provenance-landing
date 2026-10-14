@@ -154,15 +154,17 @@ section {
   max-width: 38ch;
 }
 @media (max-width: 900px) {
+  /* Room below the copy for the close-up, which must be off-screen before the
+     histories arrive: the object cuts to the mark there. */
   .thesis {
-    min-height: 120vh;
+    min-height: 150vh;
     align-items: flex-start;
     padding-top: 14vh;
   }
   .thesis__anchor {
     left: 70%;
-    top: 82%;
-    height: 78vh;
+    top: 66%;
+    height: 72vh;
   }
   .thesis__title,
   .thesis__body {
@@ -425,6 +427,15 @@ html.no-js .note {
     grid-template-columns: 1fr;
   }
 }
+/* The long labels run into each other below this width. */
+@media (max-width: 1000px) {
+  .note__long {
+    display: none;
+  }
+  .note__short {
+    display: inline;
+  }
+}
 @media (max-width: 640px) {
   .record__stats {
     gap: 12px;
@@ -432,12 +443,6 @@ html.no-js .note {
   }
   .record__track {
     margin-top: 10px;
-  }
-  .note__long {
-    display: none;
-  }
-  .note__short {
-    display: inline;
   }
   .records__replay {
     grid-column: 1;
@@ -964,6 +969,7 @@ html.no-js .how__copy[data-phase='chain'] {
   contain: layout paint;
   background: var(--night-1);
   color: var(--porcelain);
+  color-scheme: dark;
   box-shadow: 0 40px 100px -40px rgb(4 30 66 / 0.45);
 }
 .playground__editor,
@@ -1000,6 +1006,62 @@ html.no-js .how__copy[data-phase='chain'] {
   opacity: 0.4;
   cursor: default;
 }
+.playground__file {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 14px;
+}
+/* A quiet sign the editor takes typing: an invitation with a caret, then a live dot. */
+.playground__status {
+  color: rgb(245 245 242 / 0.5);
+}
+.playground__hint::after {
+  content: '';
+  display: inline-block;
+  width: 0.5em;
+  height: 1.1em;
+  margin-left: 4px;
+  vertical-align: -0.2em;
+  background: var(--gold);
+  animation: caret 1.1s steps(1) infinite;
+}
+.playground__live {
+  display: none;
+  color: var(--gold);
+}
+.playground__live::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 7px;
+  vertical-align: 0.1em;
+  border-radius: 50%;
+  background: currentColor;
+  animation: live 1.6s var(--ease-soft) infinite;
+}
+.playground__editor:focus-within .playground__hint {
+  display: none;
+}
+.playground__editor:focus-within .playground__live {
+  display: inline;
+}
+@keyframes caret {
+  50% {
+    opacity: 0;
+  }
+}
+@keyframes live {
+  50% {
+    opacity: 0.35;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .playground__hint::after,
+  .playground__live::before {
+    animation: none;
+  }
+}
 .playground__input {
   width: 100%;
   height: 100%;
@@ -1010,9 +1072,16 @@ html.no-js .how__copy[data-phase='chain'] {
   background: transparent;
   color: var(--porcelain);
   caret-color: var(--accent-n);
+  cursor: text;
+  scrollbar-width: thin;
+  scrollbar-color: rgb(245 245 242 / 0.22) transparent;
+  transition: background-color 0.3s var(--ease-soft);
   font-size: 0.875rem;
   line-height: 1.7;
   tab-size: 4;
+}
+.playground__input:hover {
+  background: rgb(245 245 242 / 0.025);
 }
 .playground__input:focus-visible {
   outline: none;
@@ -1341,6 +1410,7 @@ a.tool:hover {
     grid-template-columns: 1fr;
     row-gap: 44px;
     max-width: 520px;
+    margin-inline: auto;
   }
   .suite__stage {
     position: static;

@@ -14,6 +14,9 @@ export interface Keyframe {
   round: number;
   /** the plain link: Berkeley Blue wherever the object is the logo, porcelain as a chain */
   ink: 'blue' | 'porcelain';
+  /** the accent link: California Gold (default), or Berkeley Blue where the ground is gold
+   *  and the mark goes one colour, the brand's Blue on Gold */
+  accent?: 'gold' | 'blue';
   /** lighting: 0 night studio, 1 day sun */
   day: number;
   /** in daylight, how low the sun sits: 1 (default) a low late sun and a long, crisp
@@ -102,11 +105,13 @@ export const KEYFRAMES: readonly Keyframe[] = [
     stream: true,
   },
   {
-    form: 'single',
+    // The whole mark, one colour on the gold ground.
+    form: 'pair',
     anchor: '[data-anchor="close"]',
     rotation: [0, 0, -8],
     round: 0,
     ink: 'blue',
+    accent: 'blue',
     day: 0.85,
     shadow: 0.42,
     shadowDepth: 0.3,

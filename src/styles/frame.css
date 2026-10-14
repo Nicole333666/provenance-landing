@@ -130,6 +130,7 @@ main {
 
 [data-theme='night'] {
   color: var(--porcelain);
+  color-scheme: dark;
   --mark-ink: var(--porcelain);
   --mark-accent: var(--accent-n);
   --accent: var(--accent-n);
@@ -147,7 +148,8 @@ main {
 [data-theme='signal'] {
   color: var(--ink);
   --mark-ink: var(--blue);
-  --mark-accent: var(--porcelain);
+  /* On gold the mark goes one colour: Blue on Gold (White on Gold is not a brand pairing). */
+  --mark-accent: var(--blue);
   --accent: var(--ink);
   --focus: var(--blue);
   --hair: rgb(4 30 66 / 0.22);

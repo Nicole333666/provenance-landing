@@ -86,7 +86,10 @@ does not follow `prefers-color-scheme`; there is no theme toggle.
 
 Colour roles: gold means act (the primary pill is gold on paper and navy, Berkeley Blue on the
 gold close); Berkeley Blue means structure (secondary pills, accent labels on paper, the mark).
-Focus rings are gold on navy and Berkeley Blue on paper and gold. The 3D plain link is Berkeley
+Focus rings are gold on navy and Berkeley Blue on paper and gold. Gold on a link means the
+signed checkpoint and nothing else: it keeps its gold through the break and the cover-up (what
+gives it away is being knocked out of the chain, and the ledger's signature mismatch), and the
+link a visitor pulls keeps its own colour. The 3D plain link is Berkeley
 Blue wherever the object is the logo and porcelain only as the chain, so a broken link going
 dark stays legible; the two blend in display space so the change never passes through grey.
 
@@ -325,7 +328,9 @@ The day ground floods to `--signal` over ~0.6 viewport heights, wiping up from t
 ### 9. Close (signal)
 
 Layout: poster. The _Signal_ woven pattern (rows of chain in `--signal-rule` outlines) fills the
-ground as texture; one link, solid ink, sits whole above it, rendered in 3D.
+ground as texture; the whole mark sits above it in 3D, both links solid Berkeley Blue: on gold
+the mark goes one colour, the brand's Blue on Gold (gold vanishes on gold, and White on Gold is
+not a brand pairing). The flat nav and footer marks over the gold do the same.
 
 > **Bring Provenance to your course.**
 >

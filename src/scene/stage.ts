@@ -46,7 +46,6 @@ const COLORS = {
   ink: new Color('#002676'),
   // Broken links go dark into the navy, not to grey steel.
   ash: new Color('#17223c'),
-  hot: new Color('#ffc31b'),
 };
 
 const FOV = 22;
@@ -409,7 +408,10 @@ export class Stage {
       .convertLinearToSRGB()
       .lerp(new Color().copy(COLORS.ink).convertLinearToSRGB(), blue)
       .convertSRGBToLinear();
-    const accentColor = new Color().copy(COLORS.accent).lerp(COLORS.accentDay, day);
+    const goldAccent = new Color().copy(COLORS.accent).lerp(COLORS.accentDay, day);
+    const blueAccent =
+      (k0.accent === 'blue' ? 1 : 0) * (1 - f) + (k1.accent === 'blue' ? 1 : 0) * f;
+    const accentColor = goldAccent.lerp(COLORS.ink, blueAccent);
 
     for (let i = 0; i < LINK_COUNT; i++) {
       const p = lp[i]!;
@@ -426,19 +428,18 @@ export class Stage {
       // Colour: base colourway, then the break.
       const isAccent = i === 1;
       color.copy(isAccent ? accentColor : inkColor);
-      if (this.brokenSlot !== null && demo > 0) {
+      // The signed checkpoint keeps its gold through the break and the cover-up: what gives
+      // it away is that it is knocked out of the chain, and the ledger's signature mismatch.
+      if (this.brokenSlot !== null && demo > 0 && !isAccent) {
         const base = scratch.copy(color);
         const slot = chainSlot(i);
         const d = slot - this.brokenSlot;
         const healed = MathUtils.clamp(coverWave - d, 0, 1);
-        if (d === 0) {
-          color.lerp(COLORS.hot, MathUtils.clamp(this.wave, 0, 1));
-          color.lerp(COLORS.porcelain, MathUtils.clamp(this.cover * 4, 0, 1));
-        } else if (d > 0) {
-          const dark = MathUtils.clamp(this.wave - d, 0, 1) * (isAccent ? 1 : 0.92 * (1 - healed));
+        // The pulled link keeps its own colour (pulling it out is the mark); gold stays the
+        // signed checkpoint's alone.
+        if (d > 0) {
+          const dark = MathUtils.clamp(this.wave - d, 0, 1) * 0.92 * (1 - healed);
           color.lerp(COLORS.ash, dark);
-          // The signed checkpoint can't be recomputed: once the rest heals, it runs hot.
-          if (isAccent) color.lerp(COLORS.hot, healed);
         }
         color.lerp(base, 1 - demo);
       }

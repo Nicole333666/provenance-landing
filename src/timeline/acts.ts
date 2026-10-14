@@ -34,7 +34,16 @@ const ramp = (x: number, a: number, b: number) => smooth((x - a) / (b - a));
  */
 export class Acts {
   private readonly el: Record<
-    'thesis' | 'histories' | 'how' | 'relight' | 'tryit' | 'close' | 'nav' | 'evening' | 'ledger',
+    | 'thesis'
+    | 'closeup'
+    | 'histories'
+    | 'how'
+    | 'relight'
+    | 'tryit'
+    | 'close'
+    | 'nav'
+    | 'evening'
+    | 'ledger',
     HTMLElement
   >;
   private readonly copies: Record<HowPhase, HTMLElement>;
@@ -55,6 +64,7 @@ export class Acts {
     };
     this.el = {
       thesis: q('.thesis'),
+      closeup: q('[data-anchor="thesis"]'),
       histories: q('.histories'),
       how: q('.how'),
       relight: q('.relight'),
@@ -112,8 +122,12 @@ export class Acts {
     // Object: hero -> thesis, then a cut to the mark while the two histories are on
     // screen, the mark rounds into the chain, the relight, and a cut to the close.
     let s: number;
-    // Narrow: the close-up leaves (off-screen) once the histories take the screen.
-    if (narrow && how.top >= vh && histories.top < vh * 0.4) s = KF.mark;
+    // Narrow: once the histories take the screen, cut to the mark, but only after the
+    // close-up has scrolled off: the anchor is one link tall, and the turned link reaches
+    // about one more anchor height past its centre.
+    const closeup = r(this.el.closeup);
+    const closeupGone = closeup.top + closeup.height * 1.5 < 0;
+    if (narrow && how.top >= vh && histories.top < vh * 0.4 && closeupGone) s = KF.mark;
     else if (how.top >= vh) s = KF.hero + p01;
     else if (p23 <= 0) s = KF.mark + ramp(howP, 0.05, 0.22);
     else if (tryit.top + tryit.height / 2 > vh / 2) s = KF.chain + p23;
