@@ -175,11 +175,17 @@ export class Acts {
     if (this.ground) {
       this.set(this.ground, '--dawn', `${clamp(thesis.top, -vh, 2 * vh).toFixed(0)}px`);
       this.set(this.ground, '--day-pos', (-10 + 140 * day).toFixed(1));
+      this.set(
+        this.ground,
+        '--dusk-top',
+        `${clamp(tryit.top - 0.1 * vh, -0.1 * vh, vh).toFixed(0)}px`,
+      );
       this.set(this.ground, '--signal-top', `${clamp(close.top, 0, vh).toFixed(0)}px`);
     }
 
     // Nav theme: whatever ground sits under it.
-    const navTheme = close.top < 38 ? 'signal' : thesis.top > 38 || day > 0.28 ? 'day' : 'night';
+    const navTheme =
+      close.top < 38 ? 'signal' : tryit.top > 0.08 * vh && day > 0.28 ? 'day' : 'night';
     if (navTheme !== this.navTheme) {
       this.navTheme = navTheme;
       this.el.nav.dataset.theme = navTheme;
@@ -187,7 +193,7 @@ export class Acts {
         .querySelector('meta[name="theme-color"]')
         ?.setAttribute(
           'content',
-          navTheme === 'night' ? '#06142a' : navTheme === 'day' ? '#f7f7f5' : '#fdb515',
+          navTheme === 'night' ? '#0b111c' : navTheme === 'day' ? '#f7f7f5' : '#fdb515',
         );
     }
 
