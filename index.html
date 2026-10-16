@@ -103,8 +103,9 @@
       </a>
       <nav class="nav__island" aria-label="Primary">
         <a class="nav__link" href="#histories">How it works</a>
-        <a class="nav__link" href="#suite">Tools</a>
         <a class="nav__link" href="#students">For students</a>
+        <a class="nav__link" href="#instructors">For instructors &amp; TAs</a>
+        <a class="nav__link" href="#suite">Tools</a>
         <a class="nav__link" href="https://github.com/ProvenanceTools">GitHub</a>
         <a
           class="btn btn--primary btn--small"
@@ -187,13 +188,13 @@
         <div class="thesis__anchor" data-anchor="thesis"></div>
         <div class="wrap thesis__inner">
           <h2 class="thesis__title statement" id="thesis-title" data-split>
-            The finished file is the easiest part to fake.
+            Look at the process, not just the file.
           </h2>
           <p class="lead thesis__body" data-fade>
-            Similarity checkers compare final submissions, and AI tools now produce final
-            submissions on demand. What&rsquo;s much harder to produce is the afternoon behind one:
-            the false starts, the deleted lines, the test that finally passed at 11:40&nbsp;p.m.
+            Provenance records how a file came to be, edit by edit, and flags the moments worth a
+            closer look.
           </p>
+          <!-- TODO: dynamic demo graph (recording a session and raising a flag) -->
         </div>
       </section>
 
@@ -206,9 +207,11 @@
       >
         <div class="wrap">
           <header class="histories__head">
+            <p class="section-tag" data-fade>How it works</p>
             <h2 class="display-2" id="histories-title" data-split>Same file. Two histories.</h2>
-            <p class="lead" data-fade>
-              Both end in exactly the same bytes. Only one of them is an evening of work.
+                <p class="lead" data-fade>
+              Two students hand in the exact same file. Here is what each one&rsquo;s recording
+              shows.
             </p>
           </header>
           <figure class="records" data-records aria-describedby="records-desc">
@@ -353,6 +356,9 @@
           </div>
         </div>
 
+        <div class="wrap safeguards__head">
+          <h3 class="display-2" data-split>Safeguards</h3>
+        </div>
         <div class="wrap principles">
           <article class="principle" data-fade>
             <h3 class="principle__title">Moving your own code isn&rsquo;t copying.</h3>
@@ -395,6 +401,102 @@
         </div>
       </section>
 
+      <!-- 7. One folder ------------------------------------------------------- -->
+      <section class="privacy" id="students" data-theme="day" aria-labelledby="privacy-title">
+        <div class="wrap">
+          <div class="privacy__copy">
+            <p class="section-tag" data-fade>For students</p>
+            <h2 class="display-2" id="privacy-title" data-split>One folder. Nothing else.</h2>
+            <p class="lead" data-fade>
+              If you did the work, the record is the best evidence you have that you did.
+            </p>
+          </div>
+          <div class="field" data-field aria-hidden="true"></div>
+
+          <div class="sees">
+            <div class="sees__col" data-fade>
+              <h3 class="sees__head mono">Recorded</h3>
+              <ul role="list">
+                <li>Edits and pastes in the assignment folder</li>
+                <li>Saves, opened files and editor focus</li>
+                <li>Commands run in the editor&rsquo;s terminal</li>
+                <li>Which editor extensions are installed</li>
+              </ul>
+            </div>
+            <div class="sees__col sees__col--never" data-fade>
+              <h3 class="sees__head mono">Never recorded</h3>
+              <ul role="list">
+                <li>Your browser, screen, camera or other projects</li>
+                <li>Keystrokes at the system level</li>
+                <li>Your clipboard, unless you paste into the work</li>
+              </ul>
+            </div>
+          </div>
+
+          <ul class="pledges" role="list" data-fade>
+            <li><strong>Offline.</strong> No network requests while you work.</li>
+            <li>
+              <strong>Yours to read.</strong> The log is plain text, on your computer until you hand
+              it in.
+            </li>
+
+            <li>
+              <strong>Not forever.</strong> Stored logs are deleted on a schedule your school sets.
+            </li>
+          </ul>
+
+          <div class="privacy__foot" data-fade>
+            <p class="privacy__get mono">Get the recorder</p>
+            <ul class="editors" role="list">
+              <li>
+                <a
+                  href="https://marketplace.visualstudio.com/items?itemName=itsgeagle.provenance-recorder"
+                  >VS&nbsp;Code <span aria-hidden="true">&#8599;</span></a
+                >
+              </li>
+              <li>
+                <a href="https://plugins.jetbrains.com/plugin/32944-provenance-recorder/"
+                  >JetBrains <span aria-hidden="true">&#8599;</span></a
+                >
+              </li>
+              <li>
+                <a href="https://github.com/ProvenanceTools/provenance-neovim-recorder"
+                  >Neovim <span aria-hidden="true">&#8599;</span></a
+                >
+              </li>
+            </ul>
+            <a
+              class="btn btn--ink"
+              href="https://github.com/ProvenanceTools/provenance/blob/main/docs/student-guide.md"
+            >
+              <span>Install guide</span>
+              <span class="btn__icon" aria-hidden="true">&#8599;</span>
+            </a>
+          <!-- TODO: replace # with the help link once it is decided -->
+            <p class="privacy__help">
+              Recorder not working? <a href="#">Find help <span aria-hidden="true">&#8599;</span></a>
+            </p>  
+          </div>
+        </div>
+      </section>
+
+      <!-- For instructors & TAs: the problem ------------------------------ -->
+      <section class="problem" id="instructors" data-theme="day" aria-labelledby="problem-title">
+        <div class="wrap">
+          <div class="problem__copy">
+          <p class="section-tag" data-fade>For instructors &amp; TAs</p>
+          <h2 class="display-2" id="problem-title" data-split>
+            The finished file is the easiest part to fake.
+          </h2>
+          <p class="lead" data-fade>
+            Similarity checkers compare final submissions, and AI tools now produce final
+            submissions on demand. What&rsquo;s much harder to produce is the afternoon behind one:
+            the false starts, the deleted lines, the test that finally passed at 11:40&nbsp;p.m.
+          </p>
+          </div>
+        </div>
+      </section>
+      
       <!-- 6. See the process -------------------------------------------------- -->
       <section class="insight" data-theme="day" aria-labelledby="insight-title">
         <div class="emboss" aria-hidden="true"></div>
@@ -424,6 +526,7 @@
       <section class="suite" id="suite" data-theme="day" aria-labelledby="suite-title">
         <div class="wrap">
           <div class="suite__copy">
+            <p class="section-tag" data-fade>Tools</p>
             <h2 class="display-2" id="suite-title" data-split>One record. Every tool.</h2>
             <p class="lead" data-fade>
               Three editors write the same signed log. Everything downstream reads it. Every piece
@@ -528,80 +631,7 @@
         </div>
       </section>
 
-      <!-- 7. One folder ------------------------------------------------------- -->
-      <section class="privacy" id="students" data-theme="day" aria-labelledby="privacy-title">
-        <div class="wrap">
-          <div class="privacy__copy">
-            <h2 class="display-2" id="privacy-title" data-split>One folder. Nothing else.</h2>
-            <p class="lead" data-fade>
-              If you did the work, the record is the best evidence you have that you did.
-            </p>
-          </div>
-          <div class="field" data-field aria-hidden="true"></div>
-
-          <div class="sees">
-            <div class="sees__col" data-fade>
-              <h3 class="sees__head mono">Recorded</h3>
-              <ul role="list">
-                <li>Edits and pastes in the assignment folder</li>
-                <li>Saves, opened files and editor focus</li>
-                <li>Commands run in the editor&rsquo;s terminal</li>
-                <li>Which editor extensions are installed</li>
-              </ul>
-            </div>
-            <div class="sees__col sees__col--never" data-fade>
-              <h3 class="sees__head mono">Never recorded</h3>
-              <ul role="list">
-                <li>Your browser, screen, camera or other projects</li>
-                <li>Keystrokes at the system level</li>
-                <li>Your clipboard, unless you paste into the work</li>
-              </ul>
-            </div>
-          </div>
-
-          <ul class="pledges" role="list" data-fade>
-            <li><strong>Offline.</strong> No network requests while you work.</li>
-            <li>
-              <strong>Yours to read.</strong> The log is plain text, on your computer until you hand
-              it in.
-            </li>
-
-            <li>
-              <strong>Not forever.</strong> Stored logs are deleted on a schedule your school sets.
-            </li>
-          </ul>
-
-          <div class="privacy__foot" data-fade>
-            <p class="privacy__get mono">Get the recorder</p>
-            <ul class="editors" role="list">
-              <li>
-                <a
-                  href="https://marketplace.visualstudio.com/items?itemName=itsgeagle.provenance-recorder"
-                  >VS&nbsp;Code <span aria-hidden="true">&#8599;</span></a
-                >
-              </li>
-              <li>
-                <a href="https://plugins.jetbrains.com/plugin/32944-provenance-recorder/"
-                  >JetBrains <span aria-hidden="true">&#8599;</span></a
-                >
-              </li>
-              <li>
-                <a href="https://github.com/ProvenanceTools/provenance-neovim-recorder"
-                  >Neovim <span aria-hidden="true">&#8599;</span></a
-                >
-              </li>
-            </ul>
-            <a
-              class="btn btn--ink"
-              href="https://github.com/ProvenanceTools/provenance/blob/main/docs/student-guide.md"
-            >
-              <span>Install guide</span>
-              <span class="btn__icon" aria-hidden="true">&#8599;</span>
-            </a>
-          </div>
-        </div>
-      </section>
-
+      
       <!-- 8. Try it ----------------------------------------------------------- -->
       <section class="tryit" data-theme="day" aria-labelledby="tryit-title">
         <div class="tryit__sticky">

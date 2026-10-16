@@ -1482,3 +1482,60 @@ a.tool:hover {
     display: none;
   }
 }
+
+/* ------------------------------------------------- for instructors & TAs */
+
+.problem {
+  padding: clamp(80px, 12vh, 160px) 0 0;
+  scroll-margin-top: 0;
+}
+.problem__copy {
+  display: grid;
+  gap: 28px;
+  max-width: 820px;
+}
+
+/* ------------------------------------------------------- section tags */
+
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  justify-self: start;
+  padding: 8px 16px;
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 0.875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.section-tag::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--gold);
+}
+
+/* --------------------------------------------------------- safeguards */
+
+.safeguards__head {
+  margin-top: clamp(64px, 10vh, 120px);
+  margin-bottom: clamp(24px, 4vh, 48px);
+}
+
+.histories__head .section-tag {
+  grid-column: 1 / -1;
+}
+
+/* ------------------------------------------------------------ find help */
+
+.privacy__help {
+  margin-top: 20px;
+  font-size: 0.9375rem;
+}
+.privacy__help a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
