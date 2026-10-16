@@ -35,7 +35,6 @@ section {
   grid-column: 1 / span 6;
   grid-row: 1;
   font-size: clamp(3.3rem, 7.4vw, 8.4rem);
-  color: #fff;
 }
 .hero__side {
   grid-column: 1 / span 6;
@@ -47,11 +46,11 @@ section {
 .hero__lead {
   max-width: 38ch;
   padding-left: clamp(16px, 1.6vw, 22px);
-  border-left: 2px solid var(--warm);
+  border-left: 2px solid var(--gold);
   font-size: clamp(1.1875rem, 1.05rem + 0.45vw, 1.375rem);
   line-height: 1.55;
   letter-spacing: -0.004em;
-  color: var(--text-lead);
+  color: rgb(4 30 66 / 0.86);
 }
 
 /* A still preview of the real recorder, clearly a picture: it has a label, no caret and
@@ -67,7 +66,7 @@ section {
   font-size: 0.75rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--text-soft);
+  color: rgb(4 30 66 / 0.66);
 }
 .preview {
   display: grid;
@@ -75,12 +74,11 @@ section {
   height: clamp(300px, 44vh, 420px);
   overflow: hidden;
   border-radius: 16px;
-  background: linear-gradient(180deg, var(--night-2), var(--night-1));
-  color: var(--text-lead);
+  background: var(--night-1);
+  color: var(--porcelain);
   box-shadow:
-    inset 0 0 0 1px rgb(242 245 249 / 0.12),
-    0 40px 90px -30px rgb(0 0 0 / 0.7),
-    0 0 80px -30px rgb(228 181 108 / 0.18);
+    inset 0 0 0 1px rgb(245 245 242 / 0.12),
+    0 30px 70px -30px rgb(4 30 66 / 0.5);
   user-select: none;
 }
 .preview__pane {
@@ -89,7 +87,7 @@ section {
   min-height: 0;
 }
 .preview__pane--log {
-  box-shadow: inset 1px 0 0 rgb(242 245 249 / 0.08);
+  box-shadow: inset 1px 0 0 rgb(245 245 242 / 0.08);
 }
 .preview__bar {
   display: flex;
@@ -98,8 +96,8 @@ section {
   min-height: 44px;
   padding: 0 16px;
   font-size: 0.75rem;
-  color: var(--text-soft);
-  box-shadow: inset 0 -1px 0 rgb(242 245 249 / 0.08);
+  color: rgb(245 245 242 / 0.7);
+  box-shadow: inset 0 -1px 0 rgb(245 245 242 / 0.08);
 }
 .preview__code {
   margin: 0;
@@ -108,7 +106,7 @@ section {
   font-size: 0.875rem;
   line-height: 1.7;
   white-space: pre-wrap;
-  color: var(--text-lead);
+  color: var(--porcelain);
 }
 .preview__rows {
   display: flex;
@@ -125,10 +123,10 @@ section {
   grid-template-columns: 3em 1fr auto;
   gap: 12px;
   white-space: nowrap;
-  color: rgb(242 245 249 / 0.7);
+  color: rgb(245 245 242 / 0.7);
 }
 .preview__rows li:last-child {
-  color: var(--text-hi);
+  color: var(--porcelain);
 }
 .preview__rows .k {
   overflow: hidden;
@@ -136,10 +134,10 @@ section {
 }
 .preview__rows .k i {
   font-style: normal;
-  color: rgb(242 245 249 / 0.62);
+  color: rgb(245 245 242 / 0.62);
 }
 .preview__rows .h {
-  color: rgb(242 245 249 / 0.6);
+  color: rgb(245 245 242 / 0.6);
 }
 .hero__preview-link {
   justify-self: start;
@@ -148,7 +146,7 @@ section {
   gap: 8px;
   font-size: 0.9375rem;
   font-weight: 500;
-  color: var(--warm);
+  color: var(--accent-d);
   transition: gap 0.4s var(--ease-out);
 }
 .hero__preview-link:hover {
@@ -189,7 +187,7 @@ section {
     height: 380px;
   }
   .preview__pane--log {
-    box-shadow: inset 0 1px 0 rgb(242 245 249 / 0.08);
+    box-shadow: inset 0 1px 0 rgb(245 245 242 / 0.08);
   }
 }
 
@@ -328,7 +326,7 @@ section {
   position: relative;
   height: 22px;
   font-size: 0.75rem;
-  color: rgb(245 245 242 / 0.7);
+  color: rgb(245 245 242 / 0.5);
   font-variant-numeric: tabular-nums;
 }
 .records__ticks span {
@@ -375,7 +373,7 @@ section {
   display: flex;
   gap: 18px;
   font-size: 0.75rem;
-  color: rgb(245 245 242 / 0.72);
+  color: rgb(245 245 242 / 0.6);
   font-variant-numeric: tabular-nums;
 }
 .record__track {
@@ -435,7 +433,7 @@ section {
   position: relative;
   height: 34px;
   font-size: 0.75rem;
-  color: rgb(245 245 242 / 0.78);
+  color: rgb(245 245 242 / 0.7);
 }
 .note {
   position: absolute;
@@ -497,7 +495,7 @@ section {
   flex-wrap: wrap;
   gap: 4px 14px;
   font-size: 0.75rem;
-  color: rgb(245 245 242 / 0.7);
+  color: rgb(245 245 242 / 0.5);
 }
 .records__digest {
   color: var(--accent-n);
@@ -648,7 +646,7 @@ html.no-js .how__copy[data-phase='chain'] {
   gap: 4px;
   padding-bottom: 12px;
   border-bottom: 1px solid var(--hair);
-  color: color-mix(in srgb, currentColor 72%, transparent);
+  color: color-mix(in srgb, currentColor 58%, transparent);
 }
 .ledger__status {
   color: var(--porcelain);
@@ -676,7 +674,7 @@ html.no-js .how__copy[data-phase='chain'] {
   height: 1.95em;
   align-items: center;
   white-space: nowrap;
-  color: color-mix(in srgb, var(--porcelain) 70%, transparent);
+  color: color-mix(in srgb, var(--porcelain) 60%, transparent);
 }
 .ledger__rows li:last-child {
   color: var(--porcelain);
@@ -797,7 +795,7 @@ html.no-js .how__copy[data-phase='chain'] {
 .principle p {
   font-size: 1rem;
   line-height: 1.55;
-  color: rgb(4 30 66 / 0.76);
+  color: rgb(4 30 66 / 0.72);
 }
 .flag {
   display: inline-flex;
@@ -929,7 +927,7 @@ html.no-js .how__copy[data-phase='chain'] {
 .evening__note {
   font-family: var(--mono);
   font-size: 12.5px;
-  fill: rgb(4 30 66 / 0.88);
+  fill: rgb(4 30 66 / 0.82);
   transition: opacity 0.6s var(--ease-soft);
 }
 .evening__note--accent {
@@ -1245,7 +1243,7 @@ html.no-js .how__copy[data-phase='chain'] {
 }
 .playground__input:focus-visible {
   outline: none;
-  box-shadow: inset 0 0 0 1px rgb(253 181 21 / 0.5);
+  box-shadow: inset 0 0 0 2px rgb(253 181 21 / 0.5);
 }
 .playground__rows {
   display: flex;
@@ -1348,7 +1346,7 @@ html.no-js .how__copy[data-phase='chain'] {
 .quote footer {
   margin-top: 22px;
   font-size: 0.8125rem;
-  color: var(--text-soft);
+  color: rgb(4 30 66 / 0.74);
 }
 @media (max-width: 900px) {
   .limits__inner > h2,
@@ -1453,6 +1451,38 @@ html.no-js .how__copy[data-phase='chain'] {
     flex-wrap: wrap;
     gap: 12px 24px;
   }
+}
+
+/* Reduced motion or no script: the chain chapter is not pinned. Its three explanations are
+   stacked in the page, and the chapter is kept taller than the viewport so the scroll maths
+   in acts.ts stays well defined. */
+html:not(.motion) .how {
+  height: auto;
+}
+html:not(.motion) .how__sticky {
+  position: relative;
+  height: auto;
+  min-height: 190svh;
+  overflow: visible;
+  display: grid;
+  align-content: start;
+  gap: clamp(28px, 5vh, 56px);
+  padding: calc(var(--nav-h) + clamp(12px, 4vh, 56px)) var(--gutter) clamp(48px, 8vh, 96px);
+}
+/* The 3D chain sits below the stacked explanations instead of behind them. */
+html:not(.motion) .how__anchor {
+  top: auto;
+  bottom: 40svh;
+  transform: none;
+}
+html:not(.motion) .how__copy {
+  position: relative;
+  left: auto;
+  top: auto;
+  width: min(780px, 100%);
+  visibility: visible !important;
+  opacity: 1 !important;
+  transform: none !important;
 }
 
 /* Reduced motion or no script: the editor simply sits in the page. */
@@ -1581,7 +1611,7 @@ a.tool:hover {
 .tool__line {
   font-size: 0.9375rem;
   line-height: 1.5;
-  color: rgb(4 30 66 / 0.74);
+  color: rgb(4 30 66 / 0.68);
   max-width: 34ch;
 }
 .tool--bundle {
@@ -1763,12 +1793,12 @@ a.tool:hover {
   color: color-mix(in srgb, currentColor 78%, transparent);
 }
 .section-tag::before {
-  background: var(--warm);
+  background: var(--gold);
 }
 
 /* Human review gets the one warm mark among the four safeguards. */
 .principle:last-child {
-  border-top-color: var(--warm);
+  border-top-color: var(--gold);
 }
 
 /* A reserved frame for a real product clip. Replace the element, keep the proportions. */
@@ -1777,12 +1807,10 @@ a.tool:hover {
   aspect-ratio: 16 / 10;
   width: 100%;
   border-radius: 16px;
-  background:
-    radial-gradient(70% 60% at 30% 0%, rgb(58 88 138 / 0.28), transparent 70%),
-    linear-gradient(180deg, var(--night-2), var(--night-1));
+  background: linear-gradient(180deg, var(--night-1), var(--night-0));
   box-shadow:
-    inset 0 0 0 1px rgb(242 245 249 / 0.14),
-    0 30px 70px -30px rgb(0 0 0 / 0.55);
+    inset 0 0 0 1px rgb(245 245 242 / 0.14),
+    0 30px 70px -30px rgb(4 30 66 / 0.45);
 }
 .demo-slot__tag {
   position: absolute;
@@ -1793,8 +1821,8 @@ a.tool:hover {
   font-size: 0.75rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--text-soft);
-  box-shadow: inset 0 0 0 1px rgb(242 245 249 / 0.22);
+  color: rgb(245 245 242 / 0.7);
+  box-shadow: inset 0 0 0 1px rgb(245 245 242 / 0.22);
 }
 .demo-slot__tag::before {
   content: '';
@@ -1803,7 +1831,7 @@ a.tool:hover {
   height: 6px;
   margin-right: 8px;
   border-radius: 50%;
-  background: var(--warm);
+  background: var(--gold);
   vertical-align: 0.08em;
 }
 .demo-slot--thesis {
@@ -1838,9 +1866,8 @@ a.tool:hover {
 /* Try It: the working editor is a lit surface on the dark ground. */
 .playground {
   border-radius: 16px;
-  background: linear-gradient(180deg, var(--night-2), var(--night-1));
+  background: var(--night-1);
   box-shadow:
-    inset 0 0 0 1px rgb(242 245 249 / 0.14),
-    0 40px 100px -30px rgb(0 0 0 / 0.7),
-    0 0 90px -30px rgb(228 181 108 / 0.16);
+    inset 0 0 0 1px rgb(245 245 242 / 0.14),
+    0 40px 100px -40px rgb(4 30 66 / 0.45);
 }

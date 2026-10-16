@@ -8,7 +8,7 @@
       name="description"
       content="Provenance records how student code gets written, edit by edit, in a tamper-evident log. Process evidence for academic integrity, not AI detection. Open source."
     />
-    <meta name="theme-color" content="#0b111c" />
+    <meta name="theme-color" content="#f7f7f5" />
     <link rel="icon" href="/brand/favicon.svg" type="image/svg+xml" />
     <link rel="canonical" href="https://provtools.com/" />
 
@@ -43,8 +43,8 @@
     <style>
       html,
       body {
-        background: #0b111c;
-        color: #f2f5f9;
+        background: #f7f7f5;
+        color: #041e42;
       }
     </style>
     <link rel="stylesheet" href="/src/styles/index.css" />
@@ -80,7 +80,6 @@
       <div class="ground__night"></div>
       <div class="ground__dawn"></div>
       <div class="ground__day"></div>
-      <div class="ground__dusk"></div>
       <div class="ground__signal"><div class="ground__pattern" data-pattern></div></div>
     </div>
 
@@ -120,7 +119,7 @@
 
     <main id="main">
       <!-- 0. Hero ------------------------------------------------------------ -->
-      <section class="hero" id="top" data-theme="night" aria-labelledby="hero-title">
+      <section class="hero" id="top" data-theme="day" aria-labelledby="hero-title">
         <div class="hero__anchor" data-anchor="hero">
           <picture class="still" style="--k: 333%">
             <source
@@ -229,7 +228,7 @@ print(greet("Ada"))</pre>
       </section>
 
       <!-- 1. Proof ----------------------------------------------------------- -->
-      <section class="proof" data-theme="night" aria-labelledby="proof-title">
+      <section class="proof" data-theme="day" aria-labelledby="proof-title">
         <div class="wrap">
           <h2 class="label" id="proof-title" data-fade>In use this semester at UC Berkeley</h2>
           <ul class="proof__courses" role="list">
@@ -259,7 +258,7 @@ print(greet("Ada"))</pre>
             closer look.
           </p>
           <!--
-            TODO(demo): "Demo dynamic — recording → flag → review".
+            TODO(demo): "Demo dynamic: recording → flag → review".
             A short looping clip (or GIF) of a real session: edits being recorded, the Analyzer
             raising a flag on a paste, then the reviewer opening that moment in the replay.
             Replace the .demo-slot below with <video autoplay muted loop playsinline> or an <img>;
@@ -578,7 +577,7 @@ print(greet("Ada"))</pre>
             </p>
           </div>
           <!--
-            TODO(demo): "Demo dynamic — Analyzer / review interface".
+            TODO(demo): "Demo dynamic: Analyzer / review interface".
             A real screen recording of the Analyzer: a cohort overview, opening one submission, and
             the replay jumping to a flagged moment. Do not mock this up; replace the .demo-slot with
             <video autoplay muted loop playsinline> or an <img> when the footage exists (16:10).
@@ -723,7 +722,7 @@ print(greet("Ada"))</pre>
       </section>
 
       <!-- 8. Try it ----------------------------------------------------------- -->
-      <section class="tryit" id="tryit" data-theme="night" aria-labelledby="tryit-title">
+      <section class="tryit" id="tryit" data-theme="day" aria-labelledby="tryit-title">
         <div class="tryit__sticky">
           <div class="wrap tryit__inner">
             <div class="tryit__copy">
@@ -763,7 +762,7 @@ print(greet("Ada"))</pre>
                   <span>scratch.slog</span>
                   <span data-log-status>0 events</span>
                 </div>
-                <ol class="playground__rows mono" data-log role="log" aria-live="off"></ol>
+                <ol class="playground__rows mono" data-log aria-live="off"></ol>
               </div>
             </div>
           </div>
@@ -771,7 +770,7 @@ print(greet("Ada"))</pre>
       </section>
 
       <!-- 8. Limits ---------------------------------------------------------- -->
-      <section class="limits" data-theme="night" aria-labelledby="limits-title">
+      <section class="limits" data-theme="day" aria-labelledby="limits-title">
         <div class="wrap limits__inner">
           <h2 class="display-2" id="limits-title" data-split>What it can&rsquo;t do.</h2>
           <p class="lead" data-fade>
