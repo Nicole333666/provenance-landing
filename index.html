@@ -145,8 +145,9 @@
           </h1>
           <div class="hero__side">
             <p class="lead hero__lead">
-              Provenance records how student code gets written, edit by edit, in a tamper-evident
-              log that travels with the submission.
+              Provenance records how student code comes to life, one edit at a time. A
+              tamper-evident history that travels with the submission, preserving more than the
+              final answer.
             </p>
             <div class="actions hero__actions">
               <a
@@ -221,7 +222,7 @@ print(greet("Ada"))</pre>
               </div>
             </div>
             <a class="hero__preview-link" href="#tryit">
-              <span>See it for yourself.</span><span aria-hidden="true">&#8595;</span>
+              <span>See it for yourself.</span>
             </a>
           </div>
         </div>
@@ -251,14 +252,14 @@ print(greet("Ada"))</pre>
         <div class="thesis__anchor" data-anchor="thesis"></div>
         <div class="wrap thesis__inner">
           <h2 class="thesis__title statement" id="thesis-title" data-split>
-            Look at the process, not just the file.
+            What remains when the work is done?
           </h2>
           <p class="lead thesis__body" data-fade>
-            Provenance records how a file came to be, edit by edit, and flags the moments worth a
-            closer look.
+            A finished file holds the result. The attempts, revisions, and decisions that shaped it
+            are often invisible. Provenance makes the recorded process available for examination.
           </p>
           <!--
-            TODO(demo): "Demo dynamic: recording → flag → review".
+            TODO(demo): "Demo dynamic: recording, examination, review".
             A short looping clip (or GIF) of a real session: edits being recorded, the Analyzer
             raising a flag on a paste, then the reviewer opening that moment in the replay.
             Replace the .demo-slot below with <video autoplay muted loop playsinline> or an <img>;
@@ -282,8 +283,8 @@ print(greet("Ada"))</pre>
             <p class="section-tag" data-fade>How it works</p>
             <h2 class="display-2" id="histories-title" data-split>Same file. Two histories.</h2>
             <p class="lead" data-fade>
-              Two students hand in the exact same file. Here is what each one&rsquo;s recording
-              shows.
+              Identical code can emerge through different paths. One unfolds over hours of edits and
+              tests. Another arrives in a single paste.
             </p>
           </header>
           <figure class="records" data-records aria-describedby="records-desc">
@@ -320,9 +321,7 @@ print(greet("Ada"))</pre>
                 <span class="records__eq">=</span>
                 <span class="records__digest" data-digest></span>
               </p>
-              <p class="records__verdict">
-                The code is identical. The recorded process isn&rsquo;t.
-              </p>
+              <p class="records__verdict">The result is identical. The evidence is not.</p>
               <button class="records__replay mono" type="button" data-replay>Replay</button>
               <span class="visually-hidden" id="records-desc">
                 Two recordings of the same assignment on one clock, 20:55 to 23:41. In the first, a
@@ -361,26 +360,28 @@ print(greet("Ada"))</pre>
           </picture>
 
           <div class="how__copy" data-phase="chain">
-            <h2 class="display-2" data-split>A history of connected events.</h2>
+            <p class="section-tag">I. Continuity</p>
+            <h2 class="display-2" data-split>Every event is connected.</h2>
             <p class="lead">
-              Each recorded event is linked to the one before it, forming a history that can be
-              checked for changes.
+              Changes, pastes, and saves form a hash-linked record, preserving the sequence of
+              recorded activity.
             </p>
           </div>
 
           <div class="how__copy" data-phase="tamper">
-            <h2 class="display-2" data-split>Changes leave a trace.</h2>
+            <p class="section-tag">II. Integrity</p>
+            <h2 class="display-2" data-split>The past leaves traces.</h2>
             <p class="lead">
-              Alter an earlier event, and the hashes that follow no longer match the original
-              record.
+              Alter an event, and the hashes that follow no longer match the original chain.
             </p>
           </div>
 
           <div class="how__copy" data-phase="cover">
-            <h2 class="display-2" data-split>Checkpoints protect the record.</h2>
+            <p class="section-tag">III. Verification</p>
+            <h2 class="display-2" data-split>Trust, made verifiable.</h2>
             <p class="lead">
-              Even if the chain is rebuilt, a signed checkpoint provides another way to detect
-              changes that cannot be authenticated with the original signing key.
+              Signed checkpoints anchor the history. A rebuilt chain alone cannot reproduce an
+              authentic signature.
             </p>
           </div>
 
@@ -403,10 +404,10 @@ print(greet("Ada"))</pre>
       <section class="fair" id="fair" data-theme="day" aria-labelledby="fair-title">
         <div class="wrap fair__top">
           <div class="fair__copy">
-            <h2 class="display-2" id="fair-title" data-split>Built not to accuse.</h2>
+            <h2 class="display-2" id="fair-title" data-split>Observation is not judgment.</h2>
             <p class="lead" data-fade>
-              Provenance points a person at the moments worth a look. Honest work stays out of the
-              way.
+              A recorded event can raise a question. It cannot tell us why something happened.
+              Provenance supports careful review, not automatic accusation.
             </p>
           </div>
           <div class="fair__anchor" data-anchor="day">
@@ -430,27 +431,18 @@ print(greet("Ada"))</pre>
           </div>
         </div>
 
-        <div class="wrap safeguards__head">
-          <h3 class="display-2" data-split>Safeguards</h3>
-        </div>
         <div class="wrap principles">
           <article class="principle" data-fade>
-            <h3 class="principle__title">Moving your own code isn&rsquo;t copying.</h3>
-            <p>
-              A paste that matches code you already typed is recognized as a move. It drops out of
-              the review queue, and stays on the record.
-            </p>
+            <h3 class="principle__title">Context matters.</h3>
+            <p>Moving code already written is recognized as a move, not an unexplained paste.</p>
             <div class="flag" data-flag aria-hidden="true">
               <span class="flag__level mono" data-flag-level>high</span>
               <span class="flag__text" data-flag-text>Paste of 6 lines into trails.py</span>
             </div>
           </article>
           <article class="principle" data-fade>
-            <h3 class="principle__title">Missing evidence is never evidence.</h3>
-            <p>
-              A check that can&rsquo;t run reports that it was skipped. It never reports a failure
-              it couldn&rsquo;t see.
-            </p>
+            <h3 class="principle__title">Uncertainty remains visible.</h3>
+            <p>A check that cannot run is marked as skipped, never as a failure.</p>
             <div class="checks mono" aria-hidden="true">
               <span><i class="is-ok"></i>chain intact</span>
               <span><i class="is-ok"></i>seal valid</span>
@@ -458,15 +450,12 @@ print(greet("Ada"))</pre>
             </div>
           </article>
           <article class="principle" data-fade>
-            <h3 class="principle__title">Your course sets the rules.</h3>
-            <p>
-              Staff can weight or switch off every signal, and a course can turn some kinds of
-              capture off before anything is recorded.
-            </p>
+            <h3 class="principle__title">Courses set the rules.</h3>
+            <p>Staff configure supported recording and review signals.</p>
           </article>
           <article class="principle" data-fade>
-            <h3 class="principle__title">A person decides.</h3>
-            <p>Every flag opens the exact moment in the replay. Nothing happens automatically.</p>
+            <h3 class="principle__title">People make decisions.</h3>
+            <p>Flags lead to moments in the replay, not automatic findings.</p>
           </article>
         </div>
 
@@ -480,9 +469,12 @@ print(greet("Ada"))</pre>
         <div class="wrap">
           <div class="privacy__copy">
             <p class="section-tag" data-fade>For students</p>
-            <h2 class="display-2" id="privacy-title" data-split>One folder. Nothing else.</h2>
+            <h2 class="display-2" id="privacy-title" data-split>
+              The work is yours. So is its history.
+            </h2>
             <p class="lead" data-fade>
-              If you did the work, the record is the best evidence you have that you did.
+              Your edits and revisions deserve a record. Provenance preserves supported development
+              activity without watching the rest of your digital life.
             </p>
           </div>
 
@@ -495,7 +487,7 @@ print(greet("Ada"))</pre>
               <span class="btn__icon" aria-hidden="true">&#8599;</span>
             </a>
             <div class="privacy__editors">
-              <p class="privacy__get mono">Get the recorder</p>
+              <p class="privacy__get mono">Get the recorder:</p>
               <ul class="editors" role="list">
                 <li>
                   <a
@@ -521,42 +513,37 @@ print(greet("Ada"))</pre>
             <div class="sees__col" data-fade>
               <h3 class="sees__head mono">Recorded</h3>
               <ul role="list">
-                <li>Edits and pastes in the assignment folder</li>
-                <li>Saves, opened files and editor focus</li>
-                <li>Commands run in the editor&rsquo;s terminal</li>
-                <li>Which editor extensions are installed</li>
+                <li>Edits and pastes in the assignment workspace</li>
+                <li>File activity and editor focus</li>
+                <li>Supported terminal commands</li>
+                <li>Installed editor extensions</li>
               </ul>
             </div>
             <div class="sees__col sees__col--never" data-fade>
               <h3 class="sees__head mono">Never recorded</h3>
               <ul role="list">
-                <li>Your browser, screen, camera or other projects</li>
-                <li>Keystrokes at the system level</li>
-                <li>Your clipboard, unless you paste into the work</li>
+                <li>Your browser, screen, camera, or other projects</li>
+                <li>System-level keystrokes</li>
+                <li>Clipboard contents unless pasted into your work</li>
               </ul>
             </div>
           </div>
 
           <ul class="pledges" role="list" data-fade>
-            <li><strong>Works offline</strong> No network requests while you work.</li>
+            <li><strong>Offline.</strong> No network requests while recording.</li>
+            <li><strong>Readable.</strong> Plain-text logs stay local until submission.</li>
             <li>
-              <strong>Readable local logs</strong> The log is plain text, on your computer until you
-              hand it in.
-            </li>
-            <li>
-              <strong>Course-defined retention</strong> Stored logs are deleted on a schedule your
-              school sets.
+              <strong>Course-defined retention.</strong> Your school sets the deletion schedule.
             </li>
           </ul>
 
           <div class="field" data-field aria-hidden="true"></div>
 
-          <!--
-            TODO: Find Help has no verified destination yet. When one is decided, wrap the label
-            in <a href="..."> (the previous placeholder href was "#"). It is deliberately not a link.
-          -->
           <p class="privacy__help">
-            <span>Recorder not working?</span> <span class="privacy__help-label">Find Help</span>
+            <strong>Recorder not working?</strong> See the
+            <a href="https://github.com/ProvenanceTools/provenance/blob/main/docs/student-guide.md"
+              >installation guide</a
+            >.
           </p>
         </div>
       </section>
@@ -566,24 +553,21 @@ print(greet("Ada"))</pre>
         <div class="wrap">
           <div class="problem__copy">
             <p class="section-tag" data-fade>For instructors &amp; TAs</p>
-            <h2 class="display-2" id="problem-title" data-split>
-              The finished file is the easiest part to fake.
-            </h2>
+            <h2 class="display-2" id="problem-title" data-split>Look beyond the submission.</h2>
             <p class="lead" data-fade>
-              Similarity checkers compare final submissions, and AI tools now produce final
-              submissions on demand. What&rsquo;s much harder to produce is the afternoon behind
-              one: the false starts, the deleted lines, the test that finally passed at
-              11:40&nbsp;p.m.
+              A final file shows what was handed in, not how it came to be. Provenance brings the
+              recorded development history into view, so review can begin with evidence rather than
+              assumptions.
             </p>
           </div>
           <!--
-            TODO(demo): "Demo dynamic: Analyzer / review interface".
+            TODO(demo): "Analyzer / Review demonstration".
             A real screen recording of the Analyzer: a cohort overview, opening one submission, and
             the replay jumping to a flagged moment. Do not mock this up; replace the .demo-slot with
             <video autoplay muted loop playsinline> or an <img> when the footage exists (16:10).
           -->
           <div class="demo-slot demo-slot--problem" aria-hidden="true">
-            <span class="demo-slot__tag mono">Demo dynamic</span>
+            <span class="demo-slot__tag mono">Analyzer / Review demonstration</span>
           </div>
         </div>
       </section>
@@ -594,11 +578,11 @@ print(greet("Ada"))</pre>
         <div class="wrap">
           <div class="insight__copy">
             <h2 class="display-2" id="insight-title" data-split>
-              Grade the work. See the process.
+              The moments between the answers.
             </h2>
             <p class="lead" data-fade>
-              The replay shows where a student got stuck, what they tried, and when it clicked.
-              Office hours can start from the actual evening, not a guess about it.
+              A failed test. A discarded approach. A function written again. The replay reveals
+              recorded attempts and revisions that the finished program leaves behind.
             </p>
           </div>
           <figure class="evening" data-evening>
@@ -620,8 +604,8 @@ print(greet("Ada"))</pre>
             <p class="section-tag" data-fade>Tools</p>
             <h2 class="display-2" id="suite-title" data-split>One record. Every tool.</h2>
             <p class="lead" data-fade>
-              Three editors write the same signed log. Everything downstream reads it. Every piece
-              is open source.
+              From editor to submission to review, Provenance connects an open-source workflow
+              around the recorded history.
             </p>
           </div>
 
@@ -637,7 +621,7 @@ print(greet("Ada"))</pre>
               >
                 <span class="tool__code mono">provcode</span>
                 <span class="tool__name">Provenance for VS&nbsp;Code</span>
-                <span class="tool__line">Record development activity directly in VS Code.</span>
+                <span class="tool__line">Records supported development activity in VS Code.</span>
               </a>
               <a
                 class="tool"
@@ -646,9 +630,7 @@ print(greet("Ada"))</pre>
               >
                 <span class="tool__code mono">provjet</span>
                 <span class="tool__name">Provenance for JetBrains</span>
-                <span class="tool__line"
-                  >Record development activity in supported JetBrains IDEs.</span
-                >
+                <span class="tool__line">Records activity in compatible JetBrains IDEs.</span>
               </a>
               <a
                 class="tool"
@@ -657,7 +639,7 @@ print(greet("Ada"))</pre>
               >
                 <span class="tool__code mono">provnvim</span>
                 <span class="tool__name">Provenance for Neovim</span>
-                <span class="tool__line">A lightweight Lua recorder for Neovim.</span>
+                <span class="tool__line">A lightweight recorder for Neovim.</span>
               </a>
             </div>
 
@@ -676,9 +658,9 @@ print(greet("Ada"))</pre>
                     <rect class="mark__ink" x="50" y="74" width="96" height="104" rx="34" />
                   </g>
                 </svg>
-                <span class="tool__name">The signed bundle</span>
+                <span class="tool__name">Signed bundle</span>
                 <span class="tool__line"
-                  >The recorded history and its signed evidence, packaged for submission.</span
+                  >The history and its signed evidence, packaged for submission.</span
                 >
               </div>
               <a
@@ -688,9 +670,7 @@ print(greet("Ada"))</pre>
               >
                 <span class="tool__code mono">provgate</span>
                 <span class="tool__name">Gradescope gateway</span>
-                <span class="tool__line"
-                  >Transfers new Gradescope submissions to the Provenance server.</span
-                >
+                <span class="tool__line">Transfers new submissions to the Provenance server.</span>
               </a>
             </div>
 
@@ -700,8 +680,7 @@ print(greet("Ada"))</pre>
                 <span class="tool__code mono">provd</span>
                 <span class="tool__name">Provenance server</span>
                 <span class="tool__line"
-                  >Receives submissions, verifies recorded histories, and stores the evidence for
-                  review.</span
+                  >Receives submissions and verifies the available evidence.</span
                 >
               </div>
             </div>
@@ -712,8 +691,7 @@ print(greet("Ada"))</pre>
                 <span class="tool__code mono">provlens</span>
                 <span class="tool__name">Provenance analyzer</span>
                 <span class="tool__line"
-                  >Explore recorded activity, inspect flagged moments, and replay the development
-                  history.</span
+                  >Explore the events, signals, and recorded development history.</span
                 >
               </div>
             </div>
@@ -728,8 +706,8 @@ print(greet("Ada"))</pre>
             <div class="tryit__copy">
               <h2 class="display-2" id="tryit-title" data-split>See it for yourself.</h2>
               <p class="lead" data-fade>
-                Type something. Paste something. Click away and come back. The record writes itself
-                alongside.
+                Type something. Paste something. Click away and return. Watch the record take shape
+                beside your code.
               </p>
             </div>
             <div class="tryit__slot" data-slot aria-hidden="true"></div>
@@ -739,7 +717,7 @@ print(greet("Ada"))</pre>
                   <span class="playground__file"
                     >scratch.py
                     <span class="playground__status" aria-hidden="true"
-                      ><span class="playground__hint">Click to type</span
+                      ><span class="playground__hint">Start typing</span
                       ><span class="playground__live">Recording</span></span
                     ></span
                   >
@@ -759,8 +737,7 @@ print(greet("Ada"))</pre>
               </div>
               <div class="playground__log">
                 <div class="playground__bar mono">
-                  <span>scratch.slog</span>
-                  <span data-log-status>0 events</span>
+                  <span>scratch.slog</span><span data-log-status>0 events</span>
                 </div>
                 <ol class="playground__rows mono" data-log aria-live="off"></ol>
               </div>
@@ -772,18 +749,23 @@ print(greet("Ada"))</pre>
       <!-- 8. Limits ---------------------------------------------------------- -->
       <section class="limits" data-theme="day" aria-labelledby="limits-title">
         <div class="wrap limits__inner">
-          <h2 class="display-2" id="limits-title" data-split>What it can&rsquo;t do.</h2>
-          <p class="lead" data-fade>
-            No log is impossible to forge, and our own design documents say so. Provenance makes the
-            easy shortcuts leave marks, and the hard ones cost more than doing the work. The source
-            is public, and the design assumes it.
-          </p>
+          <h2 class="display-2" id="limits-title" data-split>What a record cannot know.</h2>
+          <div class="lead" data-fade>
+            <p>
+              A log captures events, not intention. It cannot guarantee authorship or make forgery
+              impossible.
+            </p>
+            <p>
+              Provenance makes certain changes detectable and the recorded process examinable. The
+              evidence still needs a human reader.
+            </p>
+          </div>
           <blockquote class="quote" data-fade>
+            <footer class="mono">From the Provenance design document</footer>
             <p>
               &ldquo;We will know if you do something obvious, and we will know enough to ask
               questions if you do something subtle.&rdquo;
             </p>
-            <footer class="mono">From the Provenance design document</footer>
           </blockquote>
         </div>
       </section>
@@ -815,8 +797,7 @@ print(greet("Ada"))</pre>
             to your course.
           </h2>
           <p class="lead close__lead" data-fade>
-            It&rsquo;s open source, and it already runs at the scale of a large intro course. Tell
-            us about yours.
+            Give the process a record. Give the evidence its context.
           </p>
           <div class="actions" data-fade>
             <a
@@ -827,7 +808,7 @@ print(greet("Ada"))</pre>
               <span class="btn__icon" aria-hidden="true">&#8599;</span>
             </a>
             <a class="btn btn--outline" href="https://github.com/ProvenanceTools">
-              <span>Read the source</span>
+              <span>Explore the source</span>
             </a>
           </div>
         </div>
@@ -865,7 +846,7 @@ print(greet("Ada"))</pre>
               >
             </li>
           </ul>
-          <p class="foot__made">Built at UC Berkeley.</p>
+          <p class="foot__made">Open source · Built at UC Berkeley.</p>
         </footer>
       </section>
     </main>
