@@ -43,11 +43,16 @@
 :root {
   /* UC Berkeley. Night is Pantone 282 navy taken toward black; blue and gold are used solid,
      never as tints. On navy the mark is white and gold; on paper, Berkeley Blue and gold. */
-  --night-0: #020a16;
-  --night-1: #06142a;
-  --night-2: #0d2240;
+  --night-0: #070c14;
+  --night-1: #0b111c;
+  --night-2: #101b29;
+  /* Cinematic text roles on the dark ground, and the one restrained warm accent. */
+  --text-hi: #ffffff;
+  --text-lead: #f2f5f9;
+  --text-soft: #b9c5d6;
+  --warm: #e4b56c;
   --porcelain: #f5f5f2;
-  --accent-n: #fdb515;
+  --accent-n: #e4b56c;
   --day-0: #f7f7f5;
   --day-1: #e9e9e5;
   --ink: #041e42;
@@ -91,13 +96,13 @@
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  background: var(--day-0);
+  background: var(--night-1);
 }
 
 body {
   margin: 0;
-  background: var(--day-0);
-  color: var(--ink);
+  background: var(--night-1);
+  color: var(--text-lead);
   font-family: var(--sans);
   font-size: 1rem;
   line-height: 1.5;
@@ -230,12 +235,19 @@ button {
 }
 
 .lead {
-  font-size: clamp(1.0625rem, 0.95rem + 0.42vw, 1.375rem);
-  line-height: 1.48;
+  font-size: clamp(1.125rem, 1rem + 0.5vw, 1.4375rem);
+  line-height: 1.5;
   letter-spacing: -0.006em;
-  max-width: 40ch;
+  max-width: 42ch;
   text-wrap: pretty;
-  color: color-mix(in srgb, currentColor 74%, transparent);
+  color: color-mix(in srgb, currentColor 80%, transparent);
+}
+/* On the dark ground the lead is bright, never a dim subtitle. */
+[data-theme='night'] .lead {
+  color: var(--text-lead);
+}
+[data-theme='night'] :is(.display, .display-2, .statement) {
+  color: var(--text-hi);
 }
 
 .label {

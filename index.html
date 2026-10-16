@@ -8,7 +8,7 @@
       name="description"
       content="Provenance records how student code gets written, edit by edit, in a tamper-evident log. Process evidence for academic integrity, not AI detection. Open source."
     />
-    <meta name="theme-color" content="#f7f7f5" />
+    <meta name="theme-color" content="#0b111c" />
     <link rel="icon" href="/brand/favicon.svg" type="image/svg+xml" />
     <link rel="canonical" href="https://provtools.com/" />
 
@@ -43,8 +43,8 @@
     <style>
       html,
       body {
-        background: #f7f7f5;
-        color: #041e42;
+        background: #0b111c;
+        color: #f2f5f9;
       }
     </style>
     <link rel="stylesheet" href="/src/styles/index.css" />
@@ -80,6 +80,7 @@
       <div class="ground__night"></div>
       <div class="ground__dawn"></div>
       <div class="ground__day"></div>
+      <div class="ground__dusk"></div>
       <div class="ground__signal"><div class="ground__pattern" data-pattern></div></div>
     </div>
 
@@ -119,7 +120,7 @@
 
     <main id="main">
       <!-- 0. Hero ------------------------------------------------------------ -->
-      <section class="hero" id="top" data-theme="day" aria-labelledby="hero-title">
+      <section class="hero" id="top" data-theme="night" aria-labelledby="hero-title">
         <div class="hero__anchor" data-anchor="hero">
           <picture class="still" style="--k: 333%">
             <source
@@ -157,15 +158,78 @@
                 <span class="btn__icon" aria-hidden="true">&#8599;</span>
               </a>
               <a class="btn btn--ghost" href="https://github.com/ProvenanceTools">
-                <span>Read the source</span>
+                <span>Explore the source</span>
               </a>
             </div>
+          </div>
+          <div class="hero__preview">
+            <p class="hero__preview-tag mono">Preview</p>
+            <div
+              class="preview"
+              role="img"
+              aria-label="A still preview of the recorder: the file scratch.py beside its log, scratch.slog"
+            >
+              <div class="preview__pane">
+                <div class="preview__bar mono"><span>scratch.py</span></div>
+                <pre class="preview__code mono">
+def greet(name):
+    # Type anything here. Then try pasting something,
+    # or click outside the editor and come back.
+    return "hello, " + name
+
+print(greet("Ada"))</pre>
+              </div>
+              <div class="preview__pane preview__pane--log">
+                <div class="preview__bar mono"><span>scratch.slog</span><span>23 events</span></div>
+                <ol class="preview__rows mono" role="list">
+                  <li>
+                    <span>014</span><span class="k">doc.change<i> +"t"</i></span
+                    ><span class="h">8ac22c4f</span>
+                  </li>
+                  <li>
+                    <span>015</span><span class="k">doc.change<i> +"("</i></span
+                    ><span class="h">aadcf2b6</span>
+                  </li>
+                  <li>
+                    <span>016</span><span class="k">doc.change<i> +"\""</i></span
+                    ><span class="h">d29166db</span>
+                  </li>
+                  <li>
+                    <span>017</span><span class="k">doc.change<i> +"A"</i></span
+                    ><span class="h">34deca96</span>
+                  </li>
+                  <li>
+                    <span>018</span><span class="k">doc.change<i> +"d"</i></span
+                    ><span class="h">b7268dd4</span>
+                  </li>
+                  <li>
+                    <span>019</span><span class="k">doc.change<i> +"a"</i></span
+                    ><span class="h">dba1464f</span>
+                  </li>
+                  <li>
+                    <span>020</span><span class="k">doc.change<i> +"\""</i></span
+                    ><span class="h">c12af99a</span>
+                  </li>
+                  <li>
+                    <span>021</span><span class="k">doc.change<i> +")"</i></span
+                    ><span class="h">9202eac7</span>
+                  </li>
+                  <li>
+                    <span>022</span><span class="k">doc.change<i> +")"</i></span
+                    ><span class="h">35693a3f</span>
+                  </li>
+                </ol>
+              </div>
+            </div>
+            <a class="hero__preview-link" href="#tryit">
+              <span>See it for yourself.</span><span aria-hidden="true">&#8595;</span>
+            </a>
           </div>
         </div>
       </section>
 
       <!-- 1. Proof ----------------------------------------------------------- -->
-      <section class="proof" data-theme="day" aria-labelledby="proof-title">
+      <section class="proof" data-theme="night" aria-labelledby="proof-title">
         <div class="wrap">
           <h2 class="label" id="proof-title" data-fade>In use this semester at UC Berkeley</h2>
           <ul class="proof__courses" role="list">
@@ -194,7 +258,16 @@
             Provenance records how a file came to be, edit by edit, and flags the moments worth a
             closer look.
           </p>
-          <!-- TODO: dynamic demo graph (recording a session and raising a flag) -->
+          <!--
+            TODO(demo): "Demo dynamic — recording → flag → review".
+            A short looping clip (or GIF) of a real session: edits being recorded, the Analyzer
+            raising a flag on a paste, then the reviewer opening that moment in the replay.
+            Replace the .demo-slot below with <video autoplay muted loop playsinline> or an <img>;
+            keep the 16:10 frame so the layout does not shift.
+          -->
+          <div class="demo-slot demo-slot--thesis" aria-hidden="true">
+            <span class="demo-slot__tag mono">Demo dynamic</span>
+          </div>
         </div>
       </section>
 
@@ -209,7 +282,7 @@
           <header class="histories__head">
             <p class="section-tag" data-fade>How it works</p>
             <h2 class="display-2" id="histories-title" data-split>Same file. Two histories.</h2>
-                <p class="lead" data-fade>
+            <p class="lead" data-fade>
               Two students hand in the exact same file. Here is what each one&rsquo;s recording
               shows.
             </p>
@@ -248,7 +321,9 @@
                 <span class="records__eq">=</span>
                 <span class="records__digest" data-digest></span>
               </p>
-              <p class="records__verdict">Identical files. Completely different records.</p>
+              <p class="records__verdict">
+                The code is identical. The recorded process isn&rsquo;t.
+              </p>
               <button class="records__replay mono" type="button" data-replay>Replay</button>
               <span class="visually-hidden" id="records-desc">
                 Two recordings of the same assignment on one clock, 20:55 to 23:41. In the first, a
@@ -287,26 +362,26 @@
           </picture>
 
           <div class="how__copy" data-phase="chain">
-            <h2 class="display-2" data-split>Every edit is a link.</h2>
+            <h2 class="display-2" data-split>A history of connected events.</h2>
             <p class="lead">
-              Every change, paste and save is sealed to the one before it, in one unbroken line from
-              the first keystroke to the hand-in. Along the way the recorder signs checkpoints, like
-              the gold link.
+              Each recorded event is linked to the one before it, forming a history that can be
+              checked for changes.
             </p>
           </div>
 
           <div class="how__copy" data-phase="tamper">
-            <h2 class="display-2" data-split>Change one link, and the chain says so.</h2>
+            <h2 class="display-2" data-split>Changes leave a trace.</h2>
             <p class="lead">
-              Rewrite one event and its seal stops matching. So does every event after it.
+              Alter an earlier event, and the hashes that follow no longer match the original
+              record.
             </p>
           </div>
 
           <div class="how__copy" data-phase="cover">
-            <h2 class="display-2" data-split>Covering it up doesn&rsquo;t work either.</h2>
+            <h2 class="display-2" data-split>Checkpoints protect the record.</h2>
             <p class="lead">
-              Reseal everything after the edit and the chain looks whole again, until the signed
-              checkpoint. That signature can&rsquo;t be redone.
+              Even if the chain is rebuilt, a signed checkpoint provides another way to detect
+              changes that cannot be authenticated with the original signing key.
             </p>
           </div>
 
@@ -411,7 +486,37 @@
               If you did the work, the record is the best evidence you have that you did.
             </p>
           </div>
-          <div class="field" data-field aria-hidden="true"></div>
+
+          <div class="privacy__foot" data-fade>
+            <a
+              class="btn btn--ink btn--install"
+              href="https://github.com/ProvenanceTools/provenance/blob/main/docs/student-guide.md"
+            >
+              <span>Install guide</span>
+              <span class="btn__icon" aria-hidden="true">&#8599;</span>
+            </a>
+            <div class="privacy__editors">
+              <p class="privacy__get mono">Get the recorder</p>
+              <ul class="editors" role="list">
+                <li>
+                  <a
+                    href="https://marketplace.visualstudio.com/items?itemName=itsgeagle.provenance-recorder"
+                    >VS&nbsp;Code <span aria-hidden="true">&#8599;</span></a
+                  >
+                </li>
+                <li>
+                  <a href="https://plugins.jetbrains.com/plugin/32944-provenance-recorder/"
+                    >JetBrains <span aria-hidden="true">&#8599;</span></a
+                  >
+                </li>
+                <li>
+                  <a href="https://github.com/ProvenanceTools/provenance-neovim-recorder"
+                    >Neovim <span aria-hidden="true">&#8599;</span></a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
 
           <div class="sees">
             <div class="sees__col" data-fade>
@@ -434,49 +539,26 @@
           </div>
 
           <ul class="pledges" role="list" data-fade>
-            <li><strong>Offline.</strong> No network requests while you work.</li>
+            <li><strong>Works offline</strong> No network requests while you work.</li>
             <li>
-              <strong>Yours to read.</strong> The log is plain text, on your computer until you hand
-              it in.
+              <strong>Readable local logs</strong> The log is plain text, on your computer until you
+              hand it in.
             </li>
-
             <li>
-              <strong>Not forever.</strong> Stored logs are deleted on a schedule your school sets.
+              <strong>Course-defined retention</strong> Stored logs are deleted on a schedule your
+              school sets.
             </li>
           </ul>
 
-          <div class="privacy__foot" data-fade>
-            <p class="privacy__get mono">Get the recorder</p>
-            <ul class="editors" role="list">
-              <li>
-                <a
-                  href="https://marketplace.visualstudio.com/items?itemName=itsgeagle.provenance-recorder"
-                  >VS&nbsp;Code <span aria-hidden="true">&#8599;</span></a
-                >
-              </li>
-              <li>
-                <a href="https://plugins.jetbrains.com/plugin/32944-provenance-recorder/"
-                  >JetBrains <span aria-hidden="true">&#8599;</span></a
-                >
-              </li>
-              <li>
-                <a href="https://github.com/ProvenanceTools/provenance-neovim-recorder"
-                  >Neovim <span aria-hidden="true">&#8599;</span></a
-                >
-              </li>
-            </ul>
-            <a
-              class="btn btn--ink"
-              href="https://github.com/ProvenanceTools/provenance/blob/main/docs/student-guide.md"
-            >
-              <span>Install guide</span>
-              <span class="btn__icon" aria-hidden="true">&#8599;</span>
-            </a>
-          <!-- TODO: replace # with the help link once it is decided -->
-            <p class="privacy__help">
-              Recorder not working? <a href="#">Find help <span aria-hidden="true">&#8599;</span></a>
-            </p>  
-          </div>
+          <div class="field" data-field aria-hidden="true"></div>
+
+          <!--
+            TODO: Find Help has no verified destination yet. When one is decided, wrap the label
+            in <a href="..."> (the previous placeholder href was "#"). It is deliberately not a link.
+          -->
+          <p class="privacy__help">
+            <span>Recorder not working?</span> <span class="privacy__help-label">Find Help</span>
+          </p>
         </div>
       </section>
 
@@ -484,19 +566,29 @@
       <section class="problem" id="instructors" data-theme="day" aria-labelledby="problem-title">
         <div class="wrap">
           <div class="problem__copy">
-          <p class="section-tag" data-fade>For instructors &amp; TAs</p>
-          <h2 class="display-2" id="problem-title" data-split>
-            The finished file is the easiest part to fake.
-          </h2>
-          <p class="lead" data-fade>
-            Similarity checkers compare final submissions, and AI tools now produce final
-            submissions on demand. What&rsquo;s much harder to produce is the afternoon behind one:
-            the false starts, the deleted lines, the test that finally passed at 11:40&nbsp;p.m.
-          </p>
+            <p class="section-tag" data-fade>For instructors &amp; TAs</p>
+            <h2 class="display-2" id="problem-title" data-split>
+              The finished file is the easiest part to fake.
+            </h2>
+            <p class="lead" data-fade>
+              Similarity checkers compare final submissions, and AI tools now produce final
+              submissions on demand. What&rsquo;s much harder to produce is the afternoon behind
+              one: the false starts, the deleted lines, the test that finally passed at
+              11:40&nbsp;p.m.
+            </p>
+          </div>
+          <!--
+            TODO(demo): "Demo dynamic — Analyzer / review interface".
+            A real screen recording of the Analyzer: a cohort overview, opening one submission, and
+            the replay jumping to a flagged moment. Do not mock this up; replace the .demo-slot with
+            <video autoplay muted loop playsinline> or an <img> when the footage exists (16:10).
+          -->
+          <div class="demo-slot demo-slot--problem" aria-hidden="true">
+            <span class="demo-slot__tag mono">Demo dynamic</span>
           </div>
         </div>
       </section>
-      
+
       <!-- 6. See the process -------------------------------------------------- -->
       <section class="insight" data-theme="day" aria-labelledby="insight-title">
         <div class="emboss" aria-hidden="true"></div>
@@ -546,9 +638,7 @@
               >
                 <span class="tool__code mono">provcode</span>
                 <span class="tool__name">Provenance for VS&nbsp;Code</span>
-                <span class="tool__line"
-                  >The original recorder. On the VS&nbsp;Code Marketplace.</span
-                >
+                <span class="tool__line">Record development activity directly in VS Code.</span>
               </a>
               <a
                 class="tool"
@@ -558,7 +648,7 @@
                 <span class="tool__code mono">provjet</span>
                 <span class="tool__name">Provenance for JetBrains</span>
                 <span class="tool__line"
-                  >IntelliJ, PyCharm, CLion and the rest. On the JetBrains Marketplace.</span
+                  >Record development activity in supported JetBrains IDEs.</span
                 >
               </a>
               <a
@@ -568,7 +658,7 @@
               >
                 <span class="tool__code mono">provnvim</span>
                 <span class="tool__name">Provenance for Neovim</span>
-                <span class="tool__line">Pure Lua, no native dependencies.</span>
+                <span class="tool__line">A lightweight Lua recorder for Neovim.</span>
               </a>
             </div>
 
@@ -589,7 +679,7 @@
                 </svg>
                 <span class="tool__name">The signed bundle</span>
                 <span class="tool__line"
-                  >The log, sealed with a per-session key. One format, from every editor.</span
+                  >The recorded history and its signed evidence, packaged for submission.</span
                 >
               </div>
               <a
@@ -600,7 +690,7 @@
                 <span class="tool__code mono">provgate</span>
                 <span class="tool__name">Gradescope gateway</span>
                 <span class="tool__line"
-                  >Pulls new submissions from Gradescope into the server, on a schedule.</span
+                  >Transfers new Gradescope submissions to the Provenance server.</span
                 >
               </a>
             </div>
@@ -610,9 +700,10 @@
               <div class="tool" data-node="server">
                 <span class="tool__code mono">provd</span>
                 <span class="tool__name">Provenance server</span>
-                <span class="tool__line">
-                  Ingests a cohort, verifies every chain, keeps the log and drops the source.
-                </span>
+                <span class="tool__line"
+                  >Receives submissions, verifies recorded histories, and stores the evidence for
+                  review.</span
+                >
               </div>
             </div>
 
@@ -621,19 +712,18 @@
               <div class="tool" data-node="lens">
                 <span class="tool__code mono">provlens</span>
                 <span class="tool__name">Provenance analyzer</span>
-                <span class="tool__line">
-                  The cohort, the replay, and every signal. It can also run entirely in a browser,
-                  on a single dropped file.
-                </span>
+                <span class="tool__line"
+                  >Explore recorded activity, inspect flagged moments, and replay the development
+                  history.</span
+                >
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      
       <!-- 8. Try it ----------------------------------------------------------- -->
-      <section class="tryit" data-theme="day" aria-labelledby="tryit-title">
+      <section class="tryit" id="tryit" data-theme="night" aria-labelledby="tryit-title">
         <div class="tryit__sticky">
           <div class="wrap tryit__inner">
             <div class="tryit__copy">
@@ -650,8 +740,8 @@
                   <span class="playground__file"
                     >scratch.py
                     <span class="playground__status" aria-hidden="true"
-                      ><span class="playground__hint">click to type</span
-                      ><span class="playground__live">recording</span></span
+                      ><span class="playground__hint">Click to type</span
+                      ><span class="playground__live">Recording</span></span
                     ></span
                   >
                   <button class="playground__replay mono" type="button" data-replay>Replay</button>
@@ -681,7 +771,7 @@
       </section>
 
       <!-- 8. Limits ---------------------------------------------------------- -->
-      <section class="limits" data-theme="day" aria-labelledby="limits-title">
+      <section class="limits" data-theme="night" aria-labelledby="limits-title">
         <div class="wrap limits__inner">
           <h2 class="display-2" id="limits-title" data-split>What it can&rsquo;t do.</h2>
           <p class="lead" data-fade>
@@ -758,6 +848,11 @@
             <span class="wordmark">Provenance</span>
           </a>
           <ul class="foot__links" role="list">
+            <li>
+              <a href="mailto:aaryanm@berkeley.edu?subject=Provenance%20for%20my%20course"
+                >Talk to us</a
+              >
+            </li>
             <li><a href="https://github.com/ProvenanceTools">GitHub</a></li>
             <li>
               <a

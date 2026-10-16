@@ -57,7 +57,7 @@ export function mountCohort(
       // The newest marks are briefly gold, then settle to Berkeley Blue.
       const age = lit - rank[i]!;
       if (on && age < 90 && progress < 1) ctx.fillStyle = 'rgb(253 181 21)';
-      else ctx.fillStyle = on ? 'rgb(0 38 118 / .7)' : 'rgb(4 30 66 / .07)';
+      else ctx.fillStyle = on ? 'rgb(159 209 255 / .8)' : 'rgb(242 245 249 / .1)';
       ctx.beginPath();
       ctx.roundRect(x, y, mark, mark, r);
       ctx.fill();
