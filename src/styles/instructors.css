@@ -1,0 +1,347 @@
+/* For instructors & TAs: a product-led page, one idea per section.
+   Loaded only by instructors.html, after the shared styles, and scoped to main.inst.
+   It sets type, spacing and layout for this page; colours, tokens and components are the shared ones. */
+
+.inst {
+  /* One content width for the whole page. The closing sheet and footer keep the full width. */
+  --max: 1240px;
+  --rule: rgb(4 30 66 / 0.74);
+  /* One frame for every interface: the recording, the annotated evening, the editor. */
+  --frame-r: clamp(22px, 3vw, 36px);
+  --frame-shadow: inset 0 0 0 1px rgb(245 245 242 / 0.1), 0 60px 120px -60px rgb(4 30 66 / 0.6);
+}
+.inst .close,
+.inst .close .wrap {
+  --max: 1480px;
+}
+/* Anchors land below the fixed nav. */
+.inst [id] {
+  scroll-margin-top: calc(var(--nav-h) + 24px);
+}
+
+/* ------------------------------------------------------------------- type */
+
+/* Display: the opening line and the one statement. Nothing else on the page is this large. */
+.inst .inst-title,
+.inst .inst-statement {
+  font-weight: 500;
+  font-stretch: 86%;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+}
+.inst .inst-title {
+  font-size: clamp(3rem, 7.4vw, 7rem);
+  line-height: 0.98;
+  letter-spacing: -0.042em;
+}
+.inst .inst-statement {
+  max-width: 12em;
+  margin-inline: auto;
+  text-align: center;
+  font-size: clamp(2.75rem, 7.2vw, 6.75rem);
+  line-height: 1;
+  letter-spacing: -0.042em;
+}
+/* The name of a demonstration. It labels; it does not introduce. */
+.inst .inst-label {
+  font-size: clamp(1.5rem, 1.1rem + 1.2vw, 2.125rem);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  font-weight: 500;
+  font-stretch: 92%;
+}
+/* Supporting text: comfortably readable, always visibly secondary to display. */
+.inst .inst-sub {
+  max-width: 30ch;
+  font-size: clamp(1.25rem, 1.05rem + 0.9vw, 1.75rem);
+  line-height: 1.35;
+  letter-spacing: -0.014em;
+  text-wrap: balance;
+  color: var(--rule);
+}
+.inst .inst-note {
+  max-width: 48ch;
+  font-size: clamp(1.125rem, 1rem + 0.45vw, 1.375rem);
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: var(--rule);
+}
+.inst .inst-note strong,
+.inst .evidence__item strong,
+.inst .inst-limits strong {
+  font-weight: 500;
+  color: var(--ink);
+}
+.inst .inst-eyebrow {
+  font-size: 0.8125rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--ink) 62%, transparent);
+}
+
+/* Actions: one confident pill, quiet text links beside it. */
+.inst .btn {
+  --h: 60px;
+  font-size: 1.0625rem;
+}
+.inst .inst-link {
+  color: var(--accent);
+  font-size: 1.0625rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  text-underline-offset: 4px;
+}
+.inst .inst-link:hover {
+  text-decoration: underline;
+}
+
+/* ------------------------------------------------------------------- hero */
+
+.inst-hero {
+  padding: clamp(96px, 15vh, 164px) 0 clamp(56px, 8vh, 96px);
+}
+.inst-hero__copy {
+  display: grid;
+  justify-items: center;
+  gap: clamp(18px, 2.4vh, 26px);
+  text-align: center;
+}
+.inst-hero__copy .inst-title {
+  max-width: 12em;
+}
+.inst-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 18px 32px;
+  margin-top: clamp(10px, 2vh, 22px);
+}
+
+/* ------------------------------------------------- the live demonstration */
+
+/* The first thing to scroll into view is the product: two recordings of one file. */
+.inst .inst-stage {
+  width: min(100% - 2 * var(--gutter), var(--max));
+  margin-inline: auto;
+  padding: clamp(28px, 4.4vw, 72px) clamp(22px, 4.4vw, 72px) clamp(32px, 5vw, 80px);
+  border-radius: var(--frame-r);
+  overflow: hidden;
+  box-shadow: var(--frame-shadow);
+}
+.inst-stage .inst-label {
+  margin-bottom: clamp(28px, 4.4vh, 48px);
+}
+.inst .record__title {
+  font-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.625rem);
+}
+.inst .record__stats {
+  font-size: 0.8125rem;
+}
+
+/* --------------------------------------------------- the annotated evening */
+
+.inst .insight {
+  padding: clamp(96px, 15vh, 176px) 0 clamp(80px, 12vh, 144px);
+}
+/* The plot sits in the same kind of frame as the recording above it, in paper tones. */
+.inst .evening {
+  margin-top: clamp(28px, 4.4vh, 48px);
+  padding: clamp(18px, 3vw, 48px) clamp(16px, 3vw, 48px) clamp(8px, 1.4vw, 20px);
+  border-radius: var(--frame-r);
+  background: rgb(255 255 255 / 0.62);
+  box-shadow:
+    inset 0 0 0 1px var(--hair),
+    0 50px 100px -70px rgb(4 30 66 / 0.35);
+}
+
+/* --------------------------------------------------------------- evidence */
+
+.inst .fair {
+  padding: clamp(48px, 8vh, 104px) 0 clamp(112px, 17vh, 208px);
+}
+.evidence {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(32px, 6vw, 112px);
+  margin-top: clamp(72px, 12vh, 136px);
+}
+.evidence__item {
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: 20px;
+  padding-top: 28px;
+  border-top: 1px solid var(--hair);
+}
+/* The indicators are the interface here: set at a size that reads as product, not footnote. */
+.evidence__item .flag,
+.evidence__item .checks {
+  margin-top: 0;
+  min-height: 56px;
+  align-items: center;
+}
+.evidence__item .flag {
+  gap: 14px;
+  padding: 9px 22px 9px 9px;
+  font-size: 1.0625rem;
+}
+.evidence__item .flag__level {
+  padding: 7px 15px;
+  font-size: 0.875rem;
+}
+.evidence__item .checks {
+  gap: 12px 30px;
+  font-size: 0.9375rem;
+}
+.evidence__item .checks i {
+  width: 11px;
+  height: 11px;
+}
+.evidence__item p {
+  max-width: 36ch;
+  font-size: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+  line-height: 1.5;
+  color: var(--rule);
+}
+.evidence__rule {
+  max-width: 46ch;
+  margin: clamp(56px, 9vh, 96px) auto 0;
+  text-align: center;
+  font-size: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+  line-height: 1.55;
+  color: var(--rule);
+  text-wrap: balance;
+}
+
+/* ------------------------------------------------------------------ tools */
+
+.inst .suite {
+  padding: clamp(32px, 5vh, 64px) 0 clamp(104px, 16vh, 192px);
+}
+.inst .suite__map {
+  margin-top: clamp(64px, 9vh, 96px);
+}
+.inst .suite__stage {
+  font-size: 0.875rem;
+}
+.inst .tool {
+  padding: 22px 24px 24px;
+  border-radius: 18px;
+}
+/* The signed bundle keeps its own dark ground. */
+.inst .tool:not(.tool--bundle) {
+  background: rgb(255 255 255 / 0.7);
+}
+.inst .tool__line {
+  font-size: 1rem;
+}
+
+/* ----------------------------------------------------------------- try it */
+
+.inst .tryit {
+  padding: clamp(32px, 5vh, 64px) 0 clamp(112px, 17vh, 208px);
+}
+.inst .tryit__inner {
+  gap: clamp(32px, 5vh, 56px);
+}
+.inst .tryit__copy {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 32px;
+  max-width: none;
+}
+.inst .playground {
+  border-radius: var(--frame-r);
+  box-shadow: var(--frame-shadow);
+}
+.inst .playground__input {
+  font-size: 1rem;
+}
+
+/* ----------------------------------------------------------------- limits */
+
+.inst .limits {
+  padding: 0 0 clamp(104px, 16vh, 192px);
+}
+.inst-limits {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 24px;
+  align-items: center;
+  padding-top: clamp(32px, 5vh, 48px);
+  border-top: 1px solid var(--hair);
+}
+.inst-limits__text {
+  grid-column: 1 / span 6;
+  display: grid;
+  gap: 0.8em;
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  color: var(--rule);
+}
+.inst-limits .quote {
+  grid-column: 8 / span 5;
+}
+.inst .quote p {
+  font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.75rem);
+}
+.inst .quote footer {
+  font-size: 0.875rem;
+}
+
+/* ------------------------------------------------------------------ close */
+
+.inst .close {
+  min-height: min(92svh, 760px);
+}
+.inst .close__title {
+  font-size: clamp(2.75rem, 6.6vw, 6.25rem);
+  line-height: 0.98;
+  letter-spacing: -0.042em;
+  font-stretch: 86%;
+}
+.inst .close__inner {
+  gap: clamp(28px, 4vh, 40px);
+}
+
+/* ------------------------------------------------------------ small screens */
+
+/* The single-column tool map aligns with the label above it. */
+@media (max-width: 1000px) {
+  .inst .suite__map {
+    margin-inline: 0;
+  }
+}
+@media (min-width: 901px) {
+  .inst .playground {
+    height: clamp(400px, 56vh, 560px);
+  }
+}
+@media (max-width: 900px) {
+  .inst-limits__text,
+  .inst-limits .quote {
+    grid-column: 1 / -1;
+  }
+  .inst-limits .quote {
+    margin-top: 32px;
+  }
+}
+@media (max-width: 760px) {
+  .evidence {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .inst .inst-stage {
+    width: 100%;
+    border-radius: 0;
+  }
+  .inst .btn {
+    --h: 56px;
+  }
+  .inst-actions {
+    flex-direction: column;
+    gap: 18px;
+  }
+}
