@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Provenance for students</title>
+    <meta
+      name="description"
+      content="Install the Provenance recorder for VS Code, JetBrains or Neovim, and see exactly what it records and what it never does."
+    />
+    <meta name="theme-color" content="#f7f7f5" />
+    <link rel="icon" href="/brand/favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://provtools.com/students.html" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://provtools.com/students.html" />
+    <meta property="og:title" content="Provenance for students" />
+    <meta
+      property="og:description"
+      content="A tamper-evident record of how student code gets written. Process evidence, not AI detection. Open source, in use at UC Berkeley."
+    />
+    <meta property="og:image" content="https://provtools.com/img/og.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link
+      rel="preload"
+      href="/fonts/instrument-sans-var.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/ibm-plex-mono-400.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <!-- Paint the day ground before anything else loads: the page opens on paper. -->
+    <style>
+      html,
+      body {
+        background: #f7f7f5;
+        color: #041e42;
+      }
+    </style>
+    <link rel="stylesheet" href="/src/styles/index.css" />
+
+    <script>
+      document.documentElement.classList.replace('no-js', 'js');
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.documentElement.classList.add('motion');
+      }
+      // Start the entrance once the display face is ready (never more than 1.2 s),
+      // so the headline never rises in a fallback font and swaps mid-flight.
+      (function () {
+        var root = document.documentElement;
+        var go = function () {
+          root.classList.add('ready');
+        };
+        if (!document.fonts || !document.fonts.load) return go();
+        Promise.race([
+          document.fonts.load('500 1em "Instrument Sans"'),
+          new Promise(function (r) {
+            setTimeout(r, 1200);
+          }),
+        ]).then(go, go);
+      })();
+    </script>
+  </head>
+
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <div class="grain" aria-hidden="true"></div>
+
+    <header class="nav" data-theme="day">
+      <a class="nav__brand" href="./" aria-label="Provenance, overview">
+        <svg class="mark" viewBox="40 64 176 124" aria-hidden="true">
+          <defs>
+            <clipPath id="nav-cross"><rect x="96" y="50" width="64" height="78" /></clipPath>
+          </defs>
+          <rect class="mark__ink" x="50" y="74" width="96" height="104" rx="34" />
+          <rect class="mark__accent" x="110" y="74" width="96" height="104" rx="34" />
+          <g clip-path="url(#nav-cross)">
+            <rect class="mark__ink" x="50" y="74" width="96" height="104" rx="34" />
+          </g>
+        </svg>
+        <span class="wordmark">Provenance</span>
+      </a>
+      <nav class="nav__links" aria-label="Primary">
+        <a class="nav__link" href="./"><span class="nav__full">Overview</span><span class="nav__short">Overview</span></a>
+        <a class="nav__link" href="students.html" aria-current="page"><span class="nav__full">For students</span><span class="nav__short">Students</span></a>
+        <a class="nav__link" href="instructors.html"><span class="nav__full">For instructors &amp; TAs</span><span class="nav__short">Instructors</span></a>
+      </nav>
+      <div class="nav__end">
+        <a class="nav__link nav__link--quiet" href="https://github.com/ProvenanceTools">GitHub</a>
+        <a class="btn btn--primary btn--small" href="#get">
+          <span>Get the recorder</span>
+          <span class="btn__icon" aria-hidden="true">&#8595;</span>
+        </a>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- 7. One folder ------------------------------------------------------- -->
+      <section class="privacy" id="students" data-theme="day" aria-labelledby="privacy-title">
+        <div class="wrap">
+          <div class="privacy__copy">
+            <p class="section-tag" data-fade>For students</p>
+            <h2 class="display-2" id="privacy-title" data-split>
+              The work is yours. So is its history.
+            </h2>
+            <p class="lead" data-fade>
+              Your edits and revisions deserve a record. Provenance preserves supported development
+              activity without watching the rest of your digital life.
+            </p>
+          </div>
+
+          <div class="privacy__foot" id="get" data-fade>
+            <a
+              class="btn btn--ink btn--install"
+              href="https://github.com/ProvenanceTools/provenance/blob/main/docs/student-guide.md"
+            >
+              <span>Install guide</span>
+              <span class="btn__icon" aria-hidden="true">&#8599;</span>
+            </a>
+            <div class="privacy__editors">
+              <p class="privacy__get mono">Get the recorder:</p>
+              <ul class="editors" role="list">
+                <li>
+                  <a
+                    href="https://marketplace.visualstudio.com/items?itemName=itsgeagle.provenance-recorder"
+                    >VS&nbsp;Code <span aria-hidden="true">&#8599;</span></a
+                  >
+                </li>
+                <li>
+                  <a href="https://plugins.jetbrains.com/plugin/32944-provenance-recorder/"
+                    >JetBrains <span aria-hidden="true">&#8599;</span></a
+                  >
+                </li>
+                <li>
+                  <a href="https://github.com/ProvenanceTools/provenance-neovim-recorder"
+                    >Neovim <span aria-hidden="true">&#8599;</span></a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="sees">
+            <div class="sees__col" data-fade>
+              <h3 class="sees__head mono">Recorded</h3>
+              <ul role="list">
+                <li>Edits and pastes in the assignment workspace</li>
+                <li>File activity and editor focus</li>
+                <li>Supported terminal commands</li>
+                <li>Installed editor extensions</li>
+              </ul>
+            </div>
+            <div class="sees__col sees__col--never" data-fade>
+              <h3 class="sees__head mono">Never recorded</h3>
+              <ul role="list">
+                <li>Your browser, screen, camera, or other projects</li>
+                <li>System-level keystrokes</li>
+                <li>Clipboard contents unless pasted into your work</li>
+              </ul>
+            </div>
+          </div>
+
+          <ul class="pledges" role="list" data-fade>
+            <li><strong>Offline.</strong> No network requests while recording.</li>
+            <li><strong>Readable.</strong> Plain-text logs stay local until submission.</li>
+            <li>
+              <strong>Course-defined retention.</strong> Your school sets the deletion schedule.
+            </li>
+          </ul>
+
+          <div class="field" data-field aria-hidden="true"></div>
+
+          <p class="privacy__help">
+            <strong>Recorder not working?</strong> See the
+            <a href="https://github.com/ProvenanceTools/provenance/blob/main/docs/student-guide.md"
+              >installation guide</a
+            >.
+          </p>
+        </div>
+      </section>
+
+      <div class="site-foot" data-theme="day">
+          <footer class="foot wrap">
+            <a class="foot__brand" href="./" aria-label="Provenance, overview">
+              <svg class="mark" viewBox="40 64 176 124" aria-hidden="true">
+                <defs>
+                  <clipPath id="foot-cross"><rect x="96" y="50" width="64" height="78" /></clipPath>
+                </defs>
+                <rect class="mark__ink" x="50" y="74" width="96" height="104" rx="34" />
+                <rect class="mark__accent" x="110" y="74" width="96" height="104" rx="34" />
+                <g clip-path="url(#foot-cross)">
+                  <rect class="mark__ink" x="50" y="74" width="96" height="104" rx="34" />
+                </g>
+              </svg>
+              <span class="wordmark">Provenance</span>
+            </a>
+            <ul class="foot__links" role="list">
+              <li>
+                <a href="mailto:aaryanm@berkeley.edu?subject=Provenance%20for%20my%20course"
+                  >Talk to us</a
+                >
+              </li>
+              <li><a href="https://github.com/ProvenanceTools">GitHub</a></li>
+              <li>
+                <a
+                  href="https://github.com/ProvenanceTools/provenance/blob/main/docs/student-guide.md"
+                  >Install guide</a
+                >
+              </li>
+              <li>
+                <a href="https://github.com/ProvenanceTools/provenance/blob/main/docs/admin-guide.md"
+                  >Admin guide</a
+                >
+              </li>
+            </ul>
+            <p class="foot__made">Open source · Built at UC Berkeley.</p>
+          </footer>
+      </div>
+    </main>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

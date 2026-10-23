@@ -51,12 +51,8 @@ html.motion [data-course] {
   opacity: 0;
 }
 
-/* Without the 3D, the same objects as still frames, placed by the same anchors. */
+/* The mark, as still frames, placed by each section's anchor. */
 .still {
-  display: none;
-}
-html.no-stage .still,
-html.no-js .still {
   display: block;
 }
 [data-anchor] .still {

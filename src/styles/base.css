@@ -70,10 +70,9 @@
   --ease-soft: cubic-bezier(0.32, 0.72, 0, 1);
 
   /* z layers */
-  --z-ground: 0;
-  --z-stage: 1;
-  --z-grain: 2;
   --z-content: 3;
+  /* Over the sections, which paint their own ground; under the nav. */
+  --z-grain: 4;
   --z-nav: 10;
   --z-sheet: 20;
 
