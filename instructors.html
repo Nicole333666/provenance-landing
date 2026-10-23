@@ -48,6 +48,7 @@
       }
     </style>
     <link rel="stylesheet" href="/src/styles/index.css" />
+    <link rel="stylesheet" href="/src/styles/instructors.css" />
 
     <script>
       document.documentElement.classList.replace('no-js', 'js');
@@ -92,9 +93,16 @@
         <span class="wordmark">Provenance</span>
       </a>
       <nav class="nav__links" aria-label="Primary">
-        <a class="nav__link" href="./"><span class="nav__full">Overview</span><span class="nav__short">Overview</span></a>
-        <a class="nav__link" href="students.html"><span class="nav__full">For students</span><span class="nav__short">Students</span></a>
-        <a class="nav__link" href="instructors.html" aria-current="page"><span class="nav__full">For instructors &amp; TAs</span><span class="nav__short">Instructors</span></a>
+        <a class="nav__link" href="./"
+          ><span class="nav__full">Overview</span><span class="nav__short">Overview</span></a
+        >
+        <a class="nav__link" href="students.html"
+          ><span class="nav__full">For students</span><span class="nav__short">Students</span></a
+        >
+        <a class="nav__link" href="instructors.html" aria-current="page"
+          ><span class="nav__full">For instructors &amp; TAs</span
+          ><span class="nav__short">Instructors</span></a
+        >
       </nav>
       <div class="nav__end">
         <a class="nav__link nav__link--quiet" href="https://github.com/ProvenanceTools">GitHub</a>
@@ -108,71 +116,43 @@
       </div>
     </header>
 
-    <main id="main">
-      <!-- For instructors & TAs: the problem ------------------------------ -->
-      <section class="problem" id="instructors" data-theme="day" aria-labelledby="problem-title">
+    <main id="main" class="inst">
+      <!-- Opening: one sentence, two actions, then the product stage ---------- -->
+      <section class="inst-hero" id="instructors" data-theme="day" aria-labelledby="inst-title">
         <div class="wrap">
-          <div class="problem__copy">
-            <p class="section-tag" data-fade>For instructors &amp; TAs</p>
-            <h2 class="display-2" id="problem-title" data-split>Look beyond the submission.</h2>
-            <p class="lead" data-fade>
-              A final file shows what was handed in, not how it came to be. Provenance brings the
-              recorded development history into view, so review can begin with evidence rather than
-              assumptions.
+          <div class="inst-hero__copy">
+            <p class="inst-eyebrow mono" data-fade>For instructors &amp; TAs</p>
+            <h1 class="inst-title" id="inst-title" data-fade>Look beyond the submission.</h1>
+            <p class="inst-sub" data-fade>
+              A final file shows what was handed in, not how it came to be.
             </p>
-          </div>
-          <!--
-            TODO(demo): "Analyzer / Review demonstration".
-            A real screen recording of the Analyzer: a cohort overview, opening one submission, and
-            the replay jumping to a flagged moment. Do not mock this up; replace the .demo-slot with
-            <video autoplay muted loop playsinline> or an <img> when the footage exists (16:10).
-          -->
-          <div class="demo-slot demo-slot--problem" aria-hidden="true">
-            <span class="demo-slot__tag mono">Analyzer / Review demonstration</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- 2. Thesis ---------------------------------------------------------- -->
-      <section class="thesis" data-theme="night" aria-labelledby="thesis-title">
-        <div class="thesis__anchor" data-anchor="thesis"></div>
-        <div class="wrap thesis__inner">
-          <h2 class="thesis__title statement" id="thesis-title" data-split>
-            What remains when the work is done?
-          </h2>
-          <p class="lead thesis__body" data-fade>
-            A finished file holds the result. The attempts, revisions, and decisions that shaped it
-            are often invisible. Provenance makes the recorded process available for examination.
-          </p>
-          <!--
-            TODO(demo): "Demo dynamic: recording, examination, review".
-            A short looping clip (or GIF) of a real session: edits being recorded, the Analyzer
-            raising a flag on a paste, then the reviewer opening that moment in the replay.
-            Replace the .demo-slot below with <video autoplay muted loop playsinline> or an <img>;
-            keep the 16:10 frame so the layout does not shift.
-          -->
-          <div class="demo-slot demo-slot--thesis" aria-hidden="true">
-            <span class="demo-slot__tag mono">Demo dynamic</span>
+            <div class="inst-actions" data-fade>
+              <a class="btn btn--ink" href="#histories">
+                <span>See a recorded history</span>
+                <span class="btn__icon" aria-hidden="true">&#8595;</span>
+              </a>
+              <a class="inst-link" href="#review"
+                >Explore the review experience <span aria-hidden="true">&#8595;</span></a
+              >
+              <a
+                class="inst-link"
+                href="https://github.com/ProvenanceTools/provenance/blob/main/docs/admin-guide.md"
+                >Read the admin guide <span aria-hidden="true">&#8599;</span></a
+              >
+            </div>
           </div>
         </div>
       </section>
 
-      <!-- 3. Same file, two histories --------------------------------------- -->
+      <!-- The live demonstration: two recordings of one file, on one clock ------ -->
       <section
-        class="histories"
+        class="histories inst-stage"
         id="histories"
         data-theme="night"
         aria-labelledby="histories-title"
       >
-        <div class="wrap">
-          <header class="histories__head">
-            <p class="section-tag" data-fade>How it works</p>
-            <h2 class="display-2" id="histories-title" data-split>Same file. Two histories.</h2>
-            <p class="lead" data-fade>
-              Identical code can emerge through different paths. One unfolds over hours of edits and
-              tests. Another arrives in a single paste.
-            </p>
-          </header>
+        <div class="inst-stage__inner">
+          <h2 class="inst-label" id="histories-title">Same file. Two histories.</h2>
           <figure class="records" data-records aria-describedby="records-desc">
             <div class="records__axis mono" aria-hidden="true">
               <div class="records__ticks" data-axis></div>
@@ -222,83 +202,13 @@
         </div>
       </section>
 
-      <!-- 5. Built not to accuse ---------------------------------------------- -->
-      <section class="fair" id="fair" data-theme="day" aria-labelledby="fair-title">
-        <div class="wrap fair__top">
-          <div class="fair__copy">
-            <h2 class="display-2" id="fair-title" data-split>Observation is not judgment.</h2>
-            <p class="lead" data-fade>
-              A recorded event can raise a question. It cannot tell us why something happened.
-              Provenance supports careful review, not automatic accusation.
-            </p>
-          </div>
-          <div class="fair__anchor" data-anchor="day">
-            <picture class="still" style="--k: 467%">
-              <source
-                type="image/avif"
-                srcset="/img/still-day-700.avif 700w, /img/still-day-1400.avif 1400w"
-                sizes="(max-width: 900px) 80vw, 46vw"
-              />
-              <img
-                src="/img/still-day-1400.webp"
-                srcset="/img/still-day-700.webp 700w, /img/still-day-1400.webp 1400w"
-                sizes="(max-width: 900px) 80vw, 46vw"
-                alt=""
-                width="1400"
-                height="1400"
-                loading="lazy"
-                decoding="async"
-              />
-            </picture>
-          </div>
-        </div>
-
-        <div class="wrap principles">
-          <article class="principle" data-fade>
-            <h3 class="principle__title">Context matters.</h3>
-            <p>Moving code already written is recognized as a move, not an unexplained paste.</p>
-            <div class="flag" data-flag aria-hidden="true">
-              <span class="flag__level mono" data-flag-level>high</span>
-              <span class="flag__text" data-flag-text>Paste of 6 lines into trails.py</span>
-            </div>
-          </article>
-          <article class="principle" data-fade>
-            <h3 class="principle__title">Uncertainty remains visible.</h3>
-            <p>A check that cannot run is marked as skipped, never as a failure.</p>
-            <div class="checks mono" aria-hidden="true">
-              <span><i class="is-ok"></i>chain intact</span>
-              <span><i class="is-ok"></i>seal valid</span>
-              <span><i class="is-skipped"></i>checkpoints: skipped</span>
-            </div>
-          </article>
-          <article class="principle" data-fade>
-            <h3 class="principle__title">Courses set the rules.</h3>
-            <p>Staff configure supported recording and review signals.</p>
-          </article>
-          <article class="principle" data-fade>
-            <h3 class="principle__title">People make decisions.</h3>
-            <p>Flags lead to moments in the replay, not automatic findings.</p>
-          </article>
-        </div>
-
-        <div class="wrap fair__pull">
-          <p class="pull" data-fade><strong>A flag is a question, not a verdict.</strong></p>
-        </div>
-      </section>
-
-      <!-- 6. See the process -------------------------------------------------- -->
-      <section class="insight" data-theme="day" aria-labelledby="insight-title">
-        <div class="emboss" aria-hidden="true"></div>
+      <!-- The annotated evening ------------------------------------------------ -->
+      <section class="insight" data-theme="day" aria-label="The first history, annotated">
         <div class="wrap">
-          <div class="insight__copy">
-            <h2 class="display-2" id="insight-title" data-split>
-              The moments between the answers.
-            </h2>
-            <p class="lead" data-fade>
-              A failed test. A discarded approach. A function written again. The replay reveals
-              recorded attempts and revisions that the finished program leaves behind.
-            </p>
-          </div>
+          <p class="inst-note" data-fade>
+            <strong>The moments between the answers.</strong> A failed test. A discarded approach. A
+            function written again.
+          </p>
           <figure class="evening" data-evening>
             <div class="evening__plot" data-evening-plot aria-hidden="true"></div>
             <div class="evening__axis mono" data-evening-axis aria-hidden="true"></div>
@@ -311,17 +221,46 @@
         </div>
       </section>
 
+      <!-- Evidence, not accusation: the two live demos sit in one panel -------- -->
+      <section class="fair" id="review" data-theme="day" aria-labelledby="fair-title">
+        <div class="wrap">
+          <h2 class="inst-statement" id="fair-title" data-fade>
+            A flag is a question, not a&nbsp;verdict.
+          </h2>
+          <div class="evidence">
+            <div class="evidence__item" data-fade>
+              <div class="flag" data-flag aria-hidden="true">
+                <span class="flag__level mono" data-flag-level>high</span>
+                <span class="flag__text" data-flag-text>Paste of 6 lines into trails.py</span>
+              </div>
+              <p>
+                <strong>Context matters.</strong> Moving code already written is recognized as a
+                move, not an unexplained paste.
+              </p>
+            </div>
+            <div class="evidence__item" data-fade>
+              <div class="checks mono" aria-hidden="true">
+                <span><i class="is-ok"></i>chain intact</span>
+                <span><i class="is-ok"></i>seal valid</span>
+                <span><i class="is-skipped"></i>checkpoints: skipped</span>
+              </div>
+              <p>
+                <strong>Uncertainty stays visible.</strong> A check that cannot run is marked as
+                skipped, never as a failure.
+              </p>
+            </div>
+          </div>
+          <p class="evidence__rule" data-fade>
+            Courses set the rules: staff configure supported recording and review signals. People
+            make decisions: flags lead to moments in the replay, not automatic findings.
+          </p>
+        </div>
+      </section>
+
       <!-- The suite -------------------------------------------------------- -->
       <section class="suite" id="suite" data-theme="day" aria-labelledby="suite-title">
         <div class="wrap">
-          <div class="suite__copy">
-            <p class="section-tag" data-fade>Tools</p>
-            <h2 class="display-2" id="suite-title" data-split>One record. Every tool.</h2>
-            <p class="lead" data-fade>
-              From editor to submission to review, Provenance connects an open-source workflow
-              around the recorded history.
-            </p>
-          </div>
+          <h2 class="inst-label" id="suite-title" data-fade>One record. Every tool.</h2>
 
           <div class="suite__map" data-suite>
             <svg class="suite__wires" data-wires aria-hidden="true"></svg>
@@ -413,16 +352,13 @@
         </div>
       </section>
 
-      <!-- 8. Try it ----------------------------------------------------------- -->
+      <!-- Try it: the working editor is the explanation ------------------------ -->
       <section class="tryit" id="tryit" data-theme="day" aria-labelledby="tryit-title">
         <div class="tryit__sticky">
           <div class="wrap tryit__inner">
             <div class="tryit__copy">
-              <h2 class="display-2" id="tryit-title" data-split>See it for yourself.</h2>
-              <p class="lead" data-fade>
-                Type something. Paste something. Click away and return. Watch the record take shape
-                beside your code.
-              </p>
+              <h2 class="inst-label" id="tryit-title" data-fade>See it for yourself.</h2>
+              <p class="inst-note" data-fade>Type, paste, click away and return.</p>
             </div>
             <div class="tryit__slot" data-slot aria-hidden="true"></div>
             <div class="playground" data-playground>
@@ -438,7 +374,8 @@
                   <button class="playground__replay mono" type="button" data-replay>Replay</button>
                 </div>
                 <label class="visually-hidden" for="scratch"
-                  >A small code editor whose edits are recorded on this page</label
+                  >A small code editor whose edits are recorded on this page. Tab indents; press
+                  Escape, then Tab, to leave it.</label
                 >
                 <textarea
                   id="scratch"
@@ -460,14 +397,13 @@
         </div>
       </section>
 
-      <!-- 8. Limits ---------------------------------------------------------- -->
-      <section class="limits" data-theme="day" aria-labelledby="limits-title">
-        <div class="wrap limits__inner">
-          <h2 class="display-2" id="limits-title" data-split>What a record cannot know.</h2>
-          <div class="lead" data-fade>
+      <!-- Limits ---------------------------------------------------------- -->
+      <section class="limits" data-theme="day" aria-label="Limits of the record">
+        <div class="wrap inst-limits">
+          <div class="inst-limits__text" data-fade>
             <p>
-              A log captures events, not intention. It cannot guarantee authorship or make forgery
-              impossible.
+              <strong>What a record cannot know.</strong> A log captures events, not intention. It
+              cannot guarantee authorship or make forgery impossible.
             </p>
             <p>
               Provenance makes certain changes detectable and the recorded process examinable. The
@@ -507,13 +443,10 @@
           </picture>
         </div>
         <div class="wrap close__inner">
-          <h2 class="close__title display" id="close-title" data-split>
+          <h2 class="close__title display" id="close-title" data-fade>
             Bring Provenance<br />
             to your course.
           </h2>
-          <p class="lead close__lead" data-fade>
-            Give the process a record. Give the evidence its context.
-          </p>
           <div class="actions" data-fade>
             <a
               class="btn btn--ink"
@@ -522,8 +455,11 @@
               <span>Talk to us</span>
               <span class="btn__icon" aria-hidden="true">&#8599;</span>
             </a>
-            <a class="btn btn--outline" href="https://github.com/ProvenanceTools">
-              <span>Explore the source</span>
+            <a
+              class="btn btn--outline"
+              href="https://github.com/ProvenanceTools/provenance/blob/main/docs/admin-guide.md"
+            >
+              <span>Read the admin guide</span>
             </a>
           </div>
         </div>
