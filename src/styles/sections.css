@@ -577,177 +577,6 @@ html.no-js .note {
   }
 }
 
-/* -------------------------------------------------------- how (the chain) */
-
-.how {
-  height: 400vh;
-}
-.how__sticky {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  height: 100svh;
-  overflow: clip;
-}
-.how__anchor {
-  left: 50%;
-  top: 57%;
-  height: clamp(80px, 12.5vh, 140px);
-  transform: translateY(-50%);
-}
-.how__anchor--mark {
-  left: 72%;
-  top: 56%;
-  height: 22vh;
-}
-.how__copy {
-  position: absolute;
-  left: var(--gutter);
-  top: calc(var(--nav-h) + clamp(12px, 4vh, 56px));
-  width: min(780px, 56vw);
-  display: grid;
-  gap: 20px;
-  z-index: 2;
-  visibility: hidden;
-}
-html.js .how__copy {
-  opacity: 0;
-}
-html.no-js .how__copy[data-phase='chain'] {
-  visibility: visible;
-}
-.how__copy .lead {
-  max-width: 40ch;
-}
-
-/* The ledger: the record, as text. */
-.ledger {
-  position: absolute;
-  right: var(--gutter);
-  bottom: clamp(20px, 5vh, 56px);
-  width: min(460px, 36vw);
-  z-index: 2;
-  font-size: 0.78rem;
-  opacity: var(--ledger, 0);
-  transition: opacity 0.6s var(--ease-soft);
-}
-.ledger::before {
-  /* A soft dark ground so the record stays legible over anything behind it. */
-  content: '';
-  position: absolute;
-  inset: -40px -40px -40px -60px;
-  z-index: -1;
-  background: radial-gradient(closest-side, rgb(2 10 22 / 0.82), rgb(2 10 22 / 0));
-  pointer-events: none;
-}
-.ledger__head {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--hair);
-  color: color-mix(in srgb, currentColor 58%, transparent);
-}
-.ledger__status {
-  color: var(--porcelain);
-  min-height: 2.6em;
-  transition: color 0.4s var(--ease-soft);
-}
-.ledger__status.is-broken {
-  color: var(--accent-n);
-}
-.ledger__rows {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  height: calc(7 * 1.95em);
-  overflow: hidden;
-  margin-top: 6px;
-  mask-image: linear-gradient(to bottom, transparent 0%, #000 30%, #000 100%);
-}
-.ledger__rows li {
-  flex: none;
-  display: grid;
-  grid-template-columns: 6.2em 3.4em 1fr auto;
-  gap: 12px;
-  height: 1.95em;
-  align-items: center;
-  white-space: nowrap;
-  color: color-mix(in srgb, var(--porcelain) 60%, transparent);
-}
-.ledger__rows li:last-child {
-  color: var(--porcelain);
-}
-.ledger__rows .k {
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.ledger__rows .k i {
-  font-style: normal;
-  white-space: pre;
-  color: color-mix(in srgb, var(--porcelain) 56%, transparent);
-}
-.ledger__rows .h {
-  color: color-mix(in srgb, var(--porcelain) 58%, transparent);
-}
-.ledger__rows li:last-child .h {
-  color: var(--accent-n);
-}
-.ledger__rows li.is-broken,
-.ledger__rows li.is-broken .h {
-  color: var(--accent-n);
-}
-.ledger__rows li.is-unverified {
-  color: color-mix(in srgb, var(--porcelain) 52%, transparent);
-  text-decoration: line-through;
-  text-decoration-color: color-mix(in srgb, var(--accent-n) 70%, transparent);
-}
-.ledger__rows li.is-unverified .h {
-  color: color-mix(in srgb, var(--porcelain) 52%, transparent);
-}
-
-@media (max-width: 900px) {
-  .how__copy {
-    width: auto;
-    right: var(--gutter);
-  }
-  .how__copy .lead {
-    font-size: 1rem;
-  }
-  .ledger {
-    left: var(--gutter);
-    right: var(--gutter);
-    width: auto;
-    font-size: 0.72rem;
-  }
-  .ledger__rows {
-    height: calc(4 * 1.95em);
-  }
-  .ledger__rows li {
-    grid-template-columns: 5.6em 3em 1fr auto;
-    gap: 8px;
-  }
-  .ledger__head > span:first-child {
-    display: none;
-  }
-  .how__anchor {
-    top: 54%;
-    height: clamp(60px, 8.5vh, 92px);
-  }
-  .how__anchor--mark {
-    left: 50%;
-    top: 62%;
-    height: 17vh;
-  }
-}
-
-/* ---------------------------------------------------------------- relight */
-
-.relight {
-  height: 80vh;
-}
-
 /* ------------------------------------------------------- built not to accuse */
 
 .fair {
@@ -1095,33 +924,21 @@ html.no-js .how__copy[data-phase='chain'] {
 /* ----------------------------------------------------------------- try it */
 
 .tryit {
-  height: 260vh;
-}
-.tryit__sticky {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  height: 100svh;
-  overflow: clip;
+  padding: clamp(56px, 8vh, 104px) 0 clamp(80px, 12vh, 160px);
 }
 .tryit__inner {
   display: grid;
   align-content: start;
   gap: clamp(28px, 4.5vh, 56px);
-  padding-top: calc(var(--nav-h) + clamp(16px, 5vh, 64px));
 }
 .tryit__copy {
   display: grid;
   gap: 22px;
   max-width: 780px;
-  transition: opacity 0.3s linear;
-}
-.tryit__slot {
-  height: clamp(320px, 44vh, 460px);
 }
 .playground {
-  position: absolute;
-  z-index: 2;
+  position: relative;
+  height: clamp(360px, 50vh, 520px);
   display: grid;
   grid-template-columns: 1.15fr 1fr;
   contain: layout paint;
@@ -1363,11 +1180,24 @@ html.no-js .how__copy[data-phase='chain'] {
 /* ------------------------------------------------------------------ close */
 
 .close {
+  position: relative;
+  isolation: isolate;
   min-height: min(100svh, 820px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding-top: clamp(96px, 14vh, 160px);
+}
+/* The gold sheet's chain-row texture, fading in from the right. */
+.close__pattern {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.62;
+  background-repeat: repeat;
+  background-position: 0 18vh;
+  mask-image: linear-gradient(100deg, transparent 0%, transparent 42%, #000 78%);
+  pointer-events: none;
 }
 .close__anchor {
   left: 78%;
@@ -1385,6 +1215,14 @@ html.no-js .how__copy[data-phase='chain'] {
 .close__lead {
   color: rgb(4 30 66 / 0.78);
   max-width: 34ch;
+}
+
+/* The footer on pages that end without the gold close. */
+.site-foot {
+  padding-top: clamp(24px, 4vh, 48px);
+}
+.site-foot .foot {
+  margin-top: 0;
 }
 
 .foot {
@@ -1451,59 +1289,6 @@ html.no-js .how__copy[data-phase='chain'] {
     flex-wrap: wrap;
     gap: 12px 24px;
   }
-}
-
-/* Reduced motion or no script: the chain chapter is not pinned. Its three explanations are
-   stacked in the page, and the chapter is kept taller than the viewport so the scroll maths
-   in acts.ts stays well defined. */
-html:not(.motion) .how {
-  height: auto;
-}
-html:not(.motion) .how__sticky {
-  position: relative;
-  height: auto;
-  min-height: 190svh;
-  overflow: visible;
-  display: grid;
-  align-content: start;
-  gap: clamp(28px, 5vh, 56px);
-  padding: calc(var(--nav-h) + clamp(12px, 4vh, 56px)) var(--gutter) clamp(48px, 8vh, 96px);
-}
-/* The 3D chain sits below the stacked explanations instead of behind them. */
-html:not(.motion) .how__anchor {
-  top: auto;
-  bottom: 40svh;
-  transform: none;
-}
-html:not(.motion) .how__copy {
-  position: relative;
-  left: auto;
-  top: auto;
-  width: min(780px, 100%);
-  visibility: visible !important;
-  opacity: 1 !important;
-  transform: none !important;
-}
-
-/* Reduced motion or no script: the editor simply sits in the page. */
-html:not(.motion) .tryit {
-  height: auto;
-  padding-bottom: clamp(80px, 12vh, 160px);
-}
-html:not(.motion) .tryit__sticky {
-  position: relative;
-  height: auto;
-  overflow: visible;
-}
-html:not(.motion) .tryit__slot {
-  display: none;
-}
-html:not(.motion) .playground {
-  position: relative;
-  height: clamp(360px, 50vh, 520px);
-}
-html:not(.motion) .tryit__copy {
-  opacity: 1 !important;
 }
 
 /* ------------------------------------------------------------------ suite */
