@@ -72,7 +72,7 @@
     </script>
   </head>
 
-  <body>
+  <body class="page-overview">
     <a class="skip" href="#main">Skip to content</a>
 
     <div class="grain" aria-hidden="true"></div>
@@ -107,149 +107,241 @@
     </header>
 
     <main id="main">
-      <!-- 0. Hero ------------------------------------------------------------ -->
-      <section class="hero" id="top" data-theme="day" aria-labelledby="hero-title">
-        <div class="hero__anchor" data-anchor="hero">
-          <picture class="still" style="--k: 333%">
-            <source
-              type="image/avif"
-              srcset="/img/still-hero-520.avif 520w, /img/still-hero-1040.avif 1040w"
-              sizes="(max-width: 640px) 70vw, 34vw"
-            />
-            <img
-              src="/img/still-hero-1040.webp"
-              srcset="/img/still-hero-520.webp 520w, /img/still-hero-1040.webp 1040w"
-              sizes="(max-width: 640px) 70vw, 34vw"
-              alt=""
-              width="1040"
-              height="1040"
-              decoding="async"
-            />
-          </picture>
-        </div>
-        <div class="wrap hero__inner">
-          <h1 class="hero__title display" id="hero-title">
-            <span class="line"><span class="line__inner">Every line has</span></span>
-            <span class="line"><span class="line__inner">a history.</span></span>
+      <!-- Hero: what it is, in one line, with the recorder as the picture. ---------- -->
+      <section class="ov-hero" id="top" data-theme="day" aria-labelledby="hero-title">
+        <div class="wrap pt-center">
+          <p class="pt-eyebrow" data-enter style="--d: 0">Provenance</p>
+          <h1 class="pt-hero" id="hero-title" data-enter style="--d: 1">
+            Every line has a&nbsp;history.
           </h1>
-          <div class="hero__side">
-            <p class="lead hero__lead">
-              Provenance records how student code comes to life, one edit at a time. A
-              tamper-evident history that travels with the submission, preserving more than the
-              final answer.
-            </p>
-            <div class="actions hero__actions">
-              <a class="btn btn--primary" href="#choose">
-                <span>Get started</span>
-                <span class="btn__icon" aria-hidden="true">&#8595;</span>
-              </a>
-            </div>
+          <p class="pt-sub" data-enter style="--d: 2">
+            Provenance records how student code comes to life, one edit at a time.
+          </p>
+          <div class="ov-hero__actions" data-enter style="--d: 3">
+            <a class="btn btn--primary" href="#choose">
+              <span>Get started</span>
+              <span class="btn__icon" aria-hidden="true">&#8595;</span>
+            </a>
           </div>
-          <div class="hero__preview">
-            <p class="hero__preview-tag mono">Preview</p>
-            <div
-              class="preview"
-              role="img"
-              aria-label="A still preview of the recorder: the file scratch.py beside its log, scratch.slog"
-            >
-              <div class="preview__pane">
-                <div class="preview__bar mono"><span>scratch.py</span></div>
-                <pre class="preview__code mono">
+          <figure class="ov-hero__shot" data-enter style="--d: 4">
+          <div
+            class="preview"
+            role="img"
+            aria-label="A still preview of the recorder: the file scratch.py beside its log, scratch.slog"
+          >
+            <div class="preview__pane">
+              <div class="preview__bar mono"><span>scratch.py</span></div>
+              <pre class="preview__code mono">
 def greet(name):
-    # Type anything here. Then try pasting something,
-    # or click outside the editor and come back.
-    return "hello, " + name
+  # Type anything here. Then try pasting something,
+  # or click outside the editor and come back.
+  return "hello, " + name
 
 print(greet("Ada"))</pre>
-              </div>
-              <div class="preview__pane preview__pane--log">
-                <div class="preview__bar mono"><span>scratch.slog</span><span>23 events</span></div>
-                <ol class="preview__rows mono" role="list">
-                  <li>
-                    <span>014</span><span class="k">doc.change<i> +"t"</i></span
-                    ><span class="h">8ac22c4f</span>
-                  </li>
-                  <li>
-                    <span>015</span><span class="k">doc.change<i> +"("</i></span
-                    ><span class="h">aadcf2b6</span>
-                  </li>
-                  <li>
-                    <span>016</span><span class="k">doc.change<i> +"\""</i></span
-                    ><span class="h">d29166db</span>
-                  </li>
-                  <li>
-                    <span>017</span><span class="k">doc.change<i> +"A"</i></span
-                    ><span class="h">34deca96</span>
-                  </li>
-                  <li>
-                    <span>018</span><span class="k">doc.change<i> +"d"</i></span
-                    ><span class="h">b7268dd4</span>
-                  </li>
-                  <li>
-                    <span>019</span><span class="k">doc.change<i> +"a"</i></span
-                    ><span class="h">dba1464f</span>
-                  </li>
-                  <li>
-                    <span>020</span><span class="k">doc.change<i> +"\""</i></span
-                    ><span class="h">c12af99a</span>
-                  </li>
-                  <li>
-                    <span>021</span><span class="k">doc.change<i> +")"</i></span
-                    ><span class="h">9202eac7</span>
-                  </li>
-                  <li>
-                    <span>022</span><span class="k">doc.change<i> +")"</i></span
-                    ><span class="h">35693a3f</span>
-                  </li>
-                </ol>
-              </div>
             </div>
-            <a class="hero__preview-link" href="instructors.html#tryit">
-              <span>See it for yourself.</span>
-            </a>
+            <div class="preview__pane preview__pane--log">
+              <div class="preview__bar mono"><span>scratch.slog</span><span>23 events</span></div>
+              <ol class="preview__rows mono" role="list">
+                <li>
+                  <span>014</span><span class="k">doc.change<i> +"t"</i></span
+                  ><span class="h">8ac22c4f</span>
+                </li>
+                <li>
+                  <span>015</span><span class="k">doc.change<i> +"("</i></span
+                  ><span class="h">aadcf2b6</span>
+                </li>
+                <li>
+                  <span>016</span><span class="k">doc.change<i> +"\""</i></span
+                  ><span class="h">d29166db</span>
+                </li>
+                <li>
+                  <span>017</span><span class="k">doc.change<i> +"A"</i></span
+                  ><span class="h">34deca96</span>
+                </li>
+                <li>
+                  <span>018</span><span class="k">doc.change<i> +"d"</i></span
+                  ><span class="h">b7268dd4</span>
+                </li>
+                <li>
+                  <span>019</span><span class="k">doc.change<i> +"a"</i></span
+                  ><span class="h">dba1464f</span>
+                </li>
+                <li>
+                  <span>020</span><span class="k">doc.change<i> +"\""</i></span
+                  ><span class="h">c12af99a</span>
+                </li>
+                <li>
+                  <span>021</span><span class="k">doc.change<i> +")"</i></span
+                  ><span class="h">9202eac7</span>
+                </li>
+                <li>
+                  <span>022</span><span class="k">doc.change<i> +")"</i></span
+                  ><span class="h">35693a3f</span>
+                </li>
+              </ol>
+            </div>
           </div>
+            <figcaption class="pt-small ov-hero__caption">
+              A tamper-evident history that travels with the submission, preserving more than
+              the final answer.
+            </figcaption>
+          </figure>
         </div>
       </section>
 
-      <!-- 1. Proof ----------------------------------------------------------- -->
-      <section class="proof" data-theme="day" aria-labelledby="proof-title">
-        <div class="wrap">
-          <h2 class="label" id="proof-title" data-fade>In use this semester at UC Berkeley</h2>
-          <ul class="proof__courses" role="list">
-            <li data-course>CS 61A</li>
-            <li data-course>CS 61B</li>
-            <li data-course>CS 61C</li>
-            <li data-course>CS 10</li>
-            <li data-course>DATA C88C</li>
+      <!-- Highlights: three numbers, then one mark per student. --------------------- -->
+      <section class="ov-stats pt-section" data-theme="day" aria-labelledby="stats-title">
+        <div class="wrap pt-center">
+          <p class="pt-eyebrow">In use this semester</p>
+          <h2 class="pt-h2" id="stats-title" data-split>Already in the classroom at UC&nbsp;Berkeley.</h2>
+          <dl class="ov-stats__row" data-fade>
+            <div class="pt-stat">
+              <dt class="pt-stat__cap">students recording their work</dt>
+              <dd class="pt-stat__num" data-count>2,800+</dd>
+            </div>
+            <div class="pt-stat">
+              <dt class="pt-stat__cap">courses</dt>
+              <dd class="pt-stat__num">5</dd>
+            </div>
+            <div class="pt-stat">
+              <dt class="pt-stat__cap">editors supported</dt>
+              <dd class="pt-stat__num">3</dd>
+            </div>
+          </dl>
+          <div class="cohort ov-stats__cohort" data-cohort aria-hidden="true"><canvas></canvas></div>
+          <ul class="ov-stats__courses" role="list" aria-label="Courses">
+            <li>CS 61A</li>
+            <li>CS 61B</li>
+            <li>CS 61C</li>
+            <li>CS 10</li>
+            <li>DATA C88C</li>
           </ul>
-          <div class="cohort" data-cohort aria-hidden="true"><canvas></canvas></div>
-          <p class="proof__stat" data-fade>
-            <span class="proof__number mono" data-count>2,800+</span>
-            <span class="proof__caption">students recording their work</span>
-          </p>
         </div>
       </section>
 
-      <!-- Choose: who are you? Each card opens that audience's page. -->
-      <section class="choose" id="choose" data-theme="day" aria-labelledby="choose-title">
+      <!-- Choose: who are you? Each card opens that audience's page. ---------------- -->
+      <section class="ov-choose pt-section" id="choose" data-theme="day" aria-labelledby="choose-title">
         <div class="wrap">
-          <h2 class="display-2" id="choose-title" data-split>Which one are you?</h2>
-          <div class="choose__cards">
-            <a class="choice" href="students.html">
-              <span class="section-tag">For students</span>
-              <span class="choice__title">I&rsquo;m a student</span>
-              <span class="choice__line"
-                >Install the recorder and see exactly what it keeps, and what it never touches.</span
-              >
-              <span class="choice__go">Get set up <span aria-hidden="true">&rarr;</span></span>
+          <div class="pt-center">
+            <h2 class="pt-h2" id="choose-title" data-split>Which one are you?</h2>
+            <p class="pt-sub" data-fade>Each has its own page, with just what you need.</p>
+          </div>
+          <div class="ov-choose__cards">
+            <a class="choice" href="students.html" data-fade>
+              <div class="choice__visual" aria-hidden="true">
+                <div class="mini-editor">
+                  <div class="mini-editor__bar mono">
+                    <span>hw03.py</span>
+                    <span class="mini-editor__rec">Recording</span>
+                  </div>
+                  <pre class="mini-editor__code mono"><span class="c">def</span> longest_flat(nums):
+    best = run = <span class="n">1</span>
+    <span class="c">for</span> a, b <span class="c">in</span> zip(nums, nums[<span class="n">1</span>:]):
+        run = run + <span class="n">1</span> <span class="c">if</span> a == b <span class="c">else</span> <span class="n">1</span><i class="mini-editor__caret"></i></pre>
+                </div>
+                <ul class="choice__chips mono" role="list">
+                  <li>VS Code</li>
+                  <li>JetBrains</li>
+                  <li>Neovim</li>
+                </ul>
+              </div>
+              <div class="choice__text">
+                <p class="choice__who">For students</p>
+                <p class="pt-h3">I&rsquo;m a student.</p>
+                <p class="pt-body">
+                  Install the recorder and see exactly what it keeps, and what it never touches.
+                </p>
+                <span class="choice__go">Get set up</span>
+              </div>
             </a>
-            <a class="choice choice--ink" href="instructors.html">
-              <span class="section-tag">For instructors &amp; TAs</span>
-              <span class="choice__title">I teach or TA a course</span>
-              <span class="choice__line"
-                >See how submitted work was written, not just how it ended.</span
-              >
-              <span class="choice__go">See how it works <span aria-hidden="true">&rarr;</span></span>
+
+            <a class="choice choice--ink" href="instructors.html" data-fade>
+              <div class="choice__visual" aria-hidden="true">
+                <div class="mini-hist">
+                  <div class="mini-hist__row">
+                    <p class="mini-hist__label mono"><span>An evening of work</span><span>633 edits</span></p>
+                    <svg class="mini-hist__track" viewBox="0 0 296 40" preserveAspectRatio="none">
+                      <line x1="0" y1="20" x2="296" y2="20" class="mini-hist__axis" />
+                      <rect x="4.0" y="15.0" width="2" height="10" rx="1" />
+                      <rect x="10.2" y="14.0" width="2" height="12" rx="1" />
+                      <rect x="15.5" y="17.0" width="2" height="6" rx="1" />
+                      <rect x="21.3" y="17.0" width="2" height="6" rx="1" />
+                      <rect x="25.7" y="17.0" width="2" height="6" rx="1" />
+                      <rect x="31.8" y="16.0" width="2" height="8" rx="1" />
+                      <rect x="35.1" y="14.0" width="2" height="12" rx="1" />
+                      <rect x="39.7" y="16.0" width="2" height="8" rx="1" />
+                      <rect x="43.2" y="14.0" width="2" height="12" rx="1" />
+                      <rect x="46.6" y="13.0" width="2" height="14" rx="1" />
+                      <rect x="50.2" y="16.0" width="2" height="8" rx="1" />
+                      <rect x="55.4" y="13.0" width="2" height="14" rx="1" />
+                      <rect x="61.6" y="13.0" width="2" height="14" rx="1" />
+                      <rect x="66.7" y="17.0" width="2" height="6" rx="1" />
+                      <rect x="73.0" y="17.0" width="2" height="6" rx="1" />
+                      <rect x="78.0" y="16.0" width="2" height="8" rx="1" />
+                      <rect x="82.1" y="16.0" width="2" height="8" rx="1" />
+                      <rect x="87.0" y="13.0" width="2" height="14" rx="1" />
+                      <rect x="91.2" y="9.0" width="2" height="22" rx="1" />
+                      <rect x="96.6" y="17.0" width="2" height="6" rx="1" />
+                      <rect x="101.7" y="11.0" width="2" height="18" rx="1" />
+                      <rect x="105.5" y="17.0" width="2" height="6" rx="1" />
+                      <rect x="110.4" y="17.0" width="2" height="6" rx="1" />
+                      <rect x="115.4" y="13.0" width="2" height="14" rx="1" />
+                      <rect x="119.3" y="11.0" width="2" height="18" rx="1" />
+                      <rect x="124.2" y="9.0" width="2" height="22" rx="1" />
+                      <rect x="128.4" y="13.0" width="2" height="14" rx="1" />
+                      <rect x="134.6" y="15.0" width="2" height="10" rx="1" />
+                      <rect x="138.7" y="9.0" width="2" height="22" rx="1" />
+                      <rect x="142.5" y="9.0" width="2" height="22" rx="1" />
+                      <rect x="146.5" y="13.0" width="2" height="14" rx="1" />
+                      <rect x="150.6" y="14.0" width="2" height="12" rx="1" />
+                      <rect x="156.6" y="11.0" width="2" height="18" rx="1" />
+                      <rect x="161.3" y="13.0" width="2" height="14" rx="1" />
+                      <rect x="167.6" y="17.0" width="2" height="6" rx="1" />
+                      <rect x="172.4" y="16.0" width="2" height="8" rx="1" />
+                      <rect x="178.1" y="16.0" width="2" height="8" rx="1" />
+                      <rect x="184.3" y="14.0" width="2" height="12" rx="1" />
+                      <rect x="187.6" y="11.0" width="2" height="18" rx="1" />
+                      <rect x="191.0" y="13.0" width="2" height="14" rx="1" />
+                      <rect x="196.1" y="9.0" width="2" height="22" rx="1" />
+                      <rect x="200.3" y="11.0" width="2" height="18" rx="1" />
+                      <rect x="204.6" y="14.0" width="2" height="12" rx="1" />
+                      <rect x="209.6" y="14.0" width="2" height="12" rx="1" />
+                      <rect x="213.1" y="17.0" width="2" height="6" rx="1" />
+                      <rect x="219.3" y="14.0" width="2" height="12" rx="1" />
+                      <rect x="224.7" y="17.0" width="2" height="6" rx="1" />
+                      <rect x="228.1" y="11.0" width="2" height="18" rx="1" />
+                      <rect x="232.3" y="13.0" width="2" height="14" rx="1" />
+                      <rect x="238.7" y="9.0" width="2" height="22" rx="1" />
+                      <rect x="243.3" y="11.0" width="2" height="18" rx="1" />
+                      <rect x="247.7" y="11.0" width="2" height="18" rx="1" />
+                      <rect x="252.0" y="14.0" width="2" height="12" rx="1" />
+                      <rect x="256.4" y="13.0" width="2" height="14" rx="1" />
+                      <rect x="260.0" y="17.0" width="2" height="6" rx="1" />
+                      <rect x="263.9" y="15.0" width="2" height="10" rx="1" />
+                      <rect x="267.5" y="16.0" width="2" height="8" rx="1" />
+                      <rect x="271.9" y="9.0" width="2" height="22" rx="1" />
+                      <rect x="276.7" y="16.0" width="2" height="8" rx="1" />
+                      <rect x="281.4" y="13.0" width="2" height="14" rx="1" />
+                      <rect x="285.5" y="16.0" width="2" height="8" rx="1" />
+                      <rect x="291.3" y="9.0" width="2" height="22" rx="1" />
+                    </svg>
+                  </div>
+                  <div class="mini-hist__row">
+                    <p class="mini-hist__label mono"><span>Away, then one paste</span><span>1 paste</span></p>
+                    <svg class="mini-hist__track" viewBox="0 0 296 40" preserveAspectRatio="none">
+                      <line x1="0" y1="20" x2="296" y2="20" class="mini-hist__axis mini-hist__axis--away" />
+                      <rect x="266" y="6" width="26" height="28" rx="4" class="mini-hist__paste" />
+                    </svg>
+                  </div>
+                  <p class="mini-hist__verdict mono">same file &middot; different history</p>
+                </div>
+              </div>
+              <div class="choice__text">
+                <p class="choice__who">For instructors &amp; TAs</p>
+                <p class="pt-h3">I teach or TA a course.</p>
+                <p class="pt-body">See how submitted work was written, not just how it ended.</p>
+                <span class="choice__go">See how it works</span>
+              </div>
             </a>
           </div>
         </div>
