@@ -98,6 +98,10 @@
       </nav>
       <div class="nav__end">
         <a class="nav__link nav__link--quiet" href="https://github.com/ProvenanceTools">GitHub</a>
+        <a class="btn btn--primary btn--small" href="#choose">
+          <span>Get started</span>
+          <span class="btn__icon" aria-hidden="true">&#8595;</span>
+        </a>
 
       </div>
     </header>
@@ -135,15 +139,9 @@
               final answer.
             </p>
             <div class="actions hero__actions">
-              <a
-                class="btn btn--primary"
-                href="mailto:aaryanm@berkeley.edu?subject=Provenance%20for%20my%20course"
-              >
-                <span>Talk to us</span>
-                <span class="btn__icon" aria-hidden="true">&#8599;</span>
-              </a>
-              <a class="btn btn--ghost" href="https://github.com/ProvenanceTools">
-                <span>Explore the source</span>
+              <a class="btn btn--primary" href="#choose">
+                <span>Get started</span>
+                <span class="btn__icon" aria-hidden="true">&#8595;</span>
               </a>
             </div>
           </div>
@@ -229,6 +227,31 @@ print(greet("Ada"))</pre>
             <span class="proof__number mono" data-count>2,800+</span>
             <span class="proof__caption">students recording their work</span>
           </p>
+        </div>
+      </section>
+
+      <!-- Choose: who are you? Each card opens that audience's page. -->
+      <section class="choose" id="choose" data-theme="day" aria-labelledby="choose-title">
+        <div class="wrap">
+          <h2 class="display-2" id="choose-title" data-split>Which one are you?</h2>
+          <div class="choose__cards">
+            <a class="choice" href="students.html">
+              <span class="section-tag">For students</span>
+              <span class="choice__title">I&rsquo;m a student</span>
+              <span class="choice__line"
+                >Install the recorder and see exactly what it keeps, and what it never touches.</span
+              >
+              <span class="choice__go">Get set up <span aria-hidden="true">&rarr;</span></span>
+            </a>
+            <a class="choice choice--ink" href="instructors.html">
+              <span class="section-tag">For instructors &amp; TAs</span>
+              <span class="choice__title">I teach or TA a course</span>
+              <span class="choice__line"
+                >See how submitted work was written, not just how it ended.</span
+              >
+              <span class="choice__go">See how it works <span aria-hidden="true">&rarr;</span></span>
+            </a>
+          </div>
         </div>
       </section>
 
