@@ -72,7 +72,7 @@
     </script>
   </head>
 
-  <body>
+  <body class="page-students">
     <a class="skip" href="#main">Skip to content</a>
 
     <div class="grain" aria-hidden="true"></div>
@@ -106,54 +106,76 @@
     </header>
 
     <main id="main">
-      <!-- 7. One folder ------------------------------------------------------- -->
-      <section class="privacy" id="students" data-theme="day" aria-labelledby="privacy-title">
+      <!-- Header: who this page is for, and the promise. ------------------------- -->
+      <section class="st-head" data-theme="day" aria-labelledby="st-title">
+        <div class="wrap pt-center">
+          <p class="pt-eyebrow" data-enter style="--d: 0">For students</p>
+          <h1 class="pt-hero" id="st-title" data-enter style="--d: 1">
+            The work is yours. So&nbsp;is its&nbsp;history.
+          </h1>
+          <p class="pt-sub" data-enter style="--d: 2">
+            Your edits and revisions deserve a record. Provenance keeps it without watching the
+            rest of your digital life.
+          </p>
+        </div>
+      </section>
+
+      <!-- Get the recorder: the one thing to do here. ----------------------------- -->
+      <section class="st-get" id="get" data-theme="day" aria-labelledby="get-title">
         <div class="wrap">
-          <div class="privacy__copy">
-            <p class="section-tag" data-fade>For students</p>
-            <h2 class="display-2" id="privacy-title" data-split>
-              The work is yours. So is its history.
-            </h2>
-            <p class="lead" data-fade>
-              Your edits and revisions deserve a record. Provenance preserves supported development
-              activity without watching the rest of your digital life.
+          <div class="pt-center">
+            <h2 class="pt-h3" id="get-title" data-enter style="--d: 3">Get the recorder.</h2>
+            <p class="pt-body" data-enter style="--d: 3">Pick the editor you already use.</p>
+          </div>
+          <ul class="st-editors" role="list" data-enter style="--d: 4">
+            <li>
+              <a class="editor" href="https://marketplace.visualstudio.com/items?itemName=itsgeagle.provenance-recorder">
+                <span class="editor__mark mono" aria-hidden="true">VS</span>
+                <span class="editor__name">VS&nbsp;Code</span>
+                <span class="editor__where">Visual Studio Marketplace</span>
+                <span class="editor__go">Install <span aria-hidden="true">&#8599;</span></span>
+              </a>
+            </li>
+            <li>
+              <a class="editor" href="https://plugins.jetbrains.com/plugin/32944-provenance-recorder/">
+                <span class="editor__mark mono" aria-hidden="true">JB</span>
+                <span class="editor__name">JetBrains</span>
+                <span class="editor__where">PyCharm, IntelliJ and others</span>
+                <span class="editor__go">Install <span aria-hidden="true">&#8599;</span></span>
+              </a>
+            </li>
+            <li>
+              <a class="editor" href="https://github.com/ProvenanceTools/provenance-neovim-recorder">
+                <span class="editor__mark mono" aria-hidden="true">nv</span>
+                <span class="editor__name">Neovim</span>
+                <span class="editor__where">Plugin on GitHub</span>
+                <span class="editor__go">Install <span aria-hidden="true">&#8599;</span></span>
+              </a>
+            </li>
+          </ul>
+          <p class="st-get__guide" data-enter style="--d: 5">
+            <a class="pt-link" href="https://github.com/ProvenanceTools/provenance/blob/main/docs/student-guide.md">Step-by-step install guide</a>
+          </p>
+        </div>
+      </section>
+
+      <!-- Privacy: one folder, and nothing else. ---------------------------------- -->
+      <section class="st-privacy pt-section" data-theme="day" aria-labelledby="privacy-title">
+        <div class="wrap">
+          <div class="pt-center">
+            <p class="pt-eyebrow">Privacy</p>
+            <h2 class="pt-h2" id="privacy-title" data-split>One folder. Nothing&nbsp;else.</h2>
+            <p class="pt-sub" data-fade>
+              Only your assignment workspace is recorded. Everything else on your computer stays
+              out of it.
             </p>
           </div>
 
-          <div class="privacy__foot" id="get" data-fade>
-            <a
-              class="btn btn--ink btn--install"
-              href="https://github.com/ProvenanceTools/provenance/blob/main/docs/student-guide.md"
-            >
-              <span>Install guide</span>
-              <span class="btn__icon" aria-hidden="true">&#8599;</span>
-            </a>
-            <div class="privacy__editors">
-              <p class="privacy__get mono">Get the recorder:</p>
-              <ul class="editors" role="list">
-                <li>
-                  <a
-                    href="https://marketplace.visualstudio.com/items?itemName=itsgeagle.provenance-recorder"
-                    >VS&nbsp;Code <span aria-hidden="true">&#8599;</span></a
-                  >
-                </li>
-                <li>
-                  <a href="https://plugins.jetbrains.com/plugin/32944-provenance-recorder/"
-                    >JetBrains <span aria-hidden="true">&#8599;</span></a
-                  >
-                </li>
-                <li>
-                  <a href="https://github.com/ProvenanceTools/provenance-neovim-recorder"
-                    >Neovim <span aria-hidden="true">&#8599;</span></a
-                  >
-                </li>
-              </ul>
-            </div>
-          </div>
+          <div class="field st-privacy__field" data-field aria-hidden="true"></div>
 
-          <div class="sees">
-            <div class="sees__col" data-fade>
-              <h3 class="sees__head mono">Recorded</h3>
+          <div class="st-sees">
+            <div class="st-sees__card" data-fade>
+              <h3 class="st-sees__head">Recorded</h3>
               <ul role="list">
                 <li>Edits and pastes in the assignment workspace</li>
                 <li>File activity and editor focus</li>
@@ -161,8 +183,8 @@
                 <li>Installed editor extensions</li>
               </ul>
             </div>
-            <div class="sees__col sees__col--never" data-fade>
-              <h3 class="sees__head mono">Never recorded</h3>
+            <div class="st-sees__card st-sees__card--never" data-fade>
+              <h3 class="st-sees__head">Never recorded</h3>
               <ul role="list">
                 <li>Your browser, screen, camera, or other projects</li>
                 <li>System-level keystrokes</li>
@@ -171,22 +193,29 @@
             </div>
           </div>
 
-          <ul class="pledges" role="list" data-fade>
-            <li><strong>Offline.</strong> No network requests while recording.</li>
-            <li><strong>Readable.</strong> Plain-text logs stay local until submission.</li>
+          <ul class="st-pledges" role="list" data-fade>
             <li>
-              <strong>Course-defined retention.</strong> Your school sets the deletion schedule.
+              <strong class="pt-h3">Offline.</strong>
+              <span class="pt-body">No network requests while recording.</span>
+            </li>
+            <li>
+              <strong class="pt-h3">Readable.</strong>
+              <span class="pt-body">Plain-text logs stay local until submission.</span>
+            </li>
+            <li>
+              <strong class="pt-h3">Course-defined retention.</strong>
+              <span class="pt-body">Your school sets the deletion schedule.</span>
             </li>
           </ul>
+        </div>
+      </section>
 
-          <div class="field" data-field aria-hidden="true"></div>
-
-          <p class="privacy__help">
-            <strong>Recorder not working?</strong> See the
-            <a href="https://github.com/ProvenanceTools/provenance/blob/main/docs/student-guide.md"
-              >installation guide</a
-            >.
-          </p>
+      <!-- Help. ------------------------------------------------------------------- -->
+      <section class="st-help" data-theme="day" aria-labelledby="help-title">
+        <div class="wrap pt-center">
+          <h2 class="pt-h3" id="help-title">Recorder not working?</h2>
+          <p class="pt-body">The install guide covers setup and the most common problems.</p>
+          <p class="st-help__link"><a class="pt-link" href="https://github.com/ProvenanceTools/provenance/blob/main/docs/student-guide.md">Open the install guide</a></p>
         </div>
       </section>
 
