@@ -10,6 +10,7 @@ export default defineConfig({
         main: 'index.html',
         students: 'students.html',
         instructors: 'instructors.html',
+        guide: 'guide.html',
       },
     },
   },
