@@ -73,7 +73,7 @@
     </script>
   </head>
 
-  <body>
+  <body class="page-instructors">
     <a class="skip" href="#main">Skip to content</a>
 
     <div class="grain" aria-hidden="true"></div>
@@ -117,98 +117,126 @@
     </header>
 
     <main id="main" class="inst">
-      <!-- Opening: one sentence, two actions, then the product stage ---------- -->
-      <section class="inst-hero" id="instructors" data-theme="day" aria-labelledby="inst-title">
-        <div class="wrap">
-          <div class="inst-hero__copy">
-            <p class="inst-eyebrow mono" data-fade>For instructors &amp; TAs</p>
-            <h1 class="inst-title" id="inst-title" data-fade>Look beyond the submission.</h1>
-            <p class="inst-sub" data-fade>
-              A final file shows what was handed in, not how it came to be.
-            </p>
-            <div class="inst-actions" data-fade>
-              <a class="btn btn--ink" href="#histories">
-                <span>See a recorded history</span>
-                <span class="btn__icon" aria-hidden="true">&#8595;</span>
-              </a>
-              <a class="inst-link" href="#review"
-                >Explore the review experience <span aria-hidden="true">&#8595;</span></a
-              >
-              <a
-                class="inst-link"
-                href="https://github.com/ProvenanceTools/provenance/blob/main/docs/admin-guide.md"
-                >Read the admin guide <span aria-hidden="true">&#8599;</span></a
-              >
-            </div>
+      <!-- Page sub-navigation: stays under the site bar while you scroll. -------- -->
+      <nav class="inst-sub" aria-label="On this page">
+        <div class="inst-sub__bar">
+          <a class="inst-sub__title" href="#instructors">For Instructors &amp; TAs</a>
+          <div class="inst-sub__end">
+            <ul class="inst-sub__links" role="list">
+              <li><a href="#instructors" data-spy="overview">Overview</a></li>
+              <li><a href="#review" data-spy="review">Review</a></li>
+              <li>
+                <a
+                  href="guide.html#instructors"
+                  aria-label="Guide (opens in a new tab)"
+                  target="_blank"
+                  rel="noopener"
+                  >Guide <span class="inst-sub__out" aria-hidden="true">&#8599;</span></a
+                >
+              </li>
+              <li><a href="https://github.com/ProvenanceTools">GitHub</a></li>
+            </ul>
+            <a
+              class="btn btn--primary btn--small"
+              href="mailto:aaryanm@berkeley.edu?subject=Provenance%20for%20my%20course"
+              >Talk to us</a
+            >
+          </div>
+        </div>
+      </nav>
+
+      <!-- Header: who this page is for, the promise, and where to go next. ------- -->
+      <section class="inst-head" id="instructors" data-theme="day" aria-labelledby="inst-title">
+        <div class="wrap pt-center">
+          <p class="pt-eyebrow" data-enter style="--d: 0">For instructors &amp; TAs</p>
+          <h1 class="pt-hero" id="inst-title" data-enter style="--d: 1">
+            Look beyond the&nbsp;submission.
+          </h1>
+          <p class="pt-sub" data-enter style="--d: 2">
+            A final file shows what was handed in, not how it came to be.
+          </p>
+          <div class="inst-actions" data-enter style="--d: 3">
+            <a
+              class="btn btn--primary"
+              href="mailto:aaryanm@berkeley.edu?subject=Provenance%20for%20my%20course"
+            >
+              <span>Talk to us</span>
+              <span class="btn__icon" aria-hidden="true">&#8599;</span>
+            </a>
+            <a class="pt-link" href="guide.html#instructors" target="_blank" rel="noopener"
+              >Instructor Guide<span class="visually-hidden"> (opens in a new tab)</span></a
+            >
           </div>
         </div>
       </section>
 
-      <!-- The live demonstration: two recordings of one file, on one clock ------ -->
+      <!-- The live demonstration: two recordings of one file, on one clock. ------ -->
       <section
         class="histories inst-stage"
         id="histories"
         data-theme="night"
         aria-labelledby="histories-title"
       >
-        <div class="inst-stage__inner">
-          <h2 class="inst-label" id="histories-title">Same file. Two histories.</h2>
-          <figure class="records" data-records aria-describedby="records-desc">
-            <div class="records__axis mono" aria-hidden="true">
-              <div class="records__ticks" data-axis></div>
-              <span class="records__clock" data-clock>20:55</span>
-            </div>
-            <div class="record" data-record="written">
-              <div class="record__head">
-                <h3 class="record__title">An evening of work</h3>
-                <p class="record__stats mono">
-                  <span data-stat>633 edits</span><span data-stat>10 test runs</span
-                  ><span data-stat>0 pastes</span>
-                </p>
-              </div>
-              <div class="record__track" data-track></div>
-              <ol class="record__notes mono" data-notes role="list" aria-hidden="true"></ol>
-            </div>
-            <div class="record" data-record="pasted">
-              <div class="record__head">
-                <h3 class="record__title">Away, then one paste</h3>
-                <p class="record__stats mono">
-                  <span data-stat>1 edit</span><span data-stat>1 test run</span
-                  ><span data-stat>1 paste</span>
-                </p>
-              </div>
-              <div class="record__track" data-track></div>
-              <ol class="record__notes mono" data-notes role="list" aria-hidden="true"></ol>
-            </div>
-            <figcaption class="records__foot">
-              <p class="records__digests mono" aria-hidden="true">
-                <span>trails.py</span>
-                <span class="records__digest" data-digest></span>
-                <span class="records__eq">=</span>
-                <span class="records__digest" data-digest></span>
+        <h2 class="pt-h3" id="histories-title">Same file. Two histories.</h2>
+        <figure class="records" data-records aria-describedby="records-desc">
+          <div class="records__axis mono" aria-hidden="true">
+            <div class="records__ticks" data-axis></div>
+            <span class="records__clock" data-clock>20:55</span>
+          </div>
+          <div class="record" data-record="written">
+            <div class="record__head">
+              <h3 class="record__title">An evening of work</h3>
+              <p class="record__stats mono">
+                <span data-stat>633 edits</span><span data-stat>10 test runs</span
+                ><span data-stat>0 pastes</span>
               </p>
-              <p class="records__verdict">The result is identical. The evidence is not.</p>
-              <button class="records__replay mono" type="button" data-replay>Replay</button>
-              <span class="visually-hidden" id="records-desc">
-                Two recordings of the same assignment on one clock, 20:55 to 23:41. In the first, a
-                student types the file over the evening: 633 edits and 10 test runs, stuck for a
-                while on longest_flat, which they delete and write again, and every test passes at
-                23:40. In the second, the editor sits in the background for two and a half hours,
-                then the whole file arrives in a single 26-line paste. Both final files are
-                identical.
-              </span>
-            </figcaption>
-          </figure>
-        </div>
+            </div>
+            <div class="record__track" data-track></div>
+            <ol class="record__notes mono" data-notes role="list" aria-hidden="true"></ol>
+          </div>
+          <div class="record" data-record="pasted">
+            <div class="record__head">
+              <h3 class="record__title">Away, then one paste</h3>
+              <p class="record__stats mono">
+                <span data-stat>1 edit</span><span data-stat>1 test run</span
+                ><span data-stat>1 paste</span>
+              </p>
+            </div>
+            <div class="record__track" data-track></div>
+            <ol class="record__notes mono" data-notes role="list" aria-hidden="true"></ol>
+          </div>
+          <figcaption class="records__foot">
+            <p class="records__digests mono" aria-hidden="true">
+              <span>trails.py</span>
+              <span class="records__digest" data-digest></span>
+              <span class="records__eq">=</span>
+              <span class="records__digest" data-digest></span>
+            </p>
+            <p class="records__verdict">The result is identical. The evidence is not.</p>
+            <button class="records__replay mono" type="button" data-replay>Replay</button>
+            <span class="visually-hidden" id="records-desc">
+              Two recordings of the same assignment on one clock, 20:55 to 23:41. In the first, a
+              student types the file over the evening: 633 edits and 10 test runs, stuck for a while
+              on longest_flat, which they delete and write again, and every test passes at 23:40. In
+              the second, the editor sits in the background for two and a half hours, then the whole
+              file arrives in a single 26-line paste. Both final files are identical.
+            </span>
+          </figcaption>
+        </figure>
+        <p class="inst-stage__more">
+          <a class="pt-link" href="#review">Explore the review experience</a>
+        </p>
       </section>
 
-      <!-- The annotated evening ------------------------------------------------ -->
-      <section class="insight" data-theme="day" aria-label="The first history, annotated">
+      <!-- The annotated evening. -------------------------------------------------- -->
+      <section class="inst-evening" data-theme="day" aria-labelledby="insight-title">
         <div class="wrap">
-          <p class="inst-note" data-fade>
-            <strong>The moments between the answers.</strong> A failed test. A discarded approach. A
-            function written again.
-          </p>
+          <div class="pt-center">
+            <h2 class="pt-h3" id="insight-title" data-fade>The moments between the answers.</h2>
+            <p class="pt-body" data-fade>
+              A failed test. A discarded approach. A function written again.
+            </p>
+          </div>
           <figure class="evening" data-evening>
             <div class="evening__plot" data-evening-plot aria-hidden="true"></div>
             <div class="evening__axis mono" data-evening-axis aria-hidden="true"></div>
@@ -221,46 +249,60 @@
         </div>
       </section>
 
-      <!-- Evidence, not accusation: the two live demos sit in one panel -------- -->
-      <section class="fair" id="review" data-theme="day" aria-labelledby="fair-title">
+      <!-- Evidence, not accusation: its own chapter, on white. ------------------- -->
+      <section class="inst-review" id="review" data-theme="day" aria-labelledby="fair-title">
         <div class="wrap">
-          <h2 class="inst-statement" id="fair-title" data-fade>
-            A flag is a question, not a&nbsp;verdict.
-          </h2>
-          <div class="evidence">
-            <div class="evidence__item" data-fade>
+          <div class="pt-center">
+            <h2 class="pt-h2" id="fair-title" data-split>
+              A flag is a question, not a&nbsp;verdict.
+            </h2>
+          </div>
+
+          <div class="inst-cards">
+            <div class="inst-card" data-fade>
               <div class="flag" data-flag aria-hidden="true">
                 <span class="flag__level mono" data-flag-level>high</span>
                 <span class="flag__text" data-flag-text>Paste of 6 lines into trails.py</span>
               </div>
-              <p>
+              <p class="pt-body">
                 <strong>Context matters.</strong> Moving code already written is recognized as a
                 move, not an unexplained paste.
               </p>
             </div>
-            <div class="evidence__item" data-fade>
+            <div class="inst-card" data-fade>
               <div class="checks mono" aria-hidden="true">
                 <span><i class="is-ok"></i>chain intact</span>
                 <span><i class="is-ok"></i>seal valid</span>
                 <span><i class="is-skipped"></i>checkpoints: skipped</span>
               </div>
-              <p>
+              <p class="pt-body">
                 <strong>Uncertainty stays visible.</strong> A check that cannot run is marked as
                 skipped, never as a failure.
               </p>
             </div>
           </div>
-          <p class="evidence__rule" data-fade>
-            Courses set the rules: staff configure supported recording and review signals. People
-            make decisions: flags lead to moments in the replay, not automatic findings.
-          </p>
+
+          <ul class="inst-pledges" role="list" data-fade>
+            <li>
+              <strong class="pt-h3">Courses set the rules.</strong>
+              <span class="pt-body">Staff configure supported recording and review signals.</span>
+            </li>
+            <li>
+              <strong class="pt-h3">People make decisions.</strong>
+              <span class="pt-body"
+                >Flags lead to moments in the replay, not automatic findings.</span
+              >
+            </li>
+          </ul>
         </div>
       </section>
 
-      <!-- The suite -------------------------------------------------------- -->
-      <section class="suite" id="suite" data-theme="day" aria-labelledby="suite-title">
+      <!-- The tools. --------------------------------------------------------------- -->
+      <section class="suite inst-tools" id="suite" data-theme="day" aria-labelledby="suite-title">
         <div class="wrap">
-          <h2 class="inst-label" id="suite-title" data-fade>One record. Every tool.</h2>
+          <div class="pt-center">
+            <h2 class="pt-h3" id="suite-title" data-fade>One record. Every tool.</h2>
+          </div>
 
           <div class="suite__map" data-suite>
             <svg class="suite__wires" data-wires aria-hidden="true"></svg>
@@ -352,13 +394,13 @@
         </div>
       </section>
 
-      <!-- Try it: the working editor is the explanation ------------------------ -->
-      <section class="tryit" id="tryit" data-theme="day" aria-labelledby="tryit-title">
+      <!-- Try it: the working editor is the explanation. ------------------------- -->
+      <section class="tryit inst-try" id="tryit" data-theme="day" aria-labelledby="tryit-title">
         <div class="tryit__sticky">
           <div class="wrap tryit__inner">
-            <div class="tryit__copy">
-              <h2 class="inst-label" id="tryit-title" data-fade>See it for yourself.</h2>
-              <p class="inst-note" data-fade>Type, paste, click away and return.</p>
+            <div class="tryit__copy pt-center">
+              <h2 class="pt-h3" id="tryit-title" data-fade>See it for yourself.</h2>
+              <p class="pt-body" data-fade>Type, paste, click away and return.</p>
             </div>
             <div class="tryit__slot" data-slot aria-hidden="true"></div>
             <div class="playground" data-playground>
@@ -397,20 +439,21 @@
         </div>
       </section>
 
-      <!-- Limits ---------------------------------------------------------- -->
-      <section class="limits" data-theme="day" aria-label="Limits of the record">
-        <div class="wrap inst-limits">
+      <!-- Limits: kept in full, quietly. ------------------------------------------- -->
+      <section class="inst-limits" data-theme="day" aria-labelledby="limits-title">
+        <div class="wrap pt-center">
+          <h2 class="pt-h3" id="limits-title" data-fade>What a record cannot know.</h2>
           <div class="inst-limits__text" data-fade>
-            <p>
-              <strong>What a record cannot know.</strong> A log captures events, not intention. It
-              cannot guarantee authorship or make forgery impossible.
+            <p class="pt-sub">
+              A log captures events, not intention. It cannot guarantee authorship or make forgery
+              impossible.
             </p>
-            <p>
+            <p class="pt-sub">
               Provenance makes certain changes detectable and the recorded process examinable. The
               evidence still needs a human reader.
             </p>
           </div>
-          <blockquote class="quote" data-fade>
+          <blockquote class="quote inst-quote" data-fade>
             <footer class="mono">From the Provenance design document</footer>
             <p>
               &ldquo;We will know if you do something obvious, and we will know enough to ask
@@ -420,7 +463,7 @@
         </div>
       </section>
 
-      <!-- 9. Close ----------------------------------------------------------- -->
+      <!-- The way in: California gold, one action. -------------------------------- -->
       <section class="close" data-theme="signal" aria-labelledby="close-title">
         <div class="close__pattern" data-pattern aria-hidden="true"></div>
         <div class="close__anchor" data-anchor="close">
@@ -443,7 +486,7 @@
           </picture>
         </div>
         <div class="wrap close__inner">
-          <h2 class="close__title display" id="close-title" data-fade>
+          <h2 class="close__title display" id="close-title" data-split>
             Bring Provenance<br />
             to your course.
           </h2>
@@ -454,12 +497,6 @@
             >
               <span>Talk to us</span>
               <span class="btn__icon" aria-hidden="true">&#8599;</span>
-            </a>
-            <a
-              class="btn btn--outline"
-              href="https://github.com/ProvenanceTools/provenance/blob/main/docs/admin-guide.md"
-            >
-              <span>Read the admin guide</span>
             </a>
           </div>
         </div>
@@ -478,30 +515,41 @@
             </svg>
             <span class="wordmark">Provenance</span>
           </a>
-          <ul class="foot__links" role="list">
-            <li>
-              <a href="mailto:aaryanm@berkeley.edu?subject=Provenance%20for%20my%20course"
-                >Talk to us</a
-              >
-            </li>
-            <li><a href="https://github.com/ProvenanceTools">GitHub</a></li>
-            <li>
-              <a
-                href="https://github.com/ProvenanceTools/provenance/blob/main/docs/student-guide.md"
-                >Install guide</a
-              >
-            </li>
-            <li>
-              <a href="https://github.com/ProvenanceTools/provenance/blob/main/docs/admin-guide.md"
-                >Admin guide</a
-              >
-            </li>
-          </ul>
+
           <p class="foot__made">Open source · Built at UC Berkeley.</p>
         </footer>
       </section>
     </main>
 
     <script type="module" src="/src/main.ts"></script>
+    <script>
+      // Marks which place in the sub-navigation you are in. Nothing depends on it.
+      (function () {
+        var sub = document.querySelector('.inst-sub');
+        var review = document.getElementById('review');
+        var links = document.querySelectorAll('.inst-sub [data-spy]');
+        if (!sub || !review || !links.length) return;
+        var queued = false;
+        function update() {
+          queued = false;
+          var line = sub.getBoundingClientRect().bottom + 24;
+          var r = review.getBoundingClientRect();
+          var here = r.top > line ? 'overview' : r.bottom > line ? 'review' : '';
+          links.forEach(function (a) {
+            if (a.getAttribute('data-spy') === here) a.setAttribute('aria-current', 'location');
+            else a.removeAttribute('aria-current');
+          });
+        }
+        function queue() {
+          if (!queued) {
+            queued = true;
+            requestAnimationFrame(update);
+          }
+        }
+        addEventListener('scroll', queue, { passive: true });
+        addEventListener('resize', queue);
+        update();
+      })();
+    </script>
   </body>
 </html>
