@@ -77,6 +77,15 @@
 .editor:hover .editor__go {
   background: var(--gold-hover);
 }
+.st-editors li {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  gap: 12px;
+}
+/* Each editor's own step-by-step guide, right under its card. */
+.editor__guide {
+  justify-self: center;
+}
 .st-get__guide {
   margin-top: clamp(24px, 3.5vh, 36px);
   text-align: center;
