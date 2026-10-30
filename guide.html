@@ -124,7 +124,11 @@
       <article class="gd-panel" data-topic="installation" data-title="Installation">
         <header class="gd-head">
           <p class="pt-eyebrow">Installation</p>
-          <h1 class="pt-h2">Install the recorder.</h1>
+          <h1 class="pt-h2">
+            Install the recorder<span data-for="vscode"> for VS&nbsp;Code</span
+            ><span data-for="jetbrains"> for JetBrains</span
+            ><span data-for="neovim"> for Neovim</span>.
+          </h1>
           <p class="pt-sub">Setup takes a few minutes. You only do it once per computer.</p>
         </header>
 
@@ -183,20 +187,6 @@
           </div>
 
           <ol class="gd-steps">
-            <!-- 1. Choose -->
-            <li class="gd-step">
-              <h2 class="gd-step__title">Choose your editor</h2>
-              <p>
-                All three record the same events in the same format. Your course decides which it
-                accepts; work in an editor without a recorder is not recorded.
-              </p>
-              <div class="gd-seg" role="tablist" aria-label="Editor" data-ide-tabs>
-                <button type="button" role="tab" data-ide-tab="vscode">VS Code</button>
-                <button type="button" role="tab" data-ide-tab="jetbrains">JetBrains</button>
-                <button type="button" role="tab" data-ide-tab="neovim">Neovim</button>
-              </div>
-            </li>
-
             <!-- ============ VS Code ============ -->
             <li class="gd-step" data-for="vscode">
               <h2 class="gd-step__title">Open the Extensions panel</h2>
@@ -542,11 +532,59 @@ nvim .</code></pre>
           <p class="pt-eyebrow">Troubleshooting</p>
           <h1 class="pt-h2">Something not working?</h1>
           <p class="pt-sub">
-            Start with your editor. Then the questions that apply to any of them.
+            First the questions that apply to every editor, then the ones for yours.
           </p>
         </header>
 
         <div class="gd-body">
+          <h2 class="gd-sub gd-sub--first">Any editor</h2>
+          <p class="gd-lede">
+            Say so early. A gap you mention is administrative; a gap found later is a conversation.
+          </p>
+          <div class="gd-qas">
+            <details class="gd-qa">
+              <summary>I worked for an hour and it never said it was recording.</summary>
+              <div>
+                <p>
+                  That hour isn't in the log. Usually the cause is opening a folder inside the
+                  assignment rather than the assignment folder itself or one above it. If it was a
+                  lot of work, tell your course.
+                </p>
+              </div>
+            </details>
+            <details class="gd-qa">
+              <summary>I forgot, or my laptop died, or I was offline.</summary>
+              <div>
+                <p>
+                  Forgot entirely: mention it to your course. Laptop died or editor force-quit:
+                  nothing is lost, reopen the folder and keep going. Offline: fine, the recorder
+                  needs no network.
+                </p>
+              </div>
+            </details>
+            <details class="gd-qa">
+              <summary>I deleted or edited something in <code>.provenance/</code>.</summary>
+              <div>
+                <p>
+                  Tell your course and do not try to rebuild or repair it. Deleted work is gone from
+                  the record. The log is sealed, so an edit shows up as an edit however carefully it
+                  is made; reporting it makes it a non-event.
+                </p>
+              </div>
+            </details>
+            <details class="gd-qa">
+              <summary>Can I see exactly what was recorded?</summary>
+              <div>
+                <p>
+                  Yes. The <code>session-*.slog</code> files in <code>.provenance/</code> are plain
+                  newline-delimited JSON. Open one in any text editor and read every event as it was
+                  written.
+                </p>
+              </div>
+            </details>
+          </div>
+
+          <h2 class="gd-sub">Your editor</h2>
           <div class="gd-seg" role="tablist" aria-label="Editor" data-ide-tabs>
             <button type="button" role="tab" data-ide-tab="vscode">VS Code</button>
             <button type="button" role="tab" data-ide-tab="jetbrains">JetBrains</button>
@@ -705,53 +743,6 @@ nvim .</code></pre>
                 <p>
                   Nothing is lost. The log is written continuously, not held until submission.
                   Reopen the folder and keep working; the new session links to the previous one.
-                </p>
-              </div>
-            </details>
-          </div>
-
-          <h2 class="gd-sub">Any editor</h2>
-          <p class="gd-lede">
-            Say so early. A gap you mention is administrative; a gap found later is a conversation.
-          </p>
-          <div class="gd-qas">
-            <details class="gd-qa">
-              <summary>I worked for an hour and it never said it was recording.</summary>
-              <div>
-                <p>
-                  That hour isn't in the log. Usually the cause is opening a folder inside the
-                  assignment rather than the assignment folder itself or one above it. If it was a
-                  lot of work, tell your course.
-                </p>
-              </div>
-            </details>
-            <details class="gd-qa">
-              <summary>I forgot, or my laptop died, or I was offline.</summary>
-              <div>
-                <p>
-                  Forgot entirely: mention it to your course. Laptop died or editor force-quit:
-                  nothing is lost, reopen the folder and keep going. Offline: fine, the recorder
-                  needs no network.
-                </p>
-              </div>
-            </details>
-            <details class="gd-qa">
-              <summary>I deleted or edited something in <code>.provenance/</code>.</summary>
-              <div>
-                <p>
-                  Tell your course and do not try to rebuild or repair it. Deleted work is gone from
-                  the record. The log is sealed, so an edit shows up as an edit however carefully it
-                  is made; reporting it makes it a non-event.
-                </p>
-              </div>
-            </details>
-            <details class="gd-qa">
-              <summary>Can I see exactly what was recorded?</summary>
-              <div>
-                <p>
-                  Yes. The <code>session-*.slog</code> files in <code>.provenance/</code> are plain
-                  newline-delimited JSON. Open one in any text editor and read every event as it was
-                  written.
                 </p>
               </div>
             </details>
@@ -1529,7 +1520,7 @@ PROVENANCE_LEGACY_COURSE_PUBLIC_KEY_HEX=&lt;the old course public key&gt; \
               >
             </li>
             <li><a href="https://github.com/ProvenanceTools">GitHub</a></li>
-            <li><a href="#installation">Install guide</a></li>
+            <li><a href="students.html#get">Install guide</a></li>
             <li><a href="#administration">Admin guide</a></li>
           </ul>
           <p class="foot__made">Open source · Built at UC Berkeley.</p>
